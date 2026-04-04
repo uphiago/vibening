@@ -1,0 +1,104 @@
+@font-face {
+  font-family: 'Geist';
+  src: url('../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Pixel';
+  src: url('../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Square.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg: #04060a;
+  --text: #e7eef2;
+  --text-muted: rgba(231, 238, 242, 0.62);
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.055);
+  --surface: #0b0f16;
+  --accent-teal: rgba(86, 229, 194, 0.85);
+  --mono-font: 'Geist Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+  --body-font: 'Geist', Inter, 'Segoe UI', system-ui, sans-serif;
+  --heading-font: 'Geist Pixel', 'Courier New', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--body-font);
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% -5%, rgba(70, 170, 255, 0.12), transparent 42%),
+    radial-gradient(circle at 90% 0%, rgba(86, 229, 194, 0.1), transparent 34%),
+    radial-gradient(circle at 55% 105%, rgba(130, 70, 255, 0.07), transparent 38%),
+    var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: rgba(124, 212, 255, 0.22);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+::selection {
+  background: rgba(124, 212, 255, 0.26);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
