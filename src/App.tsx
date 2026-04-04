@@ -910,16 +910,16 @@ function App() {
       { id: 'hero', label: 'Início' },
       { id: 'lesson-roadmap', label: 'Guia' },
       { id: 'vibecoding-vs-ai', label: 'Comparativo' },
-      { id: 'sdd', label: 'SDD' },
       { id: 'principles', label: 'Pilares' },
+      { id: 'sdd', label: 'SDD' },
       { id: 'context-signals', label: 'Sinais' },
       { id: 'progressive-disclosure', label: 'Progressive' },
-      { id: 'deep-dive', label: 'Deep Dive' },
       { id: 'layer-model', label: 'Camadas' },
       { id: 'execution-flow', label: 'RPEV' },
       { id: 'workflow-gate', label: 'Workflow' },
       { id: 'multi-agent', label: 'Multi-Agent' },
       { id: 'anti-patterns', label: 'Anti-patterns' },
+      { id: 'deep-dive', label: 'Deep Dive' },
       { id: 'mermaid-diagrams', label: 'Diagramas' },
       { id: 'ecosystem-map', label: 'Mapa' },
       { id: 'xyflow-map', label: 'Graph' },
@@ -1048,24 +1048,18 @@ function App() {
         <div className="hero-glow hero-glow-primary" />
         <div className="hero-glow hero-glow-secondary" />
         <div className="hero-content reveal visible">
-          <p className="eyebrow">Agentic Engineering · AI Coding · Production</p>
+          <p className="eyebrow">Agentic Engineering</p>
           <h1>
             Engenharia agêntica
-            <span>contexto limpo e execução previsível</span>
+            <span>do conceito à produção</span>
           </h1>
           <p className="hero-subtitle">
-            Material visual e interativo sobre fundamentos técnicos de IA Coding: Progressive Disclosure, RPEV, Skills, MCP, validação contínua e gates de qualidade. Do conceito à produção.
+            Fundamentos técnicos de AI Coding: contexto, execução controlada e arquitetura multi-agente.
           </p>
-          <div className="hero-actions">
-            <a href="#vibecoding-vs-ai" className="hero-cta primary">Vibecoding vs AI-Assisted</a>
-            <a href="#execution-flow" className="hero-cta">Ver RPEV</a>
-            <a href="#anti-patterns" className="hero-cta">Anti-patterns</a>
-          </div>
           <div className="hero-metrics" aria-label="Destaques do guia">
-            <div className="metric"><span>2 partes</span><small>fundamentos + aplicação</small></div>
-            <div className="metric"><span>3 camadas</span><small>disclosure pattern</small></div>
-            <div className="metric"><span>RPEV</span><small>loop base</small></div>
-            <div className="metric"><span>10 gates</span><small>review checklist</small></div>
+            <div className="metric"><span>SDD</span><small>spec antes do código</small></div>
+            <div className="metric"><span>RPEV</span><small>loop de execução</small></div>
+            <div className="metric"><span>Multi-Agent</span><small>além do agente único</small></div>
           </div>
         </div>
       </header>
@@ -1075,10 +1069,7 @@ function App() {
         {/* ── Lesson Roadmap ───────────────────────────── */}
         <section id="lesson-roadmap" className="reveal">
           <p className="section-label">Guia de Estudo</p>
-          <h2 className="section-title">Dois momentos de aprendizado</h2>
-          <p className="section-description">
-            Parte 1 cobre os fundamentos conceituais. Parte 2 aplica em código real. Cada parte tem objetivo, tópicos e resultados esperados definidos antes de começar.
-          </p>
+          <h2 className="section-title">Trilha de aprendizado</h2>
           <div className="lessons-grid">
             {LESSONS.map((lesson) => (
               <article key={lesson.id} className="glass-card lesson-card">
@@ -1113,7 +1104,7 @@ function App() {
           <p className="section-label">Comparativo Central</p>
           <h2 className="section-title">Vibecoding vs AI-Assisted Engineering</h2>
           <p className="section-description">
-            Vibecoding não é errado: é uma ferramenta. O problema é usar como padrão em produção. Saber distinguir os dois modos é o primeiro passo para desenvolvimento assistido de qualidade.
+            Vibecoding é exploração. AI-Assisted Engineering é entrega. Saber distinguir os dois é o primeiro passo.
           </p>
           <div className="comparison-table glass-card">
             <div className="comparison-head">
@@ -1145,12 +1136,28 @@ function App() {
           </div>
         </section>
 
+        {/* ── Principles ───────────────────────────────── */}
+        <section id="principles" className="reveal">
+          <p className="section-label">Core Principles</p>
+          <h2 className="section-title">Três princípios que sustentam IA Coding em produção</h2>
+          <div className="principles-grid">
+            {PRINCIPLES.map((item) => (
+              <article key={item.id} className="glass-card principle-card">
+                <span className="principle-icon">{item.icon}</span>
+                <h3>{item.title}</h3>
+                <p>{item.subtitle}</p>
+                <small>{item.signal}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+
         {/* ── SDD ──────────────────────────────────────── */}
         <section id="sdd" className="reveal">
           <p className="section-label">Spec-Driven Development</p>
           <h2 className="section-title">Especificar antes de executar</h2>
           <p className="section-description">
-            SDD é a pratica de definir contexto, objetivo, escopo e critérios de validacao antes de qualquer execucao. Nao é burocracia: é o que separa entrega controlada de retrabalho em cascata.
+            Definir contexto, escopo e critérios antes de executar separa entrega controlada de retrabalho em cascata.
           </p>
 
           <div className="sdd-why-grid">
@@ -1185,7 +1192,7 @@ function App() {
                 </button>
               ))}
             </div>
-            <article className="sdd-detail glass-card">
+            <article key={activeSddField.id} className="sdd-detail glass-card">
               <div className="sdd-detail-header">
                 <span className="detail-kicker">Campo {activeSddField.number} de {SDD_FIELDS.length}</span>
                 <span className="sdd-progress-dots">
@@ -1296,22 +1303,6 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           </div>
         </section>
 
-        {/* ── Principles ───────────────────────────────── */}
-        <section id="principles" className="reveal">
-          <p className="section-label">Core Principles</p>
-          <h2 className="section-title">Três princípios que sustentam IA Coding em produção</h2>
-          <div className="principles-grid">
-            {PRINCIPLES.map((item) => (
-              <article key={item.id} className="glass-card principle-card">
-                <span className="principle-icon">{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.subtitle}</p>
-                <small>{item.signal}</small>
-              </article>
-            ))}
-          </div>
-        </section>
-
         {/* ── Context Signals ───────────────────────────── */}
         <section id="context-signals" className="reveal">
           <p className="section-label">Context Engineering</p>
@@ -1340,9 +1331,9 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
         {/* ── Progressive Disclosure ───────────────────── */}
         <section id="progressive-disclosure" className="reveal">
           <p className="section-label">Progressive Disclosure</p>
-          <h2 className="section-title">Mostrar índice primeiro. Detalhe apenas sob demanda.</h2>
+          <h2 className="section-title">Índice primeiro, detalhe sob demanda</h2>
           <p className="section-description">
-            Padrão de arquitetura para agentes: reduzir ruído de contexto, melhorar decisão e escalar workflows sem carregar tudo de uma vez. Mitiga o efeito "Lost in the Middle".
+            Reduz ruído de contexto e mitiga o efeito Lost in the Middle.
           </p>
           <div className="pd-grid">
             {PD_LAYERS.map((layer, i) => (
@@ -1370,42 +1361,6 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           </article>
         </section>
 
-        {/* ── Deep Dive ────────────────────────────────── */}
-        <section id="deep-dive" className="reveal">
-          <p className="section-label">Technical Deep Dive</p>
-          <h2 className="section-title">Arquitetura prática do stack agêntico</h2>
-          <div className="deck-layout">
-            <div className="deck-list">
-              {DEEP_DIVES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-                  onClick={() => setActiveDeepDive(item)}
-                >
-                  <span className="deck-title">{item.title}</span>
-                </button>
-              ))}
-            </div>
-            <article className="deck-detail glass-card">
-              <h3>{activeDeepDive.title}</h3>
-              <p className="deck-objective">{activeDeepDive.description}</p>
-              <div className="deck-tags">
-                {activeDeepDive.artifacts.map((artifact) => (
-                  <span key={artifact}>{artifact}</span>
-                ))}
-              </div>
-              <div className="deep-links">
-                {activeDeepDive.links.map((link) => (
-                  <a key={link.href} className="ref-link glass-card" href={link.href} target="_blank" rel="noreferrer">
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </article>
-          </div>
-        </section>
-
         {/* ── Layer Model ──────────────────────────────── */}
         <section id="layer-model" className="reveal">
           <p className="section-label">Layer Model</p>
@@ -1429,7 +1384,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="layer-detail glass-card">
+            <article key={activeLayer.id} className="layer-detail glass-card">
               <span className="detail-kicker">Detail</span>
               <h3>{activeLayer.label}</h3>
               <ul>
@@ -1444,7 +1399,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <p className="section-label">Execution Flow · RPEV</p>
           <h2 className="section-title">Research → Plan → Execute → Verify</h2>
           <p className="section-description">
-            Fluxo base para todo desenvolvimento assistido por IA. Cada fase tem entrada, saída e critério de conclusão definidos. Sem gate de verify, o ciclo não fecha.
+            Cada fase tem entrada, saída e critério de conclusão. Sem gate de verify, o ciclo não fecha.
           </p>
           <div className="flow-layout">
             <div className="flow-left">
@@ -1460,7 +1415,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="flow-right glass-card">
+            <article key={activeStep.id} className="flow-right glass-card">
               <span className="detail-kicker">Fase atual</span>
               <h3>{activeStep.label}</h3>
               <p>{activeStep.detail}</p>
@@ -1474,7 +1429,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <p className="section-label">AI-driven Workflow</p>
           <h2 className="section-title">Gate de qualidade: plan → code → release</h2>
           <p className="section-description">
-            Fluxo operacional com boas práticas embutidas: planejar antes de codar, validar antes de mergear, confirmar antes de publicar.
+            Cada etapa tem um gate antes de avançar: planejar, validar, confirmar.
           </p>
           <div className="flow-layout">
             <div className="flow-left">
@@ -1490,7 +1445,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="flow-right glass-card">
+            <article key={activePhase.id} className="flow-right glass-card">
               <span className="detail-kicker">Fase selecionada</span>
               <h3>{activePhase.step} · {activePhase.title}</h3>
               <p>{activePhase.objective}</p>
@@ -1513,7 +1468,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <p className="section-label">Multi-Agent Architectures</p>
           <h2 className="section-title">Quando um agente nao é suficiente</h2>
           <p className="section-description">
-            Um único agente tem limites práticos: mais de 10 ferramentas prejudicam decisão, contexto longo degrada qualidade, tarefas complexas precisam de especialização. Sistemas multi-agente resolvem esses problemas com arquitetura.
+            Acima de 10 ferramentas por agente a qualidade cai. Especialização e paralelismo resolvem os limites do agente único.
           </p>
 
           <div className="ma-limits glass-card">
@@ -1562,7 +1517,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="deck-detail glass-card">
+            <article key={activeArch.id} className="deck-detail glass-card">
               <div className="ma-detail-top">
                 <span className="ma-arch-letter large">{activeArch.letter}</span>
                 <span className={`ma-reliability ma-reliability-${activeArch.reliability}`}>
@@ -1588,7 +1543,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <div className="ma-section-title">
             <p className="section-label" style={{ marginTop: '32px' }}>Padrões de execução</p>
             <p className="section-description" style={{ marginTop: '8px' }}>
-              Independente da arquitetura, esses padrões determinam como os agentes executam e validam dentro do sistema.
+              Como agentes executam e validam dentro de qualquer arquitetura.
             </p>
           </div>
           <div className="deck-layout">
@@ -1608,7 +1563,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="deck-detail glass-card">
+            <article key={activeAgentPattern.id} className="deck-detail glass-card">
               <span className="detail-kicker">Padrão {activeAgentPattern.letter}</span>
               <h3>{activeAgentPattern.name}</h3>
               <p className="deck-objective">{activeAgentPattern.description}</p>
@@ -1658,7 +1613,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <p className="section-label">Anti-patterns</p>
           <h2 className="section-title">O que nao fazer e por que</h2>
           <p className="section-description">
-            Anti-patterns em AI Coding são mais custosos que em dev tradicional: a IA acelera erros tanto quanto acelera acertos. Reconhecer cedo reduz o custo de correção.
+            A IA acelera erros tanto quanto acelera acertos. Reconhecer esses padrões cedo reduz o custo de correção.
           </p>
           <div className="deck-layout">
             <div className="deck-list">
@@ -1677,7 +1632,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article className="deck-detail glass-card">
+            <article key={activeAntiPattern.id} className="deck-detail glass-card">
               <div className="ap-detail-header">
                 <span className={`ap-severity ap-severity-${activeAntiPattern.severity}`}>
                   {severityLabel(activeAntiPattern.severity)}
@@ -1692,6 +1647,42 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
               <div className="deck-block ap-fix-block">
                 <strong>Correção</strong>
                 <p>{activeAntiPattern.fix}</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        {/* ── Deep Dive ────────────────────────────────── */}
+        <section id="deep-dive" className="reveal">
+          <p className="section-label">Technical Deep Dive</p>
+          <h2 className="section-title">Arquitetura prática do stack agêntico</h2>
+          <div className="deck-layout">
+            <div className="deck-list">
+              {DEEP_DIVES.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
+                  onClick={() => setActiveDeepDive(item)}
+                >
+                  <span className="deck-title">{item.title}</span>
+                </button>
+              ))}
+            </div>
+            <article key={activeDeepDive.id} className="deck-detail glass-card">
+              <h3>{activeDeepDive.title}</h3>
+              <p className="deck-objective">{activeDeepDive.description}</p>
+              <div className="deck-tags">
+                {activeDeepDive.artifacts.map((artifact) => (
+                  <span key={artifact}>{artifact}</span>
+                ))}
+              </div>
+              <div className="deep-links">
+                {activeDeepDive.links.map((link) => (
+                  <a key={link.href} className="ref-link glass-card" href={link.href} target="_blank" rel="noreferrer">
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </article>
           </div>
@@ -1770,7 +1761,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
           <p className="section-label">Ecosystem</p>
           <h2 className="section-title">Mapa operacional de uma stack agêntica</h2>
           <p className="section-description">
-            Cada camada tem papel diferente. Build (acima) define o que o agente sabe e pode. Ops (abaixo) é o ciclo de execução e validação em tempo real.
+            Build define o que o agente sabe e pode. Ops é o ciclo de execução e validação.
           </p>
           <div className="map-controls" role="tablist" aria-label="Filtro do mapa">
             <button type="button" className={activeMapView === 'all' ? 'active' : ''} onClick={() => setActiveMapView('all')}>All</button>
@@ -1953,7 +1944,7 @@ para tratar entradas vazias sem lançar exceção.
           <p className="section-label">Code Review Checklist</p>
           <h2 className="section-title">10 gates antes de considerar pronto</h2>
           <p className="section-description">
-            Nenhum item crítico pode ficar sem resposta. Itens pendentes viram ações objetivas antes do merge, nao comentários para "resolver depois".
+            Itens abertos viram ações antes do merge, nao comentários para "resolver depois".
           </p>
           <div className="checklist-container glass-card">
             <div className="checklist-progress">

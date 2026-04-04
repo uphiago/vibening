@@ -1,3 +1,8 @@
+@keyframes fadeContent {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .app {
   min-height: 100vh;
   min-height: 100svh;
@@ -110,6 +115,7 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 12px;
+  align-items: start;
 }
 
 .deck-list {
@@ -153,6 +159,8 @@
 
 .deck-detail {
   padding: 16px;
+  min-height: 280px;
+  animation: fadeContent 0.15s ease;
 }
 
 .deck-objective {
@@ -630,6 +638,7 @@ section::before {
   grid-template-columns: 1fr 420px;
   gap: 14px;
   margin-top: 22px;
+  align-items: start;
 }
 
 .layer-stack,
@@ -701,6 +710,8 @@ section::before {
 .layer-detail,
 .flow-right {
   padding: 16px;
+  min-height: 240px;
+  animation: fadeContent 0.15s ease;
 }
 
 .detail-kicker {
@@ -2010,6 +2021,7 @@ button:focus-visible {
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 12px;
+  align-items: start;
 }
 
 .sdd-fields-list {
@@ -2061,6 +2073,8 @@ button:focus-visible {
 
 .sdd-detail {
   padding: 20px;
+  min-height: 340px;
+  animation: fadeContent 0.15s ease;
 }
 
 .sdd-detail-header {
@@ -2572,6 +2586,14 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  /* When panels stack, release reserved height — no wasted space */
+  .deck-detail,
+  .layer-detail,
+  .flow-right,
+  .sdd-detail {
+    min-height: auto;
+  }
+
   .principles-grid,
   .diagram-grid,
   .placeholder-grid,
@@ -2654,6 +2676,18 @@ button:focus-visible {
     min-width: 140px;
     font-size: 10px;
   }
+
+  /* SDD: field list becomes horizontal scrollable row on tablet */
+  .sdd-fields-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .sdd-field-btn {
+    flex: 1 1 auto;
+    min-width: 130px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -2673,6 +2707,34 @@ button:focus-visible {
   .examples-grid,
   .state-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* SDD quality table: on phones collapse to 2 cols (field + strong only) */
+  .sdd-quality-head,
+  .sdd-quality-row {
+    grid-template-columns: 90px 1fr;
+  }
+
+  .sdd-quality-weak,
+  .sdd-weak-label {
+    display: none;
+  }
+
+  /* SDD why cards: smaller padding */
+  .sdd-why-card {
+    padding: 14px;
+  }
+
+  /* Deck items: ensure comfortable touch targets */
+  .deck-item,
+  .layer-row,
+  .flow-step {
+    min-height: 48px;
+  }
+
+  /* Reduce section-title font on small screens */
+  .section-title {
+    font-size: clamp(20px, 5vw, 32px);
   }
 
   .mermaid {
@@ -2695,6 +2757,17 @@ button:focus-visible {
 
   section {
     margin-top: 52px;
+  }
+
+  /* Refs: full width links on phone */
+  .ref-link {
+    font-size: 12px;
+    padding: 12px 14px;
+  }
+
+  /* MA limits: smaller number display */
+  .ma-limit-number {
+    font-size: 18px;
   }
 }
 
