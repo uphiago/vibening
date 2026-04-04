@@ -3,6 +3,29 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 8px;
+}
+
+.diagram-skeleton {
+  height: 180px;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+
 .app {
   min-height: 100vh;
   min-height: 100svh;
@@ -82,6 +105,131 @@
   text-shadow: 0 0 26px rgba(124, 212, 255, 0.6);
 }
 
+/* ── Mobile nav hamburger ─────────────────────────────── */
+
+.mobile-nav-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.mobile-nav-btn:hover { background: rgba(255, 255, 255, 0.06); }
+
+.mobile-nav-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: rgba(235, 247, 255, 0.85);
+  border-radius: 2px;
+  transition: opacity 0.2s ease;
+}
+
+@media (max-width: 1100px) {
+  .mobile-nav-btn { display: flex; }
+}
+
+/* ── Mobile nav overlay ───────────────────────────────── */
+
+.mobile-nav-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-nav-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.mobile-nav-sheet {
+  position: relative;
+  width: min(280px, 80vw);
+  height: 100%;
+  background: rgba(8, 13, 20, 0.97);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.22s ease;
+  overflow-y: auto;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.mobile-nav-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.mobile-nav-close {
+  background: none;
+  border: none;
+  color: rgba(200, 220, 240, 0.7);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mobile-nav-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.mobile-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 11px 20px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mobile-nav-link:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.mobile-nav-link.active {
+  color: var(--accent-teal);
+  background: rgba(86, 229, 194, 0.06);
+  border-left: 2px solid rgba(86, 229, 194, 0.6);
+  padding-left: 18px;
+}
+
+/* ── Diagram grid hidden state ────────────────────────── */
+
+.diagram-grid-hidden {
+  visibility: hidden;
+  position: absolute;
+  pointer-events: none;
+}
 
 .deck-toolbar {
   margin-top: 18px;
@@ -866,6 +1014,8 @@ section::before {
   margin-top: 12px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.14);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   background:
     radial-gradient(circle at 12% 14%, rgba(124, 212, 255, 0.13), transparent 34%),
     radial-gradient(circle at 88% 86%, rgba(86, 229, 194, 0.1), transparent 30%),
@@ -2695,8 +2845,33 @@ button:focus-visible {
     padding: 72px 22px 62px;
   }
 
+  .hero {
+    min-height: auto;
+    padding-top: 100px;
+    padding-bottom: 56px;
+  }
+
+  .hero-glow-primary {
+    width: 420px;
+    height: 280px;
+  }
+
+  .hero-glow-secondary {
+    width: 320px;
+    height: 200px;
+  }
+
   .hero-subtitle {
     font-size: 16px;
+  }
+
+  .hero-metrics {
+    gap: 8px;
+  }
+
+  .metric {
+    min-width: 90px;
+    padding: 8px 10px;
   }
 
   .content {

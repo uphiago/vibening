@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Background, Controls, MiniMap, ReactFlow } from '@xyflow/react'
 import type { Edge, Node } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
@@ -904,6 +904,26 @@ function App() {
   const [activeArch, setActiveArch] = useState(MULTI_AGENT_ARCHS[0])
   const [activeAgentPattern, setActiveAgentPattern] = useState(MULTI_AGENT_PATTERNS[0])
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set())
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [mermaidReady, setMermaidReady] = useState(false)
+
+  // Refs para scroll-to-detail em mobile
+  const sddDetailRef = useRef<HTMLDivElement>(null)
+  const deepDiveDetailRef = useRef<HTMLDivElement>(null)
+  const layerDetailRef = useRef<HTMLDivElement>(null)
+  const execFlowDetailRef = useRef<HTMLDivElement>(null)
+  const workflowDetailRef = useRef<HTMLDivElement>(null)
+  const maArchDetailRef = useRef<HTMLDivElement>(null)
+  const maPatternDetailRef = useRef<HTMLDivElement>(null)
+  const antiPatternDetailRef = useRef<HTMLDivElement>(null)
+
+  const scrollToDetail = (ref: React.RefObject<HTMLDivElement | null>) => {
+    if (window.innerWidth <= 980) {
+      setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 60)
+    }
+  }
 
   const navItems = useMemo(
     () => [
@@ -996,8 +1016,9 @@ function App() {
         const nodes = Array.from(document.querySelectorAll<HTMLElement>('.mermaid'))
         nodes.forEach((node) => node.removeAttribute('data-processed'))
         await mermaid.run({ nodes })
+        if (active) setMermaidReady(true)
       } catch {
-        // keep UI stable if mermaid fails
+        if (active) setMermaidReady(true) // show content even on error
       }
     }
     void renderDiagrams()
@@ -1025,7 +1046,41 @@ function App() {
 
       <nav className="top-nav" aria-label="Navegação principal">
         <a href="#hero" className="brand">vibening</a>
+        <button
+          type="button"
+          className="mobile-nav-btn"
+          aria-label="Abrir navegação"
+          aria-expanded={mobileNavOpen}
+          onClick={() => setMobileNavOpen(true)}
+        >
+          <span /><span /><span />
+        </button>
       </nav>
+
+      {mobileNavOpen && (
+        <div className="mobile-nav-overlay" role="dialog" aria-label="Navegação por seção">
+          <div className="mobile-nav-backdrop" onClick={() => setMobileNavOpen(false)} />
+          <nav className="mobile-nav-sheet">
+            <div className="mobile-nav-header">
+              <span className="brand">vibening</span>
+              <button type="button" className="mobile-nav-close" aria-label="Fechar" onClick={() => setMobileNavOpen(false)}>✕</button>
+            </div>
+            <ul className="mobile-nav-list">
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className={`mobile-nav-link${activeSection === item.id ? ' active' : ''}`}
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      )}
 
       <aside className="side-nav" aria-label="Navegação por seção">
         {navItems.map((item) => (
@@ -1185,13 +1240,14 @@ function App() {
                   key={field.id}
                   type="button"
                   className={`sdd-field-btn glass-card ${activeSddField.id === field.id ? 'active' : ''}`}
-                  onClick={() => setActiveSddField(field)}
+                  onClick={() => { setActiveSddField(field); scrollToDetail(sddDetailRef) }}
                 >
                   <span className="sdd-field-number">{field.number}</span>
                   <span className="sdd-field-name">{field.name}</span>
                 </button>
               ))}
             </div>
+            <div ref={sddDetailRef}>
             <article key={activeSddField.id} className="sdd-detail glass-card">
               <div className="sdd-detail-header">
                 <span className="detail-kicker">Campo {activeSddField.number} de {SDD_FIELDS.length}</span>
@@ -1213,6 +1269,7 @@ function App() {
                 <p>{activeSddField.antiPattern}</p>
               </div>
             </article>
+            </div>
           </div>
 
           <div className="sdd-quality glass-card">
@@ -1372,7 +1429,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={layer.id}
                   type="button"
                   className={`layer-row glass-card ${activeLayer.id === layer.id ? 'active' : ''}`}
-                  onClick={() => setActiveLayer(layer)}
+                  onClick={() => { setActiveLayer(layer); scrollToDetail(layerDetailRef) }}
                 >
                   <div className="layer-row-main">
                     <span className="layer-title">{layer.label}</span>
@@ -1384,13 +1441,15 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
-            <article key={activeLayer.id} className="layer-detail glass-card">
-              <span className="detail-kicker">Detail</span>
-              <h3>{activeLayer.label}</h3>
-              <ul>
-                {activeLayer.facts.map((fact) => <li key={fact}>{fact}</li>)}
-              </ul>
-            </article>
+            <div ref={layerDetailRef}>
+              <article key={activeLayer.id} className="layer-detail glass-card">
+                <span className="detail-kicker">Camada selecionada</span>
+                <h3>{activeLayer.label}</h3>
+                <ul>
+                  {activeLayer.facts.map((fact) => <li key={fact}>{fact}</li>)}
+                </ul>
+              </article>
+            </div>
           </div>
         </section>
 
@@ -1408,19 +1467,21 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={step.id}
                   type="button"
                   className={`flow-step glass-card ${activeStep.id === step.id ? 'active' : ''}`}
-                  onClick={() => setActiveStep(step)}
+                  onClick={() => { setActiveStep(step); scrollToDetail(execFlowDetailRef) }}
                 >
                   <span className="flow-step-label">{step.label}</span>
                   <span className="flow-step-summary">{step.summary}</span>
                 </button>
               ))}
             </div>
-            <article key={activeStep.id} className="flow-right glass-card">
-              <span className="detail-kicker">Fase atual</span>
-              <h3>{activeStep.label}</h3>
-              <p>{activeStep.detail}</p>
-              <div className="flow-payload">{activeStep.payload}</div>
-            </article>
+            <div ref={execFlowDetailRef}>
+              <article key={activeStep.id} className="flow-right glass-card">
+                <span className="detail-kicker">Fase atual</span>
+                <h3>{activeStep.label}</h3>
+                <p>{activeStep.detail}</p>
+                <div className="flow-payload">{activeStep.payload}</div>
+              </article>
+            </div>
           </div>
         </section>
 
@@ -1438,13 +1499,14 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={phase.id}
                   type="button"
                   className={`flow-step glass-card ${activePhase.id === phase.id ? 'active' : ''}`}
-                  onClick={() => setActivePhase(phase)}
+                  onClick={() => { setActivePhase(phase); scrollToDetail(workflowDetailRef) }}
                 >
                   <span className="flow-step-label">{phase.step} · {phase.title}</span>
                   <span className="flow-step-summary">{phase.objective}</span>
                 </button>
               ))}
             </div>
+            <div ref={workflowDetailRef}>
             <article key={activePhase.id} className="flow-right glass-card">
               <span className="detail-kicker">Fase selecionada</span>
               <h3>{activePhase.step} · {activePhase.title}</h3>
@@ -1460,6 +1522,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 <p>{activePhase.antiPattern}</p>
               </div>
             </article>
+            </div>
           </div>
         </section>
 
@@ -1504,7 +1567,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={arch.id}
                   type="button"
                   className={`deck-item glass-card ma-arch-item ${activeArch.id === arch.id ? 'active' : ''}`}
-                  onClick={() => setActiveArch(arch)}
+                  onClick={() => { setActiveArch(arch); scrollToDetail(maArchDetailRef) }}
                 >
                   <div className="ma-arch-item-header">
                     <span className="ma-arch-letter">{arch.letter}</span>
@@ -1517,6 +1580,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
+            <div ref={maArchDetailRef}>
             <article key={activeArch.id} className="deck-detail glass-card">
               <div className="ma-detail-top">
                 <span className="ma-arch-letter large">{activeArch.letter}</span>
@@ -1538,6 +1602,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 <p>{activeArch.tradeoff}</p>
               </div>
             </article>
+            </div>
           </div>
 
           <div className="ma-section-title">
@@ -1553,7 +1618,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={pattern.id}
                   type="button"
                   className={`deck-item glass-card ${activeAgentPattern.id === pattern.id ? 'active' : ''}`}
-                  onClick={() => setActiveAgentPattern(pattern)}
+                  onClick={() => { setActiveAgentPattern(pattern); scrollToDetail(maPatternDetailRef) }}
                 >
                   <div className="ap-item-header">
                     <span className="ma-arch-letter">{pattern.letter}</span>
@@ -1563,6 +1628,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
+            <div ref={maPatternDetailRef}>
             <article key={activeAgentPattern.id} className="deck-detail glass-card">
               <span className="detail-kicker">Padrão {activeAgentPattern.letter}</span>
               <h3>{activeAgentPattern.name}</h3>
@@ -1579,6 +1645,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 <p>{activeAgentPattern.tradeoff}</p>
               </div>
             </article>
+            </div>
           </div>
 
           <div className="ma-section-title">
@@ -1622,7 +1689,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={ap.id}
                   type="button"
                   className={`deck-item glass-card ap-item-${ap.severity} ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
-                  onClick={() => setActiveAntiPattern(ap)}
+                  onClick={() => { setActiveAntiPattern(ap); scrollToDetail(antiPatternDetailRef) }}
                 >
                   <div className="ap-item-header">
                     <span className={`ap-severity ap-severity-${ap.severity}`}>{severityLabel(ap.severity)}</span>
@@ -1632,6 +1699,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 </button>
               ))}
             </div>
+            <div ref={antiPatternDetailRef}>
             <article key={activeAntiPattern.id} className="deck-detail glass-card">
               <div className="ap-detail-header">
                 <span className={`ap-severity ap-severity-${activeAntiPattern.severity}`}>
@@ -1649,6 +1717,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 <p>{activeAntiPattern.fix}</p>
               </div>
             </article>
+            </div>
           </div>
         </section>
 
@@ -1663,12 +1732,13 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                   key={item.id}
                   type="button"
                   className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-                  onClick={() => setActiveDeepDive(item)}
+                  onClick={() => { setActiveDeepDive(item); scrollToDetail(deepDiveDetailRef) }}
                 >
                   <span className="deck-title">{item.title}</span>
                 </button>
               ))}
             </div>
+            <div ref={deepDiveDetailRef}>
             <article key={activeDeepDive.id} className="deck-detail glass-card">
               <h3>{activeDeepDive.title}</h3>
               <p className="deck-objective">{activeDeepDive.description}</p>
@@ -1685,6 +1755,7 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
                 ))}
               </div>
             </article>
+            </div>
           </div>
         </section>
 
@@ -1692,7 +1763,14 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
         <section id="mermaid-diagrams" className="reveal">
           <p className="section-label">Diagramas</p>
           <h2 className="section-title">Fluxos editáveis de governança e execução</h2>
-          <div className="diagram-grid">
+          {!mermaidReady && (
+            <div className="diagram-grid diagram-grid-skeleton">
+              <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
+              <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
+              <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
+            </div>
+          )}
+          <div className={`diagram-grid${mermaidReady ? '' : ' diagram-grid-hidden'}`}>
             <article className="glass-card diagram-card">
               <span className="detail-kicker">AI-driven Dev Workflow</span>
               <div className="diagram-wrap">
