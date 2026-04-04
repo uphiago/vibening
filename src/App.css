@@ -855,14 +855,51 @@ section::before {
   margin-top: 12px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(160deg, rgba(5, 12, 20, 0.95), rgba(7, 11, 17, 0.82));
-  padding: 10px;
+  background:
+    radial-gradient(circle at 12% 14%, rgba(124, 212, 255, 0.13), transparent 34%),
+    radial-gradient(circle at 88% 86%, rgba(86, 229, 194, 0.1), transparent 30%),
+    linear-gradient(160deg, rgba(5, 12, 20, 0.95), rgba(7, 11, 17, 0.82));
+  padding: 10px 10px 6px;
   overflow: auto;
   box-shadow: inset 0 0 0 1px rgba(124, 212, 255, 0.06);
 }
 
 .mermaid {
   min-width: 380px;
+}
+
+.diagram-wrap .mermaid svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+}
+
+.diagram-wrap .node rect,
+.diagram-wrap .node polygon,
+.diagram-wrap .node path {
+  fill: rgba(12, 22, 34, 0.9) !important;
+  stroke: rgba(102, 184, 230, 0.7) !important;
+  stroke-width: 1.2px !important;
+}
+
+.diagram-wrap .nodeLabel,
+.diagram-wrap .edgeLabel {
+  color: #dff1fc !important;
+  font-family: var(--mono-font) !important;
+}
+
+.diagram-wrap .edgeLabel rect {
+  fill: rgba(8, 16, 24, 0.95) !important;
+}
+
+.diagram-wrap .edgePath .path {
+  stroke: rgba(111, 194, 238, 0.92) !important;
+  stroke-width: 1.5px !important;
+}
+
+.diagram-wrap .arrowheadPath {
+  fill: rgba(111, 194, 238, 0.92) !important;
+  stroke: rgba(111, 194, 238, 0.92) !important;
 }
 
 .placeholder-grid {
@@ -2404,6 +2441,118 @@ button:focus-visible {
   gap: 3px;
 }
 
+/* ── XYFlow ───────────────────────────────────────────── */
+
+.xyflow-card {
+  margin-top: 22px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.xyflow-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(124, 212, 255, 0.14), transparent 34%),
+    radial-gradient(circle at 84% 86%, rgba(86, 229, 194, 0.11), transparent 30%);
+  pointer-events: none;
+}
+
+.xyflow-wrap {
+  position: relative;
+  height: clamp(360px, 52vh, 560px);
+  border-radius: 12px;
+  border: 1px solid rgba(124, 212, 255, 0.26);
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(7, 13, 21, 0.96), rgba(6, 10, 16, 0.96));
+  background-size: 26px 26px, 26px 26px, auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.xyflow-wrap .react-flow__renderer {
+  backdrop-filter: blur(2px);
+}
+
+.xyflow-wrap .react-flow__node {
+  border-radius: 10px;
+  border: 1px solid rgba(120, 192, 228, 0.64);
+  background: linear-gradient(160deg, rgba(16, 29, 45, 0.94), rgba(10, 20, 33, 0.95));
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.44), inset 0 0 0 1px rgba(124, 212, 255, 0.08);
+  color: #e5f3fb;
+  padding: 10px 12px;
+  min-width: 160px;
+  font-family: var(--mono-font);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.xyflow-wrap .react-flow__node.selected {
+  border-color: rgba(86, 229, 194, 0.8);
+  box-shadow: 0 0 0 1px rgba(86, 229, 194, 0.25), 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+.xyflow-wrap .react-flow__edge path {
+  stroke: rgba(122, 204, 246, 0.85);
+  stroke-width: 1.8px;
+  filter: drop-shadow(0 0 4px rgba(122, 204, 246, 0.24));
+}
+
+.xyflow-wrap .react-flow__edge-textbg {
+  fill: rgba(10, 18, 28, 0.92);
+}
+
+.xyflow-wrap .react-flow__edge-text {
+  fill: #cfeaff;
+  font-family: var(--mono-font);
+  font-size: 10px;
+}
+
+.xyflow-wrap .react-flow__handle {
+  width: 7px;
+  height: 7px;
+  background: #79cdf5;
+  border: 1px solid rgba(255, 255, 255, 0.52);
+}
+
+.xyflow-wrap .react-flow__controls {
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(124, 212, 255, 0.22);
+}
+
+.xyflow-wrap .react-flow__controls-button {
+  width: 30px;
+  height: 30px;
+  background: rgba(9, 18, 29, 0.92);
+  color: #d8eefe;
+  border-bottom: 1px solid rgba(124, 212, 255, 0.12);
+}
+
+.xyflow-wrap .react-flow__controls-button:hover {
+  background: rgba(17, 31, 46, 0.96);
+}
+
+.xyflow-wrap .react-flow__minimap {
+  background: rgba(7, 14, 22, 0.92);
+  border: 1px solid rgba(124, 212, 255, 0.22);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.xyflow-wrap .react-flow__attribution {
+  background: rgba(8, 16, 24, 0.76);
+  color: rgba(171, 217, 243, 0.72);
+  border-radius: 6px 0 0 0;
+}
+
 @media (max-width: 1100px) {
   .side-nav {
     display: none;
@@ -2496,6 +2645,15 @@ button:focus-visible {
   .matrix-row {
     grid-template-columns: 1fr;
   }
+
+  .xyflow-wrap {
+    height: 440px;
+  }
+
+  .xyflow-wrap .react-flow__node {
+    min-width: 140px;
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 700px) {
@@ -2519,6 +2677,20 @@ button:focus-visible {
 
   .mermaid {
     min-width: 320px;
+  }
+
+  .xyflow-card {
+    padding: 10px;
+  }
+
+  .xyflow-wrap {
+    height: 360px;
+    border-radius: 10px;
+  }
+
+  .xyflow-wrap .react-flow__controls-button {
+    width: 28px;
+    height: 28px;
   }
 
   section {

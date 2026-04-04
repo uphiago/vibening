@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
+import { Background, Controls, MiniMap, ReactFlow } from '@xyflow/react'
+import type { Edge, Node } from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
 import './App.css'
 
 /* ─── Types ─────────────────────────────────────────────── */
@@ -625,6 +628,26 @@ const STACK_TOOLS: StackTool[] = [
   { name: 'Automação stealth (evasão)', type: 'Risco', why: 'Fora do escopo: sem auditabilidade ou segurança', priority: 'C' },
 ]
 
+const XY_NODES: Node[] = [
+  { id: 'rules', position: { x: 40, y: 40 }, data: { label: 'Rules\n(AGENTS/CLAUDE)' }, type: 'input' },
+  { id: 'skills', position: { x: 300, y: 40 }, data: { label: 'Skills\n(SKILL.md + scripts)' } },
+  { id: 'mcp', position: { x: 560, y: 40 }, data: { label: 'MCP\n(tool access)' } },
+  { id: 'planner', position: { x: 180, y: 210 }, data: { label: 'Planner\n(Research/Plan)' } },
+  { id: 'executor', position: { x: 430, y: 210 }, data: { label: 'Executor\n(Implement)' } },
+  { id: 'verify', position: { x: 300, y: 380 }, data: { label: 'Verify\n(test/lint/review)' } },
+  { id: 'release', position: { x: 300, y: 540 }, data: { label: 'Release Gate' }, type: 'output' },
+]
+
+const XY_EDGES: Edge[] = [
+  { id: 'e1', source: 'rules', target: 'planner', animated: true },
+  { id: 'e2', source: 'skills', target: 'planner', animated: true },
+  { id: 'e3', source: 'mcp', target: 'executor', animated: true },
+  { id: 'e4', source: 'planner', target: 'executor' },
+  { id: 'e5', source: 'executor', target: 'verify', animated: true },
+  { id: 'e6', source: 'verify', target: 'planner', label: 'fix loop' },
+  { id: 'e7', source: 'verify', target: 'release', animated: true },
+]
+
 type SddField = {
   id: string
   number: string
@@ -899,6 +922,7 @@ function App() {
       { id: 'anti-patterns', label: 'Anti-patterns' },
       { id: 'mermaid-diagrams', label: 'Diagramas' },
       { id: 'ecosystem-map', label: 'Mapa' },
+      { id: 'xyflow-map', label: 'Graph' },
       { id: 'stack-curation', label: 'Stack' },
       { id: 'methods-core', label: 'Métodos' },
       { id: 'examples', label: 'Exemplos' },
@@ -954,13 +978,19 @@ function App() {
           securityLevel: 'loose',
           theme: 'base',
           themeVariables: {
-            primaryColor: '#0f1622',
-            primaryTextColor: '#d9edf9',
-            primaryBorderColor: '#2f4a64',
-            lineColor: '#6eaed5',
-            secondaryColor: '#0a1118',
-            tertiaryColor: '#070b10',
             background: '#070b10',
+            primaryColor: '#0f1a29',
+            primaryTextColor: '#e4f2fb',
+            primaryBorderColor: '#3e6c93',
+            secondaryColor: '#0a121d',
+            tertiaryColor: '#081018',
+            lineColor: '#6fc2ee',
+            clusterBkg: '#0c1522',
+            clusterBorder: '#325a7c',
+            mainBkg: '#0f1a29',
+            nodeBorder: '#3e6c93',
+            fontFamily: 'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
+            edgeLabelBackground: '#0c1726',
           },
         })
         const nodes = Array.from(document.querySelectorAll<HTMLElement>('.mermaid'))
@@ -1772,6 +1802,31 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de sche
               {activeMapView === 'ops' && 'Ops layer: ciclo de execução com gate de aprovação antes de todo release.'}
             </p>
           </div>
+        </section>
+
+        <section id="xyflow-map" className="reveal">
+          <p className="section-label">Interactive Graph</p>
+          <h2 className="section-title">Arquitetura agêntica navegável com XYFlow</h2>
+          <p className="section-description">
+            Visual interativo para explorar dependências entre regras, skills, MCP e gates de validação.
+          </p>
+          <article className="glass-card xyflow-card">
+            <div className="xyflow-wrap">
+              <ReactFlow
+                nodes={XY_NODES}
+                edges={XY_EDGES}
+                fitView
+                fitViewOptions={{ padding: 0.16 }}
+                minZoom={0.5}
+                maxZoom={1.8}
+                defaultEdgeOptions={{ style: { stroke: '#66b8e6', strokeWidth: 1.6 } }}
+              >
+                <MiniMap pannable zoomable />
+                <Controls />
+                <Background gap={22} size={1} color="rgba(130,180,210,0.22)" />
+              </ReactFlow>
+            </div>
+          </article>
         </section>
 
         {/* ── Stack Curation ───────────────────────────── */}
