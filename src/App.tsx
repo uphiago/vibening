@@ -116,7 +116,7 @@ function App() {
     setChecklistAnimated(false)
   }, [lang])
 
-  /* ── Refs for mobile scroll-to-detail ─────────────────── */
+  /* ── Refs for detail panels ───────────────────────────── */
   const sddDetailRef        = useRef<HTMLDivElement>(null)
   const deepDiveDetailRef   = useRef<HTMLDivElement>(null)
   const layerDetailRef      = useRef<HTMLDivElement>(null)
@@ -126,11 +126,25 @@ function App() {
   const maPatternDetailRef  = useRef<HTMLDivElement>(null)
   const antiPatternDetailRef = useRef<HTMLDivElement>(null)
 
-  const scrollToDetail = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
+  // Scrolls into view on mobile AND moves keyboard focus to the detail panel
+  const activateDetail = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
     if (window.innerWidth <= 980) {
       setTimeout(() => { ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }, 60)
     }
+    setTimeout(() => { ref.current?.focus({ preventScroll: true }) }, 80)
   }, [])
+
+  /* ── Document title + html lang ───────────────────────── */
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
+  useEffect(() => {
+    const item = t.navItems.find((i) => i.id === activeSection)
+    document.title = item && activeSection !== 'hero'
+      ? `${item.label} — vibening`
+      : 'vibening · Agentic Engineering Guide'
+  }, [activeSection, t.navItems])
 
   /* ── Intersection observers ────────────────────────────── */
   const navItems = useMemo(() => t.navItems, [t])
@@ -747,14 +761,14 @@ prompt: |
                   key={field.id}
                   type="button"
                   className={`sdd-field-btn glass-card ${activeSddField.id === field.id ? 'active' : ''}`}
-                  onClick={() => { setActiveSddField(field); scrollToDetail(sddDetailRef) }}
+                  onClick={() => { setActiveSddField(field); activateDetail(sddDetailRef) }}
                 >
                   <span className="sdd-field-number">{field.number}</span>
                   <span className="sdd-field-name">{field.name}</span>
                 </button>
               ))}
             </div>
-            <div ref={sddDetailRef}>
+            <div ref={sddDetailRef} tabIndex={-1}>
               <article key={activeSddField.id} className="sdd-detail glass-card">
                 <div className="sdd-detail-header">
                   <span className="detail-kicker">{t.sdd.fieldKicker(activeSddField.number, SDD_FIELDS.length)}</span>
@@ -890,7 +904,7 @@ prompt: |
                   key={layer.id}
                   type="button"
                   className={`layer-row glass-card ${activeLayer.id === layer.id ? 'active' : ''}`}
-                  onClick={() => { setActiveLayer(layer); scrollToDetail(layerDetailRef) }}
+                  onClick={() => { setActiveLayer(layer); activateDetail(layerDetailRef) }}
                 >
                   <div className="layer-row-main">
                     <span className="layer-title">{layer.label}</span>
@@ -902,7 +916,7 @@ prompt: |
                 </button>
               ))}
             </div>
-            <div ref={layerDetailRef}>
+            <div ref={layerDetailRef} tabIndex={-1}>
               <article key={activeLayer.id} className="layer-detail glass-card">
                 <span className="detail-kicker">{t.layerModel.kicker}</span>
                 <h3>{activeLayer.label}</h3>
@@ -924,14 +938,14 @@ prompt: |
                   key={step.id}
                   type="button"
                   className={`flow-step glass-card ${activeStep.id === step.id ? 'active' : ''}`}
-                  onClick={() => { setActiveStep(step); scrollToDetail(execFlowDetailRef) }}
+                  onClick={() => { setActiveStep(step); activateDetail(execFlowDetailRef) }}
                 >
                   <span className="flow-step-label">{step.label}</span>
                   <span className="flow-step-summary">{step.summary}</span>
                 </button>
               ))}
             </div>
-            <div ref={execFlowDetailRef}>
+            <div ref={execFlowDetailRef} tabIndex={-1}>
               <article key={activeStep.id} className="flow-right glass-card">
                 <span className="detail-kicker">{t.executionFlow.kicker}</span>
                 <h3>{activeStep.label}</h3>
@@ -954,14 +968,14 @@ prompt: |
                   key={phase.id}
                   type="button"
                   className={`flow-step glass-card ${activePhase.id === phase.id ? 'active' : ''}`}
-                  onClick={() => { setActivePhase(phase); scrollToDetail(workflowDetailRef) }}
+                  onClick={() => { setActivePhase(phase); activateDetail(workflowDetailRef) }}
                 >
                   <span className="flow-step-label">{phase.step} · {phase.title}</span>
                   <span className="flow-step-summary">{phase.objective}</span>
                 </button>
               ))}
             </div>
-            <div ref={workflowDetailRef}>
+            <div ref={workflowDetailRef} tabIndex={-1}>
               <article key={activePhase.id} className="flow-right glass-card">
                 <span className="detail-kicker">{t.workflowGate.kicker}</span>
                 <h3>{activePhase.step} · {activePhase.title}</h3>
@@ -1018,7 +1032,7 @@ prompt: |
                   key={arch.id}
                   type="button"
                   className={`deck-item glass-card ma-arch-item ${activeArch.id === arch.id ? 'active' : ''}`}
-                  onClick={() => { setActiveArch(arch); scrollToDetail(maArchDetailRef) }}
+                  onClick={() => { setActiveArch(arch); activateDetail(maArchDetailRef) }}
                 >
                   <div className="ma-arch-item-header">
                     <span className="ma-arch-letter">{arch.letter}</span>
@@ -1031,7 +1045,7 @@ prompt: |
                 </button>
               ))}
             </div>
-            <div ref={maArchDetailRef}>
+            <div ref={maArchDetailRef} tabIndex={-1}>
               <article key={activeArch.id} className="deck-detail glass-card">
                 <div className="ma-detail-top">
                   <span className="ma-arch-letter large">{activeArch.letter}</span>
@@ -1067,7 +1081,7 @@ prompt: |
                   key={pattern.id}
                   type="button"
                   className={`deck-item glass-card ${activeAgentPattern.id === pattern.id ? 'active' : ''}`}
-                  onClick={() => { setActiveAgentPattern(pattern); scrollToDetail(maPatternDetailRef) }}
+                  onClick={() => { setActiveAgentPattern(pattern); activateDetail(maPatternDetailRef) }}
                 >
                   <div className="ap-item-header">
                     <span className="ma-arch-letter">{pattern.letter}</span>
@@ -1077,7 +1091,7 @@ prompt: |
                 </button>
               ))}
             </div>
-            <div ref={maPatternDetailRef}>
+            <div ref={maPatternDetailRef} tabIndex={-1}>
               <article key={activeAgentPattern.id} className="deck-detail glass-card">
                 <span className="detail-kicker">{t.multiAgent.patternKicker(activeAgentPattern.letter)}</span>
                 <h3>{activeAgentPattern.name}</h3>
@@ -1132,7 +1146,7 @@ prompt: |
                   key={ap.id}
                   type="button"
                   className={`deck-item glass-card ap-item-${ap.severity} ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
-                  onClick={() => { setActiveAntiPattern(ap); scrollToDetail(antiPatternDetailRef) }}
+                  onClick={() => { setActiveAntiPattern(ap); activateDetail(antiPatternDetailRef) }}
                 >
                   <div className="ap-item-header">
                     <span className={`ap-severity ap-severity-${ap.severity}`}>{severityLabel(ap.severity)}</span>
@@ -1142,7 +1156,7 @@ prompt: |
                 </button>
               ))}
             </div>
-            <div ref={antiPatternDetailRef}>
+            <div ref={antiPatternDetailRef} tabIndex={-1}>
               <article key={activeAntiPattern.id} className="deck-detail glass-card">
                 <div className="ap-detail-header">
                   <span className={`ap-severity ap-severity-${activeAntiPattern.severity}`}>
@@ -1176,13 +1190,13 @@ prompt: |
                   key={item.id}
                   type="button"
                   className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-                  onClick={() => { setActiveDeepDive(item); scrollToDetail(deepDiveDetailRef) }}
+                  onClick={() => { setActiveDeepDive(item); activateDetail(deepDiveDetailRef) }}
                 >
                   <span className="deck-title">{item.title}</span>
                 </button>
               ))}
             </div>
-            <div ref={deepDiveDetailRef}>
+            <div ref={deepDiveDetailRef} tabIndex={-1}>
               <article key={activeDeepDive.id} className="deck-detail glass-card">
                 <h3>{activeDeepDive.title}</h3>
                 <p className="deck-objective">{activeDeepDive.description}</p>
