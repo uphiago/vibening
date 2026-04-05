@@ -194,6 +194,10 @@ export const translations = {
       sectionLabel: 'Diagramas',
       title: 'Fluxos de governança e execução',
       description: 'Representações visuais dos ciclos de desenvolvimento assistido por IA: do planejamento ao release, passando por validação e controle de loops.',
+      diagramWorkflow: 'Fluxo de dev assistido por IA',
+      diagramRules: 'Rules + Skills + MCP',
+      diagramProgressive: 'Progressive Disclosure',
+      diagramEvaluator: 'Padrão Evaluator-Optimizer',
     },
     ecosystemMap: {
       sectionLabel: 'Ecosystem',
@@ -443,6 +447,10 @@ export const translations = {
       sectionLabel: 'Diagrams',
       title: 'Governance and execution flows',
       description: 'Visual representations of AI-assisted development cycles: from planning to release, through validation and loop control.',
+      diagramWorkflow: 'AI-driven Dev Workflow',
+      diagramRules: 'Rules + Skills + MCP',
+      diagramProgressive: 'Progressive Disclosure',
+      diagramEvaluator: 'Evaluator-Optimizer Pattern',
     },
     ecosystemMap: {
       sectionLabel: 'Ecosystem',

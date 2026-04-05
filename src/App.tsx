@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 import { useLang } from './LanguageContext'
@@ -78,7 +78,7 @@ function App() {
   const FLOW           = FLOW_DATA[lang]
   const METHODS        = METHODS_DATA[lang]
   const QUALITY_ROWS   = QUALITY_ROWS_DATA[lang]
-  const REVIEW_CHECKLIST = useMemo(() => REVIEW_CHECKLIST_DATA[lang], [lang])
+  const REVIEW_CHECKLIST = REVIEW_CHECKLIST_DATA[lang]
   const DEEP_DIVES     = DEEP_DIVES_DATA[lang]
   const WORKFLOW_PHASES = WORKFLOW_PHASES_DATA[lang]
   const STACK_TOOLS    = STACK_TOOLS_DATA[lang]
@@ -152,7 +152,7 @@ function App() {
   }, [activeSection, t.navItems])
 
   /* ── Intersection observers ────────────────────────────── */
-  const navItems = useMemo(() => t.navItems, [t])
+  const navItems = t.navItems
 
   useEffect(() => {
     const sections = document.querySelectorAll('.reveal')
@@ -1240,7 +1240,7 @@ prompt: |
           )}
           <div className={`diagram-stack${mermaidReady ? '' : ' diagram-grid-hidden'}`}>
             <article className="glass-card diagram-card">
-              <span className="detail-kicker">AI-driven Dev Workflow</span>
+              <span className="detail-kicker">{t.mermaidDiagrams.diagramWorkflow}</span>
               <div className="diagram-wrap">
                 <pre className="mermaid">{`flowchart LR
   A[Plan] --> B[Branch/Worktree]
@@ -1257,7 +1257,7 @@ prompt: |
               </div>
             </article>
             <article className="glass-card diagram-card">
-              <span className="detail-kicker">Rules + Skills + MCP</span>
+              <span className="detail-kicker">{t.mermaidDiagrams.diagramRules}</span>
               <div className="diagram-wrap">
                 <pre className="mermaid">{`graph TD
   A[Project Rules] --> D[Agent Runtime]
@@ -1271,7 +1271,7 @@ prompt: |
               </div>
             </article>
             <article className="glass-card diagram-card">
-              <span className="detail-kicker">Progressive Disclosure</span>
+              <span className="detail-kicker">{t.mermaidDiagrams.diagramProgressive}</span>
               <div className="diagram-wrap">
                 <pre className="mermaid">{`flowchart TD
   T[Task] --> L1[Layer 1: Discovery ~100 tokens]
@@ -1287,7 +1287,7 @@ prompt: |
               </div>
             </article>
             <article className="glass-card diagram-card">
-              <span className="detail-kicker">Evaluator-Optimizer Pattern</span>
+              <span className="detail-kicker">{t.mermaidDiagrams.diagramEvaluator}</span>
               <div className="diagram-wrap">
                 <pre className="mermaid">{`flowchart LR
   G[Generator] --> S[Solution]
