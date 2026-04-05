@@ -240,6 +240,7 @@ export const translations = {
       ],
       ex5Title: 'CLAUDE.md / AGENTS.md estrutura',
       ex6Title: 'Hook de pre-commit',
+      ex7Title: 'Multi-agent: handoff via arquivo',
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
@@ -482,6 +483,7 @@ export const translations = {
       ],
       ex5Title: 'CLAUDE.md / AGENTS.md structure',
       ex6Title: 'Pre-commit hook',
+      ex7Title: 'Multi-agent: handoff via file',
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
@@ -633,6 +635,9 @@ export const CONTEXT_SIGNALS_DATA: Record<string, ContextSignal[]> = {
     { signal: 'Prompt ultrapassa ~10k tokens', meaning: 'Volume alto; efeito "Lost in the Middle" possível', action: 'Reduzir escopo, aplicar Progressive Disclosure', type: 'warning' },
     { signal: 'IA confirma mas não executa corretamente', meaning: 'Instrução ambígua ou critério de aceite ausente', action: 'Definir critério de aceite antes de pedir execução', type: 'warning' },
     { signal: 'Tempo de resposta alto + domain error', meaning: 'Carga inicial pesada demais para o contexto', action: 'Aplicar camada de Discovery antes de carregar tudo', type: 'warning' },
+    { signal: 'IA alucina API ou método inexistente', meaning: 'Janela de contexto sem tipos, docs ou snippet real do projeto', action: 'Incluir interface TypeScript, assinatura real ou exemplo de uso como referência', type: 'error' },
+    { signal: 'Respostas longas contradizem mensagens anteriores', meaning: 'Histórico extenso; início da sessão já saiu da janela ativa', action: 'Resetar e abrir novo chat com resumo compacto: objetivo + estado + regras', type: 'error' },
+    { signal: 'IA ignora constraint declarado no início', meaning: 'Constraint perdido por volume de contexto intermediário', action: 'Repetir restrições críticas no prompt atual ou encurtar o histórico', type: 'warning' },
   ],
   'en': [
     { signal: 'Response degrades with each follow-up', meaning: 'Context is polluted with accumulated noise', action: 'Start a new session with clean, specific context', type: 'error' },
@@ -641,6 +646,9 @@ export const CONTEXT_SIGNALS_DATA: Record<string, ContextSignal[]> = {
     { signal: 'Prompt exceeds ~10k tokens', meaning: 'High volume; "Lost in the Middle" effect likely', action: 'Reduce scope, apply Progressive Disclosure', type: 'warning' },
     { signal: 'AI confirms but does not execute correctly', meaning: 'Ambiguous instruction or missing acceptance criteria', action: 'Define acceptance criteria before requesting execution', type: 'warning' },
     { signal: 'High response time + domain error', meaning: 'Initial load too heavy for the context window', action: 'Apply Discovery layer before loading everything', type: 'warning' },
+    { signal: 'AI hallucinates non-existent API or method', meaning: 'Context window lacks project types, docs, or real snippets', action: 'Include TypeScript interface, real function signature, or usage example as reference', type: 'error' },
+    { signal: 'Long responses contradict earlier messages', meaning: 'Session history too long; start of session already outside active window', action: 'Reset and open new chat with compact summary: objective + state + rules', type: 'error' },
+    { signal: 'AI ignores constraint declared at session start', meaning: 'Constraint buried by intermediate context volume', action: 'Repeat critical constraints in the current prompt or shorten the history', type: 'warning' },
   ],
 }
 
@@ -652,6 +660,8 @@ export const ANTI_PATTERNS_DATA: Record<string, AntiPattern[]> = {
     { id: 'ap4', category: 'Contexto', problem: 'Continuar sessão com contexto poluído', consequence: 'Qualidade degrada progressivamente: IA erra domínio e repete erros.', fix: 'Resetar contexto ao detectar degradação. Novo chat com contexto limpo.', severity: 'high' },
     { id: 'ap5', category: 'Validação', problem: 'Confiar em único reviewer automático', consequence: 'Falso senso de segurança; gaps ficam ocultos até produção.', fix: 'CI verde + revisão técnica humana = condição mínima de conclusão.', severity: 'high' },
     { id: 'ap6', category: 'Autonomia', problem: 'Delegar ação irreversível sem gate de confirmação', consequence: 'Dados apagados, deploys não planejados, dano difícil de reverter.', fix: 'Toda ação crítica (push, rm, migrations) exige confirmação humana explícita.', severity: 'critical' },
+    { id: 'ap7', category: 'Escopo', problem: 'Não declarar o campo "não entra" no prompt de implementação', consequence: 'IA preenche lacunas com suposições; entrega excede o escopo combinado.', fix: 'Todo prompt de implementação deve incluir o que está explicitamente fora do escopo.', severity: 'high' },
+    { id: 'ap8', category: 'Decisão', problem: 'Usar saída da IA como justificativa de decisão arquitetural', consequence: '"A IA sugeriu" não é evidência. Decisões sem contexto real geram dívida técnica.', fix: 'IA dá opções; engenheiro decide com base em evidências, constraints reais e histórico do projeto.', severity: 'high' },
   ],
   'en': [
     { id: 'ap1', category: 'Planning', problem: 'Starting directly in code without a technical contract', consequence: 'Implementation diverges from the real objective; high rework at the end.', fix: 'Declare scope, acceptance criteria, and risks before any execution.', severity: 'critical' },
@@ -660,6 +670,8 @@ export const ANTI_PATTERNS_DATA: Record<string, AntiPattern[]> = {
     { id: 'ap4', category: 'Context', problem: 'Continuing a session with polluted context', consequence: 'Quality degrades progressively: AI misses domain and repeats errors.', fix: 'Reset context when degradation is detected. New chat with clean context.', severity: 'high' },
     { id: 'ap5', category: 'Validation', problem: 'Trusting a single automated reviewer', consequence: 'False sense of security; gaps stay hidden until production.', fix: 'CI green + human technical review = minimum completion condition.', severity: 'high' },
     { id: 'ap6', category: 'Autonomy', problem: 'Delegating an irreversible action without a confirmation gate', consequence: 'Deleted data, unplanned deploys, damage hard to reverse.', fix: 'Every critical action (push, rm, migrations) requires explicit human confirmation.', severity: 'critical' },
+    { id: 'ap7', category: 'Scope', problem: 'Not declaring the "out of scope" field in the implementation prompt', consequence: 'AI fills gaps with assumptions; delivery exceeds the agreed scope.', fix: 'Every implementation prompt must include what is explicitly out of scope.', severity: 'high' },
+    { id: 'ap8', category: 'Decision', problem: 'Using AI output as justification for architectural decisions', consequence: '"The AI suggested it" is not evidence. Decisions without real context create technical debt.', fix: 'AI provides options; engineer decides based on evidence, real constraints, and project history.', severity: 'high' },
   ],
 }
 

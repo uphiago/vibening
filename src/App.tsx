@@ -96,6 +96,8 @@ function App() {
   const [activeArch, setActiveArch]             = useState(MULTI_AGENT_ARCHS[0])
   const [activeAgentPattern, setActiveAgentPattern] = useState(MULTI_AGENT_PATTERNS[0])
   const [checkedItems, setCheckedItems]         = useState<Set<number>>(new Set())
+  const [checklistAnimated, setChecklistAnimated] = useState(false)
+  const checklistSectionRef = useRef<HTMLElement | null>(null)
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
   const [mermaidReady, setMermaidReady]         = useState(false)
 
@@ -148,6 +150,14 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const hash = window.location.hash.slice(1)
+    if (hash) {
+      const el = document.getElementById(hash)
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80)
+    }
+  }, [])
+
+  useEffect(() => {
     const watched = navItems
       .map((item) => document.getElementById(item.id))
       .filter(Boolean) as HTMLElement[]
@@ -156,7 +166,10 @@ function App() {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]?.target?.id) setActiveSection(visible[0].target.id)
+        if (visible[0]?.target?.id) {
+          setActiveSection(visible[0].target.id)
+          history.replaceState(null, '', `#${visible[0].target.id}`)
+        }
       },
       { rootMargin: '-20% 0px -60% 0px', threshold: [0.3, 0.6, 1] },
     )
@@ -203,14 +216,27 @@ function App() {
     return () => { active = false }
   }, [])
 
+  /* ── Auto-checklist ───────────────────────────────────── */
+  useEffect(() => {
+    if (checklistAnimated) return
+    const el = checklistSectionRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        obs.disconnect()
+        setChecklistAnimated(true)
+        REVIEW_CHECKLIST.forEach((_, i) => {
+          setTimeout(() => setCheckedItems((prev) => new Set([...prev, i])), i * 140 + 300)
+        })
+      },
+      { threshold: 0.15 },
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [checklistAnimated, REVIEW_CHECKLIST])
+
   /* ── Helpers ───────────────────────────────────────────── */
-  const toggleCheck = (i: number) => {
-    setCheckedItems((prev) => {
-      const next = new Set(prev)
-      if (next.has(i)) { next.delete(i) } else { next.add(i) }
-      return next
-    })
-  }
 
   const severityLabel = (s: 'critical' | 'high' | 'medium') => {
     if (s === 'critical') return t.antiPatterns.severityCritical
@@ -498,6 +524,66 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "✓ All gates passed."`
+
+  const SUBAGENT_EXAMPLE = lang === 'pt-BR'
+    ? `# Padrão: handoff entre subagentes via arquivo
+# Cada agente lê entrada e escreve saída em /tmp/
+
+## Orquestrador
+prompt: |
+  Leia /tmp/task.md.
+  Execute os agentes em sequência: researcher → implementer → reviewer.
+  Se reviewer retornar exit 1, reenvie para implementer com /tmp/review.md.
+
+## Agente: researcher
+prompt: |
+  Leia /tmp/task.md. Mapeie arquivos relevantes, APIs e restrições.
+  Escreva descobertas em /tmp/research.md.
+  Documente apenas o que for confirmado, não assuma.
+
+## Agente: implementer
+depends_on: researcher
+prompt: |
+  Leia /tmp/research.md e /tmp/task.md.
+  Implemente as mudanças. Não exceda o escopo em task.md.
+  Após cada arquivo alterado, adicione uma linha em /tmp/changes.md.
+
+## Agente: reviewer
+depends_on: implementer
+prompt: |
+  Leia /tmp/changes.md.
+  Execute: npm run lint && npm run test
+  Se falhar: escreva detalhes em /tmp/review.md e exit 1.
+  Se passar: escreva "approved" em /tmp/review.md e exit 0.`
+    : `# Pattern: subagent handoff via file
+# Each agent reads input and writes output to /tmp/
+
+## Orchestrator
+prompt: |
+  Read /tmp/task.md.
+  Run agents in sequence: researcher → implementer → reviewer.
+  If reviewer returns exit 1, re-send to implementer with /tmp/review.md.
+
+## Agent: researcher
+prompt: |
+  Read /tmp/task.md. Map relevant files, APIs, and constraints.
+  Write findings to /tmp/research.md.
+  Document only what is confirmed, do not assume.
+
+## Agent: implementer
+depends_on: researcher
+prompt: |
+  Read /tmp/research.md and /tmp/task.md.
+  Implement the changes. Do not exceed the scope in task.md.
+  After each file change, append a one-line summary to /tmp/changes.md.
+
+## Agent: reviewer
+depends_on: implementer
+prompt: |
+  Read /tmp/changes.md.
+  Run: npm run lint && npm run test
+  If any check fails: write details to /tmp/review.md and exit 1.
+  If all pass: write "approved" to /tmp/review.md and exit 0.`
 
   return (
     <div className="app">
@@ -1302,11 +1388,18 @@ echo "✓ All gates passed."`
                 <pre><code>{PRECOMMIT_EXAMPLE}</code></pre>
               </div>
             </article>
+            <article className="glass-card example-card">
+              <h3>{t.examples.ex7Title}</h3>
+              <div className="code-block-wrap">
+                <CopyButton text={SUBAGENT_EXAMPLE} />
+                <pre><code>{SUBAGENT_EXAMPLE}</code></pre>
+              </div>
+            </article>
           </div>
         </section>
 
         {/* ── Review Checklist ─────────────────────────── */}
-        <section id="review-checklist" className="reveal">
+        <section id="review-checklist" className="reveal" ref={checklistSectionRef}>
           <p className="section-label">{t.reviewChecklist.sectionLabel}</p>
           <h2 className="section-title">{t.reviewChecklist.title}</h2>
           <p className="section-description">{t.reviewChecklist.description}</p>
@@ -1321,18 +1414,16 @@ echo "✓ All gates passed."`
               </div>
             </div>
             {REVIEW_CHECKLIST.map((item, i) => (
-              <button
+              <div
                 key={`${lang}-${i}`}
-                type="button"
                 className={`checklist-item ${checkedItems.has(i) ? 'checked' : ''}`}
-                onClick={() => toggleCheck(i)}
               >
                 <span className="checklist-check" aria-hidden="true">
                   {checkedItems.has(i) ? '✓' : '○'}
                 </span>
                 <span className="checklist-text">{item.item}</span>
                 <span className="checklist-cat">{item.category}</span>
-              </button>
+              </div>
             ))}
             {checkedItems.size === REVIEW_CHECKLIST.length && (
               <div className="checklist-done">

@@ -2204,14 +2204,8 @@ button:focus-visible {
   border: 1px solid transparent;
   background: transparent;
   color: inherit;
-  cursor: pointer;
-  transition: background 0.18s ease, border-color 0.18s ease;
+  transition: background 0.28s ease, border-color 0.28s ease;
   font-size: 13px;
-}
-
-.checklist-item:hover {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .checklist-item.checked {
