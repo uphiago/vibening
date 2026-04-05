@@ -4,63 +4,30 @@ import './App.css'
 import { useLang } from './LanguageContext'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
+import { CopyButton } from './components/CopyButton'
+import { References } from './sections/References'
+import { QualityMatrix } from './sections/QualityMatrix'
+import { Methods } from './sections/Methods'
+import { StackCuration } from './sections/StackCuration'
+import { Principles } from './sections/Principles'
+import { ContextSignals } from './sections/ContextSignals'
+import { ProgressiveDisclosure } from './sections/ProgressiveDisclosure'
 
 import {
   ANTI_PATTERNS_DATA,
   COMM_PATTERNS_DATA,
   COMPARISONS_DATA,
-  CONTEXT_SIGNALS_DATA,
   DEEP_DIVES_DATA,
   FLOW_DATA,
   LAYERS_DATA,
   LESSONS_DATA,
-  METHODS_DATA,
   MULTI_AGENT_ARCHS_DATA,
   MULTI_AGENT_PATTERNS_DATA,
-  PD_LAYERS_DATA,
-  PRINCIPLES_DATA,
-  QUALITY_ROWS_DATA,
   REVIEW_CHECKLIST_DATA,
   SDD_FIELDS_DATA,
   SDD_SPEC_ROWS_DATA,
-  STACK_TOOLS_DATA,
   WORKFLOW_PHASES_DATA,
 } from './i18n'
-
-/* ─── Copy button hook ───────────────────────────────────── */
-
-function useCopy(text: string) {
-  const [copied, setCopied] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const copy = useCallback(() => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true)
-      if (timerRef.current) clearTimeout(timerRef.current)
-      timerRef.current = setTimeout(() => setCopied(false), 1800)
-    }).catch(() => { /* clipboard unavailable or permission denied */ })
-  }, [text])
-  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
-  return { copied, copy }
-}
-
-function CopyButton({ text }: { text: string }) {
-  const { copied, copy } = useCopy(text)
-  const { t } = useLang()
-  return (
-    <button type="button" className={`copy-btn${copied ? ' copied' : ''}`} onClick={copy} aria-label={t.footer.copyCode}>
-      {copied ? (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <polyline points="20 6 9 17 4 12" />
-        </svg>
-      ) : (
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-        </svg>
-      )}
-    </button>
-  )
-}
 
 /* ─── App ────────────────────────────────────────────────── */
 
@@ -70,18 +37,12 @@ function App() {
   /* ── Data (lang-switched) ──────────────────────────────── */
   const LESSONS        = LESSONS_DATA[lang]
   const COMPARISONS    = COMPARISONS_DATA[lang]
-  const CONTEXT_SIGNALS = CONTEXT_SIGNALS_DATA[lang]
   const ANTI_PATTERNS  = ANTI_PATTERNS_DATA[lang]
-  const PRINCIPLES     = PRINCIPLES_DATA[lang]
-  const PD_LAYERS      = PD_LAYERS_DATA[lang]
   const LAYERS         = LAYERS_DATA[lang]
   const FLOW           = FLOW_DATA[lang]
-  const METHODS        = METHODS_DATA[lang]
-  const QUALITY_ROWS   = QUALITY_ROWS_DATA[lang]
   const REVIEW_CHECKLIST = REVIEW_CHECKLIST_DATA[lang]
   const DEEP_DIVES     = DEEP_DIVES_DATA[lang]
   const WORKFLOW_PHASES = WORKFLOW_PHASES_DATA[lang]
-  const STACK_TOOLS    = STACK_TOOLS_DATA[lang]
   const SDD_FIELDS     = SDD_FIELDS_DATA[lang]
   const SDD_SPEC_ROWS  = SDD_SPEC_ROWS_DATA[lang]
   const MULTI_AGENT_ARCHS    = MULTI_AGENT_ARCHS_DATA[lang]
@@ -735,21 +696,7 @@ prompt: |
         </section>
 
         {/* ── Principles ───────────────────────────────── */}
-        <section id="principles" className="reveal">
-          <p className="section-label">{t.principles.sectionLabel}</p>
-          <h2 className="section-title">{t.principles.title}</h2>
-          <p className="section-description">{t.principles.description}</p>
-          <div className="principles-grid">
-            {PRINCIPLES.map((item) => (
-              <article key={item.id} className="glass-card principle-card">
-                <span className="principle-icon">{item.icon}</span>
-                <h3>{item.title}</h3>
-                <p>{item.subtitle}</p>
-                <small>{item.signal}</small>
-              </article>
-            ))}
-          </div>
-        </section>
+        <Principles />
 
         {/* ── SDD ──────────────────────────────────────── */}
         <section id="sdd" className="reveal">
@@ -856,62 +803,10 @@ prompt: |
         </section>
 
         {/* ── Context Signals ───────────────────────────── */}
-        <section id="context-signals" className="reveal">
-          <p className="section-label">{t.contextSignals.sectionLabel}</p>
-          <h2 className="section-title">{t.contextSignals.title}</h2>
-          <p className="section-description">{t.contextSignals.description}</p>
-          <div className="signals-grid">
-            {CONTEXT_SIGNALS.map((signal) => (
-              <article key={signal.signal} className={`glass-card signal-card signal-${signal.type}`}>
-                <div className="signal-header">
-                  <svg className="signal-type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    {signal.type === 'error'
-                      ? <><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></>
-                      : <><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>
-                    }
-                  </svg>
-                  <span className={`signal-badge signal-${signal.type}`}>
-                    {signal.type === 'error' ? t.contextSignals.badgeReset : t.contextSignals.badgeWarning}
-                  </span>
-                </div>
-                <h3>{signal.signal}</h3>
-                <p className="signal-meaning">{signal.meaning}</p>
-                <div className="signal-action">
-                  <span>{t.contextSignals.actionLabel}</span> {signal.action}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <ContextSignals />
 
         {/* ── Progressive Disclosure ───────────────────── */}
-        <section id="progressive-disclosure" className="reveal">
-          <p className="section-label">{t.progressiveDisclosure.sectionLabel}</p>
-          <h2 className="section-title">{t.progressiveDisclosure.title}</h2>
-          <p className="section-description">{t.progressiveDisclosure.description}</p>
-          <div className="pd-grid">
-            {PD_LAYERS.map((layer, i) => (
-              <article key={layer.id} className="glass-card pd-card">
-                <div className="pd-header">
-                  <span className="pd-number">L{i + 1}</span>
-                  <span className="pd-tokens">{layer.tokens}</span>
-                </div>
-                <h3>{layer.name}</h3>
-                <p>{layer.objective}</p>
-                <div className="deck-block">
-                  <strong>{t.progressiveDisclosure.loadWhenLabel}</strong>
-                  <p>{layer.loadWhen}</p>
-                </div>
-                <ul>{layer.includes.map((item) => <li key={item}>{item}</li>)}</ul>
-              </article>
-            ))}
-          </div>
-          <article className="glass-card checklist-card">
-            <h3>{t.progressiveDisclosure.workflowTitle}</h3>
-            <pre><code>{t.progressiveDisclosure.workflowCode}</code></pre>
-            <p>{t.progressiveDisclosure.workflowNote}</p>
-          </article>
-        </section>
+        <ProgressiveDisclosure />
 
         {/* ── Layer Model ──────────────────────────────── */}
         <section id="layer-model" className="reveal">
@@ -1353,56 +1248,10 @@ prompt: |
         </section>
 
         {/* ── Stack Curation ───────────────────────────── */}
-        <section id="stack-curation" className="reveal">
-          <p className="section-label">{t.stackCuration.sectionLabel}</p>
-          <h2 className="section-title">{t.stackCuration.title}</h2>
-          <p className="section-description">{t.stackCuration.description}</p>
-          <div className="stack-grid">
-            {(['A', 'B', 'C'] as const).map((priority) => {
-              const tools = STACK_TOOLS.filter((tool) => tool.priority === priority)
-              const labels: Record<string, string> = {
-                A: t.stackCuration.priorityA,
-                B: t.stackCuration.priorityB,
-                C: t.stackCuration.priorityC,
-              }
-              return (
-                <div key={priority} className={`stack-group glass-card priority-${priority}`}>
-                  <div className="stack-group-header">
-                    <span className={`priority-badge priority-${priority}`}>{t.stackCuration.priorityLabel} {priority}</span>
-                    <span className="priority-label">{labels[priority]}</span>
-                  </div>
-                  <div className="stack-list">
-                    {tools.map((tool) => (
-                      <div key={tool.name} className="stack-item">
-                        <div className="stack-item-main">
-                          <span className="stack-name">{tool.name}</span>
-                          <span className="stack-type">{tool.type}</span>
-                        </div>
-                        <span className="stack-why">{tool.why}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </section>
+        <StackCuration />
 
         {/* ── Methods ──────────────────────────────────── */}
-        <section id="methods-core" className="reveal">
-          <p className="section-label">{t.methods.sectionLabel}</p>
-          <h2 className="section-title">{t.methods.title}</h2>
-          <p className="section-description">{t.methods.description}</p>
-          <div className="methods-grid">
-            {METHODS.map((method) => (
-              <article key={method.id} className="glass-card method-card">
-                <h3>{method.title}</h3>
-                <p>{method.summary}</p>
-                <ul>{method.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
-              </article>
-            ))}
-          </div>
-        </section>
+        <Methods />
 
         {/* ── Examples ─────────────────────────────────── */}
         <section id="examples" className="reveal">
@@ -1497,60 +1346,10 @@ prompt: |
         </section>
 
         {/* ── Quality Matrix ───────────────────────────── */}
-        <section id="quality-matrix" className="reveal">
-          <p className="section-label">{t.qualityMatrix.sectionLabel}</p>
-          <h2 className="section-title">{t.qualityMatrix.title}</h2>
-          <p className="section-description">{t.qualityMatrix.description}</p>
-          <div className="matrix-card glass-card">
-            <div className="matrix-head">
-              <span>{t.qualityMatrix.headerGate}</span>
-              <span>{t.qualityMatrix.headerRule}</span>
-              <span>{t.qualityMatrix.headerVerify}</span>
-            </div>
-            {QUALITY_ROWS.map((row) => (
-              <div key={row.gate} className="matrix-row">
-                <span>{row.gate}</span>
-                <span>{row.rule}</span>
-                <span>{row.verify}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+        <QualityMatrix />
 
         {/* ── References ───────────────────────────────── */}
-        <section id="refs" className="reveal">
-          <p className="section-label">{t.refs.sectionLabel}</p>
-          <h2 className="section-title">{t.refs.title}</h2>
-          <p className="section-description">{t.refs.description}</p>
-          <div className="refs-categories">
-            <div>
-              <h3 className="refs-group-label">{t.refs.groupSkills}</h3>
-              <div className="references-grid">
-                <a className="glass-card ref-link" href="https://agentskills.io" target="_blank" rel="noreferrer">Agent Skills Standard</a>
-                <a className="glass-card ref-link" href="https://github.com/anthropics/skills" target="_blank" rel="noreferrer">anthropics/skills</a>
-                <a className="glass-card ref-link" href="https://github.com/vercel-labs/skills" target="_blank" rel="noreferrer">vercel-labs/skills</a>
-                <a className="glass-card ref-link" href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noreferrer">Building Effective Agents</a>
-              </div>
-            </div>
-            <div>
-              <h3 className="refs-group-label">{t.refs.groupMcp}</h3>
-              <div className="references-grid">
-                <a className="glass-card ref-link" href="https://modelcontextprotocol.io/docs/getting-started/intro" target="_blank" rel="noreferrer">MCP Docs</a>
-                <a className="glass-card ref-link" href="https://cursor.com/docs/mcp" target="_blank" rel="noreferrer">Cursor MCP Docs</a>
-                <a className="glass-card ref-link" href="https://context7.com" target="_blank" rel="noreferrer">Context7</a>
-              </div>
-            </div>
-            <div>
-              <h3 className="refs-group-label">{t.refs.groupPrompt}</h3>
-              <div className="references-grid">
-                <a className="glass-card ref-link" href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" rel="noreferrer">Prompt Engineering</a>
-                <a className="glass-card ref-link" href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/long-context-tips" target="_blank" rel="noreferrer">Long Context Tips</a>
-                <a className="glass-card ref-link" href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noreferrer">Lost in the Middle (arXiv)</a>
-                <a className="glass-card ref-link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noreferrer">ReAct (arXiv)</a>
-              </div>
-            </div>
-          </div>
-        </section>
+        <References />
 
       </main>
 
