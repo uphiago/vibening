@@ -237,6 +237,8 @@ export const translations = {
         'IA sai do escopo → reformular com in/out explícitos.',
         'Index primeiro, deep dive só sob demanda.',
       ],
+      ex5Title: 'CLAUDE.md / AGENTS.md estrutura',
+      ex6Title: 'Hook de pre-commit',
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
@@ -475,6 +477,8 @@ export const translations = {
         'AI goes out of scope → reframe with explicit in/out.',
         'Index first, deep dive only on demand.',
       ],
+      ex5Title: 'CLAUDE.md / AGENTS.md structure',
+      ex6Title: 'Pre-commit hook',
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
@@ -719,12 +723,14 @@ export const METHODS_DATA: Record<string, MethodCard[]> = {
     { id: 'progressive-disclosure', title: 'Progressive Disclosure', summary: 'Carregamento por camadas sem poluir janela de contexto.', bullets: ['Discovery: índice leve com metadata (~100 tokens).', 'Activation: instrução completa apenas para o item escolhido.', 'Execution: deep dive apenas quando a tarefa exigir.'] },
     { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Spec curta e execução disciplinada em ciclo fechado.', bullets: ['Plan como contrato técnico, não guia vago.', 'Execução em passos pequenos com diff revisável.', 'Verify contínuo: validate → fix → repeat.'] },
     { id: 'review-loop', title: 'CI + AI Review Loop', summary: 'Pipeline de qualidade: CI, revisão e correção iterativa.', bullets: ['PR pequena e auditável: facilita revisão real.', 'Feedback conflitante exige validação multi-fonte.', 'Merge só após gate de aprovação explicitamente atendido.'] },
+    { id: 'context-reset', title: 'Context Reset', summary: 'Saber quando e como reiniciar o contexto para manter qualidade.', bullets: ['Degradação de qualidade = sinal imediato de reset.', 'Novo chat com contexto compacto: objetivo + regras + estado atual.', 'Nunca arrastar histórico longo apenas para "manter continuidade".'] },
   ],
   'en': [
     { id: 'context-minimo', title: 'Minimum viable context', summary: 'Define problem, scope, and validation before execution.', bullets: ['Explicit objective in one sentence, not a conversation.', 'Acceptance criteria: what defines "done" before starting.', 'Bounded scope: what is in and what is explicitly out.'] },
     { id: 'progressive-disclosure', title: 'Progressive Disclosure', summary: 'Layered loading without polluting the context window.', bullets: ['Discovery: lightweight index with metadata (~100 tokens).', 'Activation: full instructions only for the selected item.', 'Execution: deep dive only when the task requires it.'] },
     { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Short spec and disciplined execution in a closed cycle.', bullets: ['Plan as a technical contract, not a vague guide.', 'Execution in small steps with a reviewable diff.', 'Continuous verify: validate → fix → repeat.'] },
     { id: 'review-loop', title: 'CI + AI Review Loop', summary: 'Quality pipeline: CI, review, and iterative correction.', bullets: ['Small, auditable PR: enables real review.', 'Conflicting feedback requires multi-source validation.', 'Merge only after the approval gate is explicitly met.'] },
+    { id: 'context-reset', title: 'Context Reset', summary: 'Know when and how to restart context to maintain quality.', bullets: ['Quality degradation = immediate reset signal.', 'New chat with compact context: objective + rules + current state.', 'Never drag a long history just to "maintain continuity".'] },
   ],
 }
 

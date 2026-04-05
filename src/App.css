@@ -2809,18 +2809,39 @@ button:focus-visible {
   background: linear-gradient(160deg, rgba(16, 29, 45, 0.94), rgba(10, 20, 33, 0.95));
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.44), inset 0 0 0 1px rgba(124, 212, 255, 0.08);
   color: #e5f3fb;
-  padding: 10px 12px;
-  min-width: 160px;
+  padding: 12px 14px;
+  min-width: 180px;
   font-family: var(--mono-font);
   font-size: 11px;
   letter-spacing: 0.03em;
-  line-height: 1.45;
+  line-height: 1.5;
   white-space: pre-line;
+  text-align: center;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.xyflow-wrap .react-flow__node:hover {
+  border-color: rgba(124, 212, 255, 0.75);
+  background: linear-gradient(160deg, rgba(19, 34, 52, 0.96), rgba(13, 23, 38, 0.97));
+  box-shadow: 0 0 10px rgba(124, 212, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.48);
 }
 
 .xyflow-wrap .react-flow__node.selected {
   border-color: rgba(86, 229, 194, 0.8);
   box-shadow: 0 0 0 1px rgba(86, 229, 194, 0.25), 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+.xyflow-wrap .react-flow__node-input {
+  border-color: rgba(124, 212, 255, 0.75);
+  background: linear-gradient(160deg, rgba(14, 34, 56, 0.96), rgba(9, 24, 42, 0.97));
+  box-shadow: 0 0 14px rgba(124, 212, 255, 0.1), 0 8px 18px rgba(0, 0, 0, 0.44);
+}
+
+.xyflow-wrap .react-flow__node-output {
+  border-color: rgba(86, 229, 194, 0.75);
+  background: linear-gradient(160deg, rgba(8, 36, 28, 0.96), rgba(6, 24, 18, 0.97));
+  box-shadow: 0 0 14px rgba(86, 229, 194, 0.1), 0 8px 18px rgba(0, 0, 0, 0.44);
+  color: rgba(180, 255, 236, 0.92);
 }
 
 .xyflow-wrap .react-flow__edge path {
@@ -2840,10 +2861,15 @@ button:focus-visible {
 }
 
 .xyflow-wrap .react-flow__handle {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   background: #79cdf5;
   border: 1px solid rgba(255, 255, 255, 0.52);
+  transition: background 0.2s ease;
+}
+
+.xyflow-wrap .react-flow__handle:hover {
+  background: rgba(86, 229, 194, 0.9);
 }
 
 .xyflow-wrap .react-flow__controls {
@@ -2870,6 +2896,19 @@ button:focus-visible {
   border: 1px solid rgba(124, 212, 255, 0.22);
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(86, 229, 194, 0.14);
+}
+
+.xyflow-wrap .react-flow__minimap-mask {
+  fill: rgba(86, 229, 194, 0.1);
+  stroke: rgba(86, 229, 194, 0.5);
+  stroke-width: 2;
+}
+
+.xyflow-wrap .react-flow__minimap-node {
+  fill: rgba(124, 212, 255, 0.3);
+  stroke: rgba(124, 212, 255, 0.6);
+  stroke-width: 1;
 }
 
 .xyflow-wrap .react-flow__attribution {
@@ -3087,8 +3126,15 @@ button:focus-visible {
   }
 
   .xyflow-wrap .react-flow__controls-button {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .xyflow-wrap .react-flow__node {
+    min-width: 120px;
+    padding: 10px 8px;
+    font-size: 9px;
   }
 
   section {

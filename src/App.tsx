@@ -467,6 +467,88 @@ to handle empty inputs without throwing an exception.
 # Use in session with:
 # "given the current state !{command}, do X"`
 
+  const AGENTS_MD_EXAMPLE = lang === 'pt-BR'
+    ? `# CLAUDE.md — Contrato do projeto
+
+## Identidade e escopo
+Você é um assistente de engenharia para este repositório.
+Foco: TypeScript/React. Nao toque em outros arquivos sem pedido explícito.
+
+## Regras obrigatórias
+- Nao commite sem confirmacao explícita
+- Nao use --no-verify
+- Leia o arquivo antes de editar
+- Diff incremental: 1 mudanca lógica por commit
+
+## Stack
+- Node 20+, TypeScript strict, React 19, Vite
+- Testes: Vitest + Testing Library
+- Lint: ESLint + Prettier (run npm run check)
+
+## Gates de qualidade
+1. npm run check deve passar sem erros
+2. Testes existentes devem continuar passando
+3. Toda PR precisa de diff legível e aprovacao humana`
+    : `# CLAUDE.md — Project contract
+
+## Identity and scope
+You are an engineering assistant for this repository.
+Focus: TypeScript/React. Do not touch other files without explicit request.
+
+## Mandatory rules
+- Do not commit without explicit confirmation
+- Do not use --no-verify
+- Read the file before editing
+- Incremental diff: 1 logical change per commit
+
+## Stack
+- Node 20+, TypeScript strict, React 19, Vite
+- Tests: Vitest + Testing Library
+- Lint: ESLint + Prettier (run npm run check)
+
+## Quality gates
+1. npm run check must pass without errors
+2. Existing tests must continue passing
+3. Every PR needs a readable diff and human approval`
+
+  const PRECOMMIT_EXAMPLE = lang === 'pt-BR'
+    ? `#!/bin/sh
+# .claude/hooks/pre-commit — gate antes de todo commit
+
+# 1. Lint e typecheck
+npm run check
+if [ $? -ne 0 ]; then
+  echo "❌ Lint/typecheck falhou. Corrija antes de commitar."
+  exit 1
+fi
+
+# 2. Testes unitários
+npm run test -- --run
+if [ $? -ne 0 ]; then
+  echo "❌ Testes falharam. Corrija antes de commitar."
+  exit 1
+fi
+
+echo "✓ Todos os gates passaram."`
+    : `#!/bin/sh
+# .claude/hooks/pre-commit — gate before every commit
+
+# 1. Lint and typecheck
+npm run check
+if [ $? -ne 0 ]; then
+  echo "❌ Lint/typecheck failed. Fix before committing."
+  exit 1
+fi
+
+# 2. Unit tests
+npm run test -- --run
+if [ $? -ne 0 ]; then
+  echo "❌ Tests failed. Fix before committing."
+  exit 1
+fi
+
+echo "✓ All gates passed."`
+
   return (
     <div className="app">
       <a className="skip-link" href="#main-content">{t.nav.skipLink}</a>
@@ -1265,6 +1347,20 @@ to handle empty inputs without throwing an exception.
               <ul>
                 {t.examples.ex4Items.map((item) => <li key={item}>{item}</li>)}
               </ul>
+            </article>
+            <article className="glass-card example-card">
+              <h3>{t.examples.ex5Title}</h3>
+              <div className="code-block-wrap">
+                <CopyButton text={AGENTS_MD_EXAMPLE} />
+                <pre><code>{AGENTS_MD_EXAMPLE}</code></pre>
+              </div>
+            </article>
+            <article className="glass-card example-card">
+              <h3>{t.examples.ex6Title}</h3>
+              <div className="code-block-wrap">
+                <CopyButton text={PRECOMMIT_EXAMPLE} />
+                <pre><code>{PRECOMMIT_EXAMPLE}</code></pre>
+              </div>
             </article>
           </div>
         </section>
