@@ -97,6 +97,7 @@ function App() {
   const [activeAgentPattern, setActiveAgentPattern] = useState(MULTI_AGENT_PATTERNS[0])
   const [checkedItems, setCheckedItems]         = useState<Set<number>>(new Set())
   const [checklistAnimated, setChecklistAnimated] = useState(false)
+  const [scrollProgress, setScrollProgress]     = useState(0)
   const checklistSectionRef = useRef<HTMLElement | null>(null)
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
   const [mermaidReady, setMermaidReady]         = useState(false)
@@ -155,6 +156,15 @@ function App() {
       const el = document.getElementById(hash)
       if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80)
     }
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement
+      setScrollProgress(el.scrollTop / (el.scrollHeight - el.clientHeight) * 100)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -587,6 +597,7 @@ prompt: |
 
   return (
     <div className="app">
+      <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
       <a className="skip-link" href="#main-content">{t.nav.skipLink}</a>
 
       <Nav
@@ -608,9 +619,18 @@ prompt: |
           </h1>
           <p className="hero-subtitle">{t.hero.subtitle}</p>
           <div className="hero-metrics" aria-label={t.hero.metricsLabel}>
-            <div className="metric"><span>SDD</span><small>{t.hero.metric1Label}</small></div>
-            <div className="metric"><span>RPEV</span><small>{t.hero.metric2Label}</small></div>
-            <div className="metric"><span>Multi-Agent</span><small>{t.hero.metric3Label}</small></div>
+            <div className="metric">
+              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 12h6m-6 4h6M7 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>
+              <span>SDD</span><small>{t.hero.metric1Label}</small>
+            </div>
+            <div className="metric">
+              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9a8 8 0 0114.9-2.7M20 15a8 8 0 01-14.9 2.7"/></svg>
+              <span>RPEV</span><small>{t.hero.metric2Label}</small>
+            </div>
+            <div className="metric">
+              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v3M6.5 17.5l4.5-3M17.5 17.5l-4.5-3"/></svg>
+              <span>Multi-Agent</span><small>{t.hero.metric3Label}</small>
+            </div>
           </div>
         </div>
       </header>
@@ -807,6 +827,12 @@ prompt: |
             {CONTEXT_SIGNALS.map((signal) => (
               <article key={signal.signal} className={`glass-card signal-card signal-${signal.type}`}>
                 <div className="signal-header">
+                  <svg className="signal-type-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    {signal.type === 'error'
+                      ? <><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></>
+                      : <><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>
+                    }
+                  </svg>
                   <span className={`signal-badge signal-${signal.type}`}>
                     {signal.type === 'error' ? t.contextSignals.badgeReset : t.contextSignals.badgeWarning}
                   </span>

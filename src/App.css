@@ -32,6 +32,21 @@
   color: var(--text);
 }
 
+/* ── Scroll progress ──────────────────────────────────── */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-teal), var(--accent-blue), var(--accent-teal));
+  background-size: 200% 100%;
+  z-index: 9999;
+  transition: width 0.12s ease;
+  pointer-events: none;
+  box-shadow: 0 0 6px rgba(86, 229, 194, 0.4);
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -788,13 +803,26 @@ h1 span {
 }
 
 .metric {
-  min-width: 110px;
-  padding: 10px 12px;
+  min-width: 120px;
+  padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.13);
   background: rgba(255, 255, 255, 0.03);
   display: grid;
   gap: 3px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.metric:hover {
+  border-color: rgba(86, 229, 194, 0.3);
+  background: rgba(86, 229, 194, 0.05);
+}
+
+.metric-icon {
+  width: 16px;
+  height: 16px;
+  color: rgba(86, 229, 194, 0.7);
+  margin-bottom: 4px;
 }
 
 .metric span {
@@ -916,8 +944,28 @@ section::before {
 
 .principle-icon {
   font-family: var(--mono-font);
-  font-size: 18px;
+  font-size: 32px;
+  line-height: 1;
   color: rgba(124, 212, 255, 0.92);
+}
+
+.principles-grid .principle-card:nth-child(1) {
+  border-top: 2px solid rgba(124, 212, 255, 0.45);
+}
+.principles-grid .principle-card:nth-child(1) .principle-icon {
+  color: rgba(124, 212, 255, 0.92);
+}
+.principles-grid .principle-card:nth-child(2) {
+  border-top: 2px solid rgba(86, 229, 194, 0.45);
+}
+.principles-grid .principle-card:nth-child(2) .principle-icon {
+  color: rgba(86, 229, 194, 0.92);
+}
+.principles-grid .principle-card:nth-child(3) {
+  border-top: 2px solid rgba(158, 122, 255, 0.45);
+}
+.principles-grid .principle-card:nth-child(3) .principle-icon {
+  color: rgba(158, 122, 255, 0.92);
 }
 
 .principle-card h3 {
@@ -1305,6 +1353,12 @@ section::before {
 .method-card {
   padding: 16px;
 }
+
+.methods-grid .method-card:nth-child(1) { border-top: 2px solid rgba(124, 212, 255, 0.45); }
+.methods-grid .method-card:nth-child(2) { border-top: 2px solid rgba(86, 229, 194, 0.45); }
+.methods-grid .method-card:nth-child(3) { border-top: 2px solid rgba(124, 212, 255, 0.35); }
+.methods-grid .method-card:nth-child(4) { border-top: 2px solid rgba(86, 229, 194, 0.35); }
+.methods-grid .method-card:nth-child(5) { border-top: 2px solid rgba(158, 122, 255, 0.45); }
 
 .method-card h3 {
   margin: 0;
@@ -1876,6 +1930,20 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.signal-type-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.signal-card.signal-error .signal-type-icon {
+  color: rgba(248, 81, 73, 0.85);
+}
+
+.signal-card.signal-warning .signal-type-icon {
+  color: rgba(255, 148, 66, 0.85);
 }
 
 .signal-badge {
@@ -2515,8 +2583,9 @@ button:focus-visible {
 
 .sdd-why-icon {
   font-family: var(--heading-font);
-  font-size: 26px;
-  color: rgba(86, 229, 194, 0.4);
+  font-size: 44px;
+  line-height: 1;
+  color: rgba(86, 229, 194, 0.35);
   letter-spacing: 0.02em;
   line-height: 1;
 }
