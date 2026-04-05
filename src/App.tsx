@@ -102,8 +102,9 @@ function App() {
   const [checkedItems, setCheckedItems]         = useState<Set<number>>(new Set())
   const [checklistAnimated, setChecklistAnimated] = useState(false)
   const [scrollProgress, setScrollProgress]     = useState(0)
-  const checklistSectionRef = useRef<HTMLElement | null>(null)
-  const checklistTimersRef  = useRef<ReturnType<typeof setTimeout>[]>([])
+  const checklistSectionRef  = useRef<HTMLElement | null>(null)
+  const checklistTimersRef   = useRef<ReturnType<typeof setTimeout>[]>([])
+  const mermaidSectionRef    = useRef<HTMLElement | null>(null)
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
   const [mermaidReady, setMermaidReady]         = useState(false)
 
@@ -208,43 +209,55 @@ function App() {
     return () => spyObserver.disconnect()
   }, [navItems])
 
-  /* ── Mermaid ───────────────────────────────────────────── */
+  /* ── Mermaid (lazy: only loads bundle when section enters viewport) ── */
   useEffect(() => {
+    const el = mermaidSectionRef.current
+    if (!el) return
     let active = true
-    const renderDiagrams = async () => {
-      try {
-        const mermaid = (await import('mermaid')).default
-        if (!active) return
-        mermaid.initialize({
-          startOnLoad: false,
-          securityLevel: 'loose',
-          theme: 'base',
-          themeVariables: {
-            background: '#070b10',
-            primaryColor: '#0f1a29',
-            primaryTextColor: '#e4f2fb',
-            primaryBorderColor: '#3e6c93',
-            secondaryColor: '#0a121d',
-            tertiaryColor: '#081018',
-            lineColor: '#6fc2ee',
-            clusterBkg: '#0c1522',
-            clusterBorder: '#325a7c',
-            mainBkg: '#0f1a29',
-            nodeBorder: '#3e6c93',
-            fontFamily: 'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
-            edgeLabelBackground: '#0c1726',
-          },
-        })
-        const nodes = Array.from(document.querySelectorAll<HTMLElement>('.mermaid'))
-        nodes.forEach((node) => node.removeAttribute('data-processed'))
-        await mermaid.run({ nodes })
-        if (active) setMermaidReady(true)
-      } catch {
-        if (active) setMermaidReady(true)
-      }
-    }
-    void renderDiagrams()
-    return () => { active = false }
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        obs.disconnect()
+
+        const renderDiagrams = async () => {
+          try {
+            const mermaid = (await import('mermaid')).default
+            if (!active) return
+            mermaid.initialize({
+              startOnLoad: false,
+              securityLevel: 'loose',
+              theme: 'base',
+              themeVariables: {
+                background: '#070b10',
+                primaryColor: '#0f1a29',
+                primaryTextColor: '#e4f2fb',
+                primaryBorderColor: '#3e6c93',
+                secondaryColor: '#0a121d',
+                tertiaryColor: '#081018',
+                lineColor: '#6fc2ee',
+                clusterBkg: '#0c1522',
+                clusterBorder: '#325a7c',
+                mainBkg: '#0f1a29',
+                nodeBorder: '#3e6c93',
+                fontFamily: 'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, monospace',
+                edgeLabelBackground: '#0c1726',
+              },
+            })
+            const nodes = Array.from(document.querySelectorAll<HTMLElement>('.mermaid'))
+            nodes.forEach((node) => node.removeAttribute('data-processed'))
+            await mermaid.run({ nodes })
+            if (active) setMermaidReady(true)
+          } catch {
+            if (active) setMermaidReady(true)
+          }
+        }
+        void renderDiagrams()
+      },
+      { rootMargin: '300px' }, // preload 300px before entering viewport
+    )
+    obs.observe(el)
+    return () => { active = false; obs.disconnect() }
   }, [])
 
   /* ── Auto-checklist ───────────────────────────────────── */
@@ -1226,7 +1239,7 @@ prompt: |
         </section>
 
         {/* ── Mermaid Diagrams ─────────────────────────── */}
-        <section id="mermaid-diagrams" className="reveal">
+        <section ref={mermaidSectionRef} id="mermaid-diagrams" className="reveal">
           <p className="section-label">{t.mermaidDiagrams.sectionLabel}</p>
           <h2 className="section-title">{t.mermaidDiagrams.title}</h2>
           <p className="section-description">{t.mermaidDiagrams.description}</p>
