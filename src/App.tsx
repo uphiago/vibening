@@ -1,5 +1,4 @@
-import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { Edge, Node } from '@xyflow/react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 
 import { useLang } from './LanguageContext'
@@ -27,55 +26,6 @@ import {
   STACK_TOOLS_DATA,
   WORKFLOW_PHASES_DATA,
 } from './i18n'
-
-/* ─── Lazy-loaded heavy sections ─────────────────────────── */
-
-const ReactFlowSection = lazy(() =>
-  import('@xyflow/react').then((mod) => ({
-    default: function XYFlowSection({ nodes, edges }: { nodes: Node[]; edges: Edge[] }) {
-      const { Background, Controls, MiniMap, ReactFlow } = mod
-      return (
-        <div className="xyflow-wrap">
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            fitView
-            fitViewOptions={{ padding: 0.16 }}
-            minZoom={0.5}
-            maxZoom={1.8}
-            defaultEdgeOptions={{ style: { stroke: '#66b8e6', strokeWidth: 1.6 } }}
-          >
-            <MiniMap pannable zoomable />
-            <Controls />
-            <Background gap={22} size={1} color="rgba(130,180,210,0.22)" />
-          </ReactFlow>
-        </div>
-      )
-    },
-  })),
-)
-
-/* ─── Static graph data (labels are technical, lang-agnostic) */
-
-const XY_NODES: Node[] = [
-  { id: 'rules', position: { x: 40, y: 40 }, data: { label: 'Rules\n(AGENTS/CLAUDE)' }, type: 'input' },
-  { id: 'skills', position: { x: 300, y: 40 }, data: { label: 'Skills\n(SKILL.md + scripts)' } },
-  { id: 'mcp', position: { x: 560, y: 40 }, data: { label: 'MCP\n(tool access)' } },
-  { id: 'planner', position: { x: 180, y: 210 }, data: { label: 'Planner\n(Research/Plan)' } },
-  { id: 'executor', position: { x: 430, y: 210 }, data: { label: 'Executor\n(Implement)' } },
-  { id: 'verify', position: { x: 300, y: 380 }, data: { label: 'Verify\n(test/lint/review)' } },
-  { id: 'release', position: { x: 300, y: 540 }, data: { label: 'Release Gate' }, type: 'output' },
-]
-
-const XY_EDGES: Edge[] = [
-  { id: 'e1', source: 'rules', target: 'planner', animated: true },
-  { id: 'e2', source: 'skills', target: 'planner', animated: true },
-  { id: 'e3', source: 'mcp', target: 'executor', animated: true },
-  { id: 'e4', source: 'planner', target: 'executor' },
-  { id: 'e5', source: 'executor', target: 'verify', animated: true },
-  { id: 'e6', source: 'verify', target: 'planner', label: 'fix loop' },
-  { id: 'e7', source: 'verify', target: 'release', animated: true },
-]
 
 /* ─── Copy button hook ───────────────────────────────────── */
 
@@ -585,6 +535,7 @@ echo "✓ All gates passed."`
         <section id="lesson-roadmap" className="reveal">
           <p className="section-label">{t.lessonRoadmap.sectionLabel}</p>
           <h2 className="section-title">{t.lessonRoadmap.title}</h2>
+          <p className="section-description">{t.lessonRoadmap.description}</p>
           <div className="lessons-grid">
             {LESSONS.map((lesson) => (
               <article key={lesson.id} className="glass-card lesson-card">
@@ -635,10 +586,8 @@ echo "✓ All gates passed."`
             ))}
           </div>
           <div className="comparison-note glass-card">
-            <span className="deck-block">
-              <strong>{t.vibecodeVsAI.ruleTitle}</strong>
-              <p>{t.vibecodeVsAI.ruleText}</p>
-            </span>
+            <strong>{t.vibecodeVsAI.ruleTitle}</strong>
+            <p>{t.vibecodeVsAI.ruleText}</p>
           </div>
         </section>
 
@@ -646,6 +595,7 @@ echo "✓ All gates passed."`
         <section id="principles" className="reveal">
           <p className="section-label">{t.principles.sectionLabel}</p>
           <h2 className="section-title">{t.principles.title}</h2>
+          <p className="section-description">{t.principles.description}</p>
           <div className="principles-grid">
             {PRINCIPLES.map((item) => (
               <article key={item.id} className="glass-card principle-card">
@@ -809,10 +759,7 @@ echo "✓ All gates passed."`
           </div>
           <article className="glass-card checklist-card">
             <h3>{t.progressiveDisclosure.workflowTitle}</h3>
-            <div className="code-block-wrap">
-              <CopyButton text={t.progressiveDisclosure.workflowCode} />
-              <pre><code>{t.progressiveDisclosure.workflowCode}</code></pre>
-            </div>
+            <pre><code>{t.progressiveDisclosure.workflowCode}</code></pre>
             <p>{t.progressiveDisclosure.workflowNote}</p>
           </article>
         </section>
@@ -821,6 +768,7 @@ echo "✓ All gates passed."`
         <section id="layer-model" className="reveal">
           <p className="section-label">{t.layerModel.sectionLabel}</p>
           <h2 className="section-title">{t.layerModel.title}</h2>
+          <p className="section-description">{t.layerModel.description}</p>
           <div className="layer-layout">
             <div className="layer-stack">
               {LAYERS.map((layer) => (
@@ -1106,6 +1054,7 @@ echo "✓ All gates passed."`
         <section id="deep-dive" className="reveal">
           <p className="section-label">{t.deepDive.sectionLabel}</p>
           <h2 className="section-title">{t.deepDive.title}</h2>
+          <p className="section-description">{t.deepDive.description}</p>
           <div className="deck-layout">
             <div className="deck-list">
               {DEEP_DIVES.map((item) => (
@@ -1144,6 +1093,7 @@ echo "✓ All gates passed."`
         <section id="mermaid-diagrams" className="reveal">
           <p className="section-label">{t.mermaidDiagrams.sectionLabel}</p>
           <h2 className="section-title">{t.mermaidDiagrams.title}</h2>
+          <p className="section-description">{t.mermaidDiagrams.description}</p>
           {!mermaidReady && (
             <div className="diagram-stack diagram-stack-skeleton">
               <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
@@ -1253,18 +1203,6 @@ echo "✓ All gates passed."`
           </div>
         </section>
 
-        {/* ── XYFlow ───────────────────────────────────── */}
-        <section id="xyflow-map" className="reveal">
-          <p className="section-label">{t.xyflowMap.sectionLabel}</p>
-          <h2 className="section-title">{t.xyflowMap.title}</h2>
-          <p className="section-description">{t.xyflowMap.description}</p>
-          <article className="glass-card xyflow-card">
-            <Suspense fallback={<div className="skeleton" style={{ height: 400, borderRadius: 10 }} />}>
-              <ReactFlowSection nodes={XY_NODES} edges={XY_EDGES} />
-            </Suspense>
-          </article>
-        </section>
-
         {/* ── Stack Curation ───────────────────────────── */}
         <section id="stack-curation" className="reveal">
           <p className="section-label">{t.stackCuration.sectionLabel}</p>
@@ -1305,6 +1243,7 @@ echo "✓ All gates passed."`
         <section id="methods-core" className="reveal">
           <p className="section-label">{t.methods.sectionLabel}</p>
           <h2 className="section-title">{t.methods.title}</h2>
+          <p className="section-description">{t.methods.description}</p>
           <div className="methods-grid">
             {METHODS.map((method) => (
               <article key={method.id} className="glass-card method-card">
@@ -1320,6 +1259,7 @@ echo "✓ All gates passed."`
         <section id="examples" className="reveal">
           <p className="section-label">{t.examples.sectionLabel}</p>
           <h2 className="section-title">{t.examples.title}</h2>
+          <p className="section-description">{t.examples.description}</p>
           <div className="examples-grid">
             <article className="glass-card example-card">
               <h3>{t.examples.ex1Title}</h3>
@@ -1406,6 +1346,7 @@ echo "✓ All gates passed."`
         <section id="quality-matrix" className="reveal">
           <p className="section-label">{t.qualityMatrix.sectionLabel}</p>
           <h2 className="section-title">{t.qualityMatrix.title}</h2>
+          <p className="section-description">{t.qualityMatrix.description}</p>
           <div className="matrix-card glass-card">
             <div className="matrix-head">
               <span>{t.qualityMatrix.headerGate}</span>

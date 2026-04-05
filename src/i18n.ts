@@ -48,7 +48,6 @@ export const translations = {
       { id: 'deep-dive', label: 'Deep Dive' },
       { id: 'mermaid-diagrams', label: 'Diagramas' },
       { id: 'ecosystem-map', label: 'Mapa' },
-      { id: 'xyflow-map', label: 'Graph' },
       { id: 'stack-curation', label: 'Stack' },
       { id: 'methods-core', label: 'Métodos' },
       { id: 'examples', label: 'Exemplos' },
@@ -69,6 +68,7 @@ export const translations = {
     lessonRoadmap: {
       sectionLabel: 'Guia de Estudo',
       title: 'Trilha de aprendizado',
+      description: 'Duas partes progressivas: da base de contexto e execução até refatoração segura e qualidade contínua em ciclos assistidos por IA.',
       topicsLabel: 'Tópicos cobertos',
       outcomesLabel: 'Resultados esperados',
     },
@@ -87,6 +87,7 @@ export const translations = {
     principles: {
       sectionLabel: 'Core Principles',
       title: 'Três princípios que sustentam IA Coding em produção',
+      description: 'Antes de ferramentas e técnicas, esses três pilares determinam se o output vai para produção com controle ou vira retrabalho silencioso.',
     },
     sdd: {
       sectionLabel: 'Spec-Driven Development',
@@ -130,6 +131,7 @@ export const translations = {
     layerModel: {
       sectionLabel: 'Layer Model',
       title: 'Camadas operacionais do stack agêntico',
+      description: 'Cada camada tem uma responsabilidade única. Confundir onde algo pertence é uma das causas mais comuns de configuração inconsistente.',
       kicker: 'Camada selecionada',
     },
     executionFlow: {
@@ -186,10 +188,12 @@ export const translations = {
     deepDive: {
       sectionLabel: 'Technical Deep Dive',
       title: 'Arquitetura prática do stack agêntico',
+      description: 'Exploração técnica das peças que compõem um stack agêntico real: CLAUDE.md, SKILL.md, MCP, hooks e gates de CI/CD.',
     },
     mermaidDiagrams: {
       sectionLabel: 'Diagramas',
-      title: 'Fluxos editáveis de governança e execução',
+      title: 'Fluxos de governança e execução',
+      description: 'Representações visuais dos ciclos de desenvolvimento assistido por IA: do planejamento ao release, passando por validação e controle de loops.',
     },
     ecosystemMap: {
       sectionLabel: 'Ecosystem',
@@ -205,11 +209,6 @@ export const translations = {
       captionBuild: 'Build layer: configura o que o agente sabe, pode fazer e como se comporta.',
       captionOps: 'Ops layer: ciclo de execução com gate de aprovação antes de todo release.',
     },
-    xyflowMap: {
-      sectionLabel: 'Interactive Graph',
-      title: 'Arquitetura agêntica navegável com XYFlow',
-      description: 'Visual interativo para explorar dependências entre regras, skills, MCP e gates de validação.',
-    },
     stackCuration: {
       sectionLabel: 'Stack Curation',
       title: 'Curadoria técnica de ferramentas para IA Coding',
@@ -222,10 +221,12 @@ export const translations = {
     methods: {
       sectionLabel: 'Methods',
       title: 'Métodos técnicos aplicáveis no dia a dia',
+      description: 'Técnicas concretas para manter contexto limpo, controle de escopo e qualidade de output em ciclos de desenvolvimento assistido por IA.',
     },
     examples: {
       sectionLabel: 'Examples',
       title: 'Exemplos diretos e reutilizáveis',
+      description: 'Templates prontos para copiar, adaptar e usar em projetos reais. Cada exemplo resolve um problema específico de configuração ou contexto.',
       ex1Title: 'SKILL.md mínimo',
       ex2Title: 'Contexto mínimo viável',
       ex3Title: 'Dynamic context injection',
@@ -250,6 +251,7 @@ export const translations = {
     qualityMatrix: {
       sectionLabel: 'Quality Matrix',
       title: 'Gates para avaliação de interface e execução',
+      description: 'Referência objetiva: o que verificar, qual critério aplicar e como confirmar antes de considerar a entrega concluída.',
       headerGate: 'Gate',
       headerRule: 'Regra',
       headerVerify: 'Como verificar',
@@ -288,7 +290,6 @@ export const translations = {
       { id: 'deep-dive', label: 'Deep Dive' },
       { id: 'mermaid-diagrams', label: 'Diagrams' },
       { id: 'ecosystem-map', label: 'Map' },
-      { id: 'xyflow-map', label: 'Graph' },
       { id: 'stack-curation', label: 'Stack' },
       { id: 'methods-core', label: 'Methods' },
       { id: 'examples', label: 'Examples' },
@@ -309,6 +310,7 @@ export const translations = {
     lessonRoadmap: {
       sectionLabel: 'Study Guide',
       title: 'Learning path',
+      description: 'Two progressive parts: from context engineering and execution fundamentals to safe refactoring and continuous quality in AI-assisted cycles.',
       topicsLabel: 'Topics covered',
       outcomesLabel: 'Expected outcomes',
     },
@@ -327,6 +329,7 @@ export const translations = {
     principles: {
       sectionLabel: 'Core Principles',
       title: 'Three principles that sustain AI Coding in production',
+      description: 'Before tools and techniques, these three pillars determine whether output ships with control or becomes silent rework.',
     },
     sdd: {
       sectionLabel: 'Spec-Driven Development',
@@ -370,6 +373,7 @@ export const translations = {
     layerModel: {
       sectionLabel: 'Layer Model',
       title: 'Operational layers of the agentic stack',
+      description: 'Each layer has a single responsibility. Mixing concerns between layers is one of the most common causes of inconsistent agent behavior.',
       kicker: 'Selected layer',
     },
     executionFlow: {
@@ -426,10 +430,12 @@ export const translations = {
     deepDive: {
       sectionLabel: 'Technical Deep Dive',
       title: 'Practical architecture of the agentic stack',
+      description: 'Technical exploration of the components that make up a real agentic stack: CLAUDE.md, SKILL.md, MCP, hooks, and CI/CD gates.',
     },
     mermaidDiagrams: {
       sectionLabel: 'Diagrams',
-      title: 'Editable governance and execution flows',
+      title: 'Governance and execution flows',
+      description: 'Visual representations of AI-assisted development cycles: from planning to release, through validation and loop control.',
     },
     ecosystemMap: {
       sectionLabel: 'Ecosystem',
@@ -445,11 +451,6 @@ export const translations = {
       captionBuild: 'Build layer: configures what the agent knows, can do, and how it behaves.',
       captionOps: 'Ops layer: execution cycle with approval gate before every release.',
     },
-    xyflowMap: {
-      sectionLabel: 'Interactive Graph',
-      title: 'Navigable agentic architecture with XYFlow',
-      description: 'Interactive visual to explore dependencies between rules, skills, MCP, and validation gates.',
-    },
     stackCuration: {
       sectionLabel: 'Stack Curation',
       title: 'Technical curation of AI Coding tools',
@@ -462,10 +463,12 @@ export const translations = {
     methods: {
       sectionLabel: 'Methods',
       title: 'Technical methods applicable day-to-day',
+      description: 'Concrete techniques for keeping context clean, controlling scope, and maintaining output quality in AI-assisted development cycles.',
     },
     examples: {
       sectionLabel: 'Examples',
       title: 'Direct, reusable examples',
+      description: 'Ready-to-copy templates to adapt and use in real projects. Each example solves a specific configuration or context problem.',
       ex1Title: 'Minimal SKILL.md',
       ex2Title: 'Minimum viable context',
       ex3Title: 'Dynamic context injection',
@@ -490,6 +493,7 @@ export const translations = {
     qualityMatrix: {
       sectionLabel: 'Quality Matrix',
       title: 'Gates for interface and execution evaluation',
+      description: 'Objective reference: what to check, which criterion to apply, and how to confirm before considering the delivery complete.',
       headerGate: 'Gate',
       headerRule: 'Rule',
       headerVerify: 'How to verify',
