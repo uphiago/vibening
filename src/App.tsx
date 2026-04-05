@@ -19,11 +19,11 @@ import { EcosystemMap } from './sections/EcosystemMap'
 import { LayerModel } from './sections/LayerModel'
 import { ExecutionFlow } from './sections/ExecutionFlow'
 import { WorkflowGate } from './sections/WorkflowGate'
+import { AntiPatterns } from './sections/AntiPatterns'
+import { DeepDive } from './sections/DeepDive'
 
 import {
-  ANTI_PATTERNS_DATA,
   COMM_PATTERNS_DATA,
-  DEEP_DIVES_DATA,
   MULTI_AGENT_ARCHS_DATA,
   MULTI_AGENT_PATTERNS_DATA,
   REVIEW_CHECKLIST_DATA,
@@ -37,9 +37,7 @@ function App() {
   const { lang, t } = useLang()
 
   /* ── Data (lang-switched) ──────────────────────────────── */
-  const ANTI_PATTERNS  = ANTI_PATTERNS_DATA[lang]
   const REVIEW_CHECKLIST = REVIEW_CHECKLIST_DATA[lang]
-  const DEEP_DIVES     = DEEP_DIVES_DATA[lang]
   const SDD_FIELDS     = SDD_FIELDS_DATA[lang]
   const SDD_SPEC_ROWS  = SDD_SPEC_ROWS_DATA[lang]
   const MULTI_AGENT_ARCHS    = MULTI_AGENT_ARCHS_DATA[lang]
@@ -48,8 +46,6 @@ function App() {
 
   /* ── State ─────────────────────────────────────────────── */
   const [activeSection, setActiveSection] = useState('hero')
-  const [activeDeepDive, setActiveDeepDive]     = useState(DEEP_DIVES[0])
-  const [activeAntiPattern, setActiveAntiPattern] = useState(ANTI_PATTERNS[0])
   const [activeSddField, setActiveSddField]     = useState(SDD_FIELDS[0])
   const [activeArch, setActiveArch]             = useState(MULTI_AGENT_ARCHS[0])
   const [activeAgentPattern, setActiveAgentPattern] = useState(MULTI_AGENT_PATTERNS[0])
@@ -64,8 +60,6 @@ function App() {
 
   // Reset active items when language changes
   useEffect(() => {
-    setActiveDeepDive(DEEP_DIVES_DATA[lang][0])
-    setActiveAntiPattern(ANTI_PATTERNS_DATA[lang][0])
     setActiveSddField(SDD_FIELDS_DATA[lang][0])
     setActiveArch(MULTI_AGENT_ARCHS_DATA[lang][0])
     setActiveAgentPattern(MULTI_AGENT_PATTERNS_DATA[lang][0])
@@ -75,10 +69,8 @@ function App() {
 
   /* ── Refs for detail panels ───────────────────────────── */
   const sddDetailRef        = useRef<HTMLDivElement>(null)
-  const deepDiveDetailRef   = useRef<HTMLDivElement>(null)
   const maArchDetailRef     = useRef<HTMLDivElement>(null)
   const maPatternDetailRef  = useRef<HTMLDivElement>(null)
-  const antiPatternDetailRef = useRef<HTMLDivElement>(null)
 
   // Scrolls into view on mobile AND moves keyboard focus to the detail panel
   const activateDetail = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
@@ -232,12 +224,6 @@ function App() {
   }, [checklistAnimated, REVIEW_CHECKLIST])
 
   /* ── Helpers ───────────────────────────────────────────── */
-
-  const severityLabel = (s: 'critical' | 'high' | 'medium') => {
-    if (s === 'critical') return t.antiPatterns.severityCritical
-    if (s === 'high') return t.antiPatterns.severityHigh
-    return t.antiPatterns.severityMedium
-  }
 
 const reliabilityLabel = (r: 'high' | 'medium' | 'low') => {
     if (r === 'high') return t.multiAgent.reliabilityHigh
@@ -860,87 +846,10 @@ prompt: |
         </section>
 
         {/* ── Anti-patterns ────────────────────────────── */}
-        <section id="anti-patterns" className="reveal">
-          <p className="section-label">{t.antiPatterns.sectionLabel}</p>
-          <h2 className="section-title">{t.antiPatterns.title}</h2>
-          <p className="section-description">{t.antiPatterns.description}</p>
-          <div className="deck-layout">
-            <div className="deck-list">
-              {ANTI_PATTERNS.map((ap) => (
-                <button
-                  key={ap.id}
-                  type="button"
-                  className={`deck-item glass-card ap-item-${ap.severity} ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
-                  onClick={() => { setActiveAntiPattern(ap); activateDetail(antiPatternDetailRef) }}
-                >
-                  <div className="ap-item-header">
-                    <span className={`ap-severity ap-severity-${ap.severity}`}>{severityLabel(ap.severity)}</span>
-                    <span className="ap-category">{ap.category}</span>
-                  </div>
-                  <span className="deck-title">{ap.problem}</span>
-                </button>
-              ))}
-            </div>
-            <div ref={antiPatternDetailRef} tabIndex={-1}>
-              <article key={activeAntiPattern.id} className="deck-detail glass-card">
-                <div className="ap-detail-header">
-                  <span className={`ap-severity ap-severity-${activeAntiPattern.severity}`}>
-                    {severityLabel(activeAntiPattern.severity)}
-                  </span>
-                  <span className="ap-category">{activeAntiPattern.category}</span>
-                </div>
-                <h3>{activeAntiPattern.problem}</h3>
-                <div className="deck-block">
-                  <strong>{t.antiPatterns.consequenceLabel}</strong>
-                  <p>{activeAntiPattern.consequence}</p>
-                </div>
-                <div className="deck-block ap-fix-block">
-                  <strong>{t.antiPatterns.fixLabel}</strong>
-                  <p>{activeAntiPattern.fix}</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+        <AntiPatterns />
 
         {/* ── Deep Dive ────────────────────────────────── */}
-        <section id="deep-dive" className="reveal">
-          <p className="section-label">{t.deepDive.sectionLabel}</p>
-          <h2 className="section-title">{t.deepDive.title}</h2>
-          <p className="section-description">{t.deepDive.description}</p>
-          <div className="deck-layout">
-            <div className="deck-list">
-              {DEEP_DIVES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-                  onClick={() => { setActiveDeepDive(item); activateDetail(deepDiveDetailRef) }}
-                >
-                  <span className="deck-title">{item.title}</span>
-                </button>
-              ))}
-            </div>
-            <div ref={deepDiveDetailRef} tabIndex={-1}>
-              <article key={activeDeepDive.id} className="deck-detail glass-card">
-                <h3>{activeDeepDive.title}</h3>
-                <p className="deck-objective">{activeDeepDive.description}</p>
-                <div className="deck-tags">
-                  {activeDeepDive.artifacts.map((artifact) => (
-                    <span key={artifact}>{artifact}</span>
-                  ))}
-                </div>
-                <div className="deep-links">
-                  {activeDeepDive.links.map((link) => (
-                    <a key={link.href} className="ref-link glass-card" href={link.href} target="_blank" rel="noreferrer">
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+        <DeepDive />
 
         {/* ── Mermaid Diagrams ─────────────────────────── */}
         <section ref={mermaidSectionRef} id="mermaid-diagrams" className="reveal">
