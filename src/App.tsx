@@ -226,7 +226,7 @@ function App() {
             if (!active) return
             mermaid.initialize({
               startOnLoad: false,
-              securityLevel: 'loose',
+              securityLevel: 'strict',
               theme: 'base',
               themeVariables: {
                 background: '#070b10',
@@ -307,31 +307,31 @@ function App() {
   const SDD_EXAMPLE_FULL = lang === 'pt-BR'
     ? `## 1. Contexto
 - problema: API /users/search retorna timeout para queries acima de 3 chars
-- publico afetado: clientes Enterprise (plano Pro+)
-- restricoes: sem schema changes em producao
+- público afetado: clientes Enterprise (plano Pro+)
+- restrições: sem schema changes em produção
 
 ## 2. Objetivo
-Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteracao de schema.
+Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteração de schema.
 
 ## 3. Escopo
-- entra: UserSearchRepository, query builder, indice existente
-- nao entra: camada de autenticacao, paginacao, outros endpoints
+- entra: UserSearchRepository, query builder, índice existente
+- não entra: camada de autenticação, paginação, outros endpoints
 
-## 4. Criterios de validacao
+## 4. Critérios de validação
 - p95 < 300ms em load test com 50 req/s por 60s
-- zero timeouts em queries de ate 50 caracteres
-- testes unitarios existentes continuam passando sem modificacao
+- zero timeouts em queries de até 50 caracteres
+- testes unitários existentes continuam passando sem modificação
 
 ## 5. Plano (RPEV)
-- research: profiling da query atual + explain plan do indice composto
-- plan: reescrever query com indice composto + limit antecipado
+- research: profiling da query atual + explain plan do índice composto
+- plan: reescrever query com índice composto + limit antecipado
 - execute: implementar em UserSearchRepository.ts
 - verify: rodar k6 load test + suite de testes + revisar diff
 
-## 6. Evidencias
-- p95 = 187ms (meta: < 300ms) — criterio 1 atendido
-- zero timeouts registrados nos 60s de carga — criterio 2 atendido
-- 42/42 testes passando — criterio 3 atendido
+## 6. Evidências
+- p95 = 187ms (meta: < 300ms) — critério 1 atendido
+- zero timeouts registrados nos 60s de carga — critério 2 atendido
+- 42/42 testes passando — critério 3 atendido
 - PR #42 aprovado por revisor humano`
     : `## 1. Context
 - problem: API /users/search returns timeout for queries above 3 chars
@@ -365,20 +365,20 @@ Reduce p95 of /users/search from 2400ms to under 300ms without schema changes.
   const SDD_TEMPLATE = lang === 'pt-BR'
     ? `## 1. Contexto
 - problema: ...
-- publico afetado: ...
-- restricoes tecnicas: ...
+- público afetado: ...
+- restrições técnicas: ...
 
 ## 2. Objetivo
 - resultado esperado em uma frase: ...
 
 ## 3. Escopo
 - entra: ...
-- nao entra: ...
+- não entra: ...
 
-## 4. Criterios de validacao
-- criterio 1: ...
-- criterio 2: ...
-- criterio 3: ...
+## 4. Critérios de validação
+- critério 1: ...
+- critério 2: ...
+- critério 3: ...
 
 ## 5. Plano (RPEV)
 - research: ...
@@ -386,8 +386,8 @@ Reduce p95 of /users/search from 2400ms to under 300ms without schema changes.
 - execute: ...
 - verify: ...
 
-## 6. Evidencias
-- criterios atendidos: ...
+## 6. Evidências
+- critérios atendidos: ...
 - exemplo demonstrado: ...
 - links de apoio: ...`
     : `## 1. Context
