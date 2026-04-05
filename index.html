@@ -28,9 +28,70 @@
 
     <!-- Canonical -->
     <link rel="canonical" href="https://vibening.vercel.app/" />
+
+    <!-- Font preload: browser fetches in parallel with HTML parse, ensuring
+         fonts are ready within font-display:optional's 100ms block window -->
+    <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- App shell: shown while React JS loads (~50-150ms); React replaces #root content on mount -->
+    <style>
+      .s-shell { background: #04060a; min-height: 100svh; }
+      .s-nav {
+        height: 50px;
+        background: rgba(5, 7, 11, .74);
+        border-bottom: 1px solid rgba(255, 255, 255, .08);
+        display: flex; align-items: center;
+        padding: 0 22px;
+        justify-content: space-between;
+      }
+      .s-brand { width: 72px; height: 10px; border-radius: 4px; }
+      .s-nav-actions { display: flex; gap: 8px; }
+      .s-nav-btn { width: 36px; height: 28px; border-radius: 6px; }
+      @keyframes s-shimmer {
+        0%   { background-position: -200% 0; }
+        100% { background-position:  200% 0; }
+      }
+      .s-brand, .s-line, .s-nav-btn {
+        background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 75%);
+        background-size: 200% 100%;
+        animation: s-shimmer 1.6s infinite;
+        border-radius: 6px;
+      }
+      .s-hero { padding: 130px 5% 0; max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+      .s-eyebrow { height: 12px; width: 160px; }
+      .s-title  { height: 56px; width: 58%; }
+      .s-sub    { height: 18px; width: 72%; }
+      .s-sub2   { height: 18px; width: 55%; }
+      .s-metrics { display: flex; gap: 12px; margin-top: 8px; }
+      .s-metric { width: 100px; height: 60px; border-radius: 10px; }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="s-shell">
+        <nav class="s-nav">
+          <div class="s-brand"></div>
+          <div class="s-nav-actions">
+            <div class="s-nav-btn"></div>
+            <div class="s-nav-btn"></div>
+          </div>
+        </nav>
+        <div class="s-hero">
+          <div class="s-line s-eyebrow"></div>
+          <div class="s-line s-title"></div>
+          <div class="s-line s-sub"></div>
+          <div class="s-line s-sub2"></div>
+          <div class="s-metrics">
+            <div class="s-line s-metric"></div>
+            <div class="s-line s-metric"></div>
+            <div class="s-line s-metric"></div>
+            <div class="s-line s-metric"></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
