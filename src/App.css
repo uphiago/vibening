@@ -987,7 +987,7 @@ section::before {
   margin: 0;
   color: var(--text-muted);
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .principle-card small {
@@ -1090,6 +1090,12 @@ section::before {
   margin-bottom: 10px;
 }
 
+/* In flex header rows (sdd, template), margin-bottom causes vertical misalignment */
+.sdd-detail-header .detail-kicker,
+.sdd-template-header .detail-kicker {
+  margin-bottom: 0;
+}
+
 .layer-detail h3,
 .flow-right h3 {
   margin: 0 0 14px;
@@ -1171,18 +1177,6 @@ section::before {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   z-index: 1;
-}
-
-.node {
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 10px;
-  min-height: 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--mono-font);
-  font-size: 12px;
-  letter-spacing: 0.04em;
 }
 
 .node.top {
@@ -2235,7 +2229,7 @@ button:focus-visible {
 .stack-why {
   font-size: 12px;
   color: var(--text-muted);
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
 /* ── Review Checklist ─────────────────────────────────── */
@@ -2244,7 +2238,7 @@ button:focus-visible {
   margin-top: 22px;
   padding: 18px;
   display: grid;
-  gap: 2px;
+  gap: 4px;
 }
 
 .checklist-progress {
@@ -2599,7 +2593,6 @@ button:focus-visible {
   line-height: 1;
   color: rgba(86, 229, 194, 0.35);
   letter-spacing: 0.02em;
-  line-height: 1;
 }
 
 .sdd-detail-text {
@@ -2861,156 +2854,6 @@ button:focus-visible {
   gap: 3px;
 }
 
-/* ── XYFlow ───────────────────────────────────────────── */
-
-.xyflow-card {
-  margin-top: 22px;
-  padding: 14px;
-  position: relative;
-  overflow: hidden;
-}
-
-.xyflow-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 16% 14%, rgba(124, 212, 255, 0.14), transparent 34%),
-    radial-gradient(circle at 84% 86%, rgba(86, 229, 194, 0.11), transparent 30%);
-  pointer-events: none;
-}
-
-.xyflow-wrap {
-  position: relative;
-  height: clamp(360px, 52vh, 560px);
-  border-radius: 12px;
-  border: 1px solid rgba(124, 212, 255, 0.26);
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(180deg, rgba(7, 13, 21, 0.96), rgba(6, 10, 16, 0.96));
-  background-size: 26px 26px, 26px 26px, auto;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.xyflow-wrap .react-flow__renderer {
-  backdrop-filter: blur(2px);
-}
-
-.xyflow-wrap .react-flow__node {
-  border-radius: 10px;
-  border: 1px solid rgba(120, 192, 228, 0.64);
-  background: linear-gradient(160deg, rgba(16, 29, 45, 0.94), rgba(10, 20, 33, 0.95));
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.44), inset 0 0 0 1px rgba(124, 212, 255, 0.08);
-  color: #e5f3fb;
-  padding: 12px 14px;
-  min-width: 180px;
-  font-family: var(--mono-font);
-  font-size: 11px;
-  letter-spacing: 0.03em;
-  line-height: 1.5;
-  white-space: pre-line;
-  text-align: center;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.xyflow-wrap .react-flow__node:hover {
-  border-color: rgba(124, 212, 255, 0.75);
-  background: linear-gradient(160deg, rgba(19, 34, 52, 0.96), rgba(13, 23, 38, 0.97));
-  box-shadow: 0 0 10px rgba(124, 212, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.48);
-}
-
-.xyflow-wrap .react-flow__node.selected {
-  border-color: rgba(86, 229, 194, 0.8);
-  box-shadow: 0 0 0 1px rgba(86, 229, 194, 0.25), 0 12px 26px rgba(0, 0, 0, 0.5);
-}
-
-.xyflow-wrap .react-flow__node-input {
-  border-color: rgba(124, 212, 255, 0.75);
-  background: linear-gradient(160deg, rgba(14, 34, 56, 0.96), rgba(9, 24, 42, 0.97));
-  box-shadow: 0 0 14px rgba(124, 212, 255, 0.1), 0 8px 18px rgba(0, 0, 0, 0.44);
-}
-
-.xyflow-wrap .react-flow__node-output {
-  border-color: rgba(86, 229, 194, 0.75);
-  background: linear-gradient(160deg, rgba(8, 36, 28, 0.96), rgba(6, 24, 18, 0.97));
-  box-shadow: 0 0 14px rgba(86, 229, 194, 0.1), 0 8px 18px rgba(0, 0, 0, 0.44);
-  color: rgba(180, 255, 236, 0.92);
-}
-
-.xyflow-wrap .react-flow__edge path {
-  stroke: rgba(122, 204, 246, 0.85);
-  stroke-width: 1.8px;
-  filter: drop-shadow(0 0 4px rgba(122, 204, 246, 0.24));
-}
-
-.xyflow-wrap .react-flow__edge-textbg {
-  fill: rgba(10, 18, 28, 0.92);
-}
-
-.xyflow-wrap .react-flow__edge-text {
-  fill: #cfeaff;
-  font-family: var(--mono-font);
-  font-size: 10px;
-}
-
-.xyflow-wrap .react-flow__handle {
-  width: 10px;
-  height: 10px;
-  background: #79cdf5;
-  border: 1px solid rgba(255, 255, 255, 0.52);
-  transition: background 0.2s ease;
-}
-
-.xyflow-wrap .react-flow__handle:hover {
-  background: rgba(86, 229, 194, 0.9);
-}
-
-.xyflow-wrap .react-flow__controls {
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(124, 212, 255, 0.22);
-}
-
-.xyflow-wrap .react-flow__controls-button {
-  width: 30px;
-  height: 30px;
-  background: rgba(9, 18, 29, 0.92);
-  color: #d8eefe;
-  border-bottom: 1px solid rgba(124, 212, 255, 0.12);
-}
-
-.xyflow-wrap .react-flow__controls-button:hover {
-  background: rgba(17, 31, 46, 0.96);
-}
-
-.xyflow-wrap .react-flow__minimap {
-  background: rgba(7, 14, 22, 0.92);
-  border: 1px solid rgba(124, 212, 255, 0.22);
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(86, 229, 194, 0.14);
-}
-
-.xyflow-wrap .react-flow__minimap-mask {
-  fill: rgba(86, 229, 194, 0.1);
-  stroke: rgba(86, 229, 194, 0.5);
-  stroke-width: 2;
-}
-
-.xyflow-wrap .react-flow__minimap-node {
-  fill: rgba(124, 212, 255, 0.3);
-  stroke: rgba(124, 212, 255, 0.6);
-  stroke-width: 1;
-}
-
-.xyflow-wrap .react-flow__attribution {
-  background: rgba(8, 16, 24, 0.76);
-  color: rgba(171, 217, 243, 0.72);
-  border-radius: 6px 0 0 0;
-}
 
 @media (max-width: 1100px) {
   .side-nav {
@@ -3117,15 +2960,6 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .xyflow-wrap {
-    height: 440px;
-  }
-
-  .xyflow-wrap .react-flow__node {
-    min-width: 140px;
-    font-size: 10px;
-  }
-
   /* SDD: field list becomes horizontal scrollable row on tablet */
   .sdd-fields-list {
     display: flex;
@@ -3213,27 +3047,6 @@ button:focus-visible {
 
   .mermaid {
     min-width: 320px;
-  }
-
-  .xyflow-card {
-    padding: 10px;
-  }
-
-  .xyflow-wrap {
-    height: 360px;
-    border-radius: 10px;
-  }
-
-  .xyflow-wrap .react-flow__controls-button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .xyflow-wrap .react-flow__node {
-    min-width: 120px;
-    padding: 10px 8px;
-    font-size: 9px;
   }
 
   section {
