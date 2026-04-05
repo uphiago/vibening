@@ -74,7 +74,7 @@ function App() {
   const FLOW           = FLOW_DATA[lang]
   const METHODS        = METHODS_DATA[lang]
   const QUALITY_ROWS   = QUALITY_ROWS_DATA[lang]
-  const REVIEW_CHECKLIST = REVIEW_CHECKLIST_DATA[lang]
+  const REVIEW_CHECKLIST = useMemo(() => REVIEW_CHECKLIST_DATA[lang], [lang])
   const DEEP_DIVES     = DEEP_DIVES_DATA[lang]
   const WORKFLOW_PHASES = WORKFLOW_PHASES_DATA[lang]
   const STACK_TOOLS    = STACK_TOOLS_DATA[lang]
@@ -112,6 +112,8 @@ function App() {
     setActiveSddField(SDD_FIELDS_DATA[lang][0])
     setActiveArch(MULTI_AGENT_ARCHS_DATA[lang][0])
     setActiveAgentPattern(MULTI_AGENT_PATTERNS_DATA[lang][0])
+    setCheckedItems(new Set())
+    setChecklistAnimated(false)
   }, [lang])
 
   /* ── Refs for mobile scroll-to-detail ─────────────────── */
@@ -1283,7 +1285,7 @@ prompt: |
           <p className="section-label">{t.ecosystemMap.sectionLabel}</p>
           <h2 className="section-title">{t.ecosystemMap.title}</h2>
           <p className="section-description">{t.ecosystemMap.description}</p>
-          <div className="map-controls" role="tablist" aria-label="Map filter">
+          <div className="map-controls" role="group" aria-label="Map filter">
             <button type="button" className={activeMapView === 'all' ? 'active' : ''} onClick={() => setActiveMapView('all')}>{t.ecosystemMap.filterAll}</button>
             <button type="button" className={activeMapView === 'build' ? 'active' : ''} onClick={() => setActiveMapView('build')}>{t.ecosystemMap.filterBuild}</button>
             <button type="button" className={activeMapView === 'ops' ? 'active' : ''} onClick={() => setActiveMapView('ops')}>{t.ecosystemMap.filterOps}</button>
