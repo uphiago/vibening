@@ -456,7 +456,7 @@
   text-align: left;
   padding: 12px;
   display: grid;
-  gap: 3px;
+  gap: 6px;
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -1023,6 +1023,12 @@ section::before {
   cursor: pointer;
   background: var(--glass);
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .layer-row:hover,

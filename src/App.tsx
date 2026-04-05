@@ -31,10 +31,12 @@ import {
 
 function useCopy(text: string) {
   const [copied, setCopied] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const copy = useCallback(() => {
     void navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
-      setTimeout(() => setCopied(false), 1800)
+      if (timerRef.current) clearTimeout(timerRef.current)
+      timerRef.current = setTimeout(() => setCopied(false), 1800)
     })
   }, [text])
   return { copied, copy }
@@ -99,6 +101,7 @@ function App() {
   const [checklistAnimated, setChecklistAnimated] = useState(false)
   const [scrollProgress, setScrollProgress]     = useState(0)
   const checklistSectionRef = useRef<HTMLElement | null>(null)
+  const checklistTimersRef  = useRef<ReturnType<typeof setTimeout>[]>([])
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
   const [mermaidReady, setMermaidReady]         = useState(false)
 
@@ -252,14 +255,17 @@ function App() {
         if (!entry.isIntersecting) return
         obs.disconnect()
         setChecklistAnimated(true)
-        REVIEW_CHECKLIST.forEach((_, i) => {
+        checklistTimersRef.current = REVIEW_CHECKLIST.map((_, i) =>
           setTimeout(() => setCheckedItems((prev) => new Set([...prev, i])), i * 140 + 300)
-        })
+        )
       },
       { threshold: 0.15 },
     )
     obs.observe(el)
-    return () => obs.disconnect()
+    return () => {
+      obs.disconnect()
+      checklistTimersRef.current.forEach(clearTimeout)
+    }
   }, [checklistAnimated, REVIEW_CHECKLIST])
 
   /* ── Helpers ───────────────────────────────────────────── */

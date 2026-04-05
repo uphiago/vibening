@@ -92,7 +92,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
             href={`#${item.id}`}
             className={`side-link${activeSection === item.id ? ' active' : ''}`}
             aria-label={item.label}
-            aria-current={activeSection === item.id ? 'true' : undefined}
+            aria-current={activeSection === item.id ? 'page' : undefined}
           >
             <span className="side-link-bar" aria-hidden="true" />
             <span className="side-link-label">{item.label}</span>
