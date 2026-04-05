@@ -15,19 +15,20 @@ import { ProgressiveDisclosure } from './sections/ProgressiveDisclosure'
 import { Hero } from './sections/Hero'
 import { LessonRoadmap } from './sections/LessonRoadmap'
 import { VibecodeVsAI } from './sections/VibecodeVsAI'
+import { EcosystemMap } from './sections/EcosystemMap'
+import { LayerModel } from './sections/LayerModel'
+import { ExecutionFlow } from './sections/ExecutionFlow'
+import { WorkflowGate } from './sections/WorkflowGate'
 
 import {
   ANTI_PATTERNS_DATA,
   COMM_PATTERNS_DATA,
   DEEP_DIVES_DATA,
-  FLOW_DATA,
-  LAYERS_DATA,
   MULTI_AGENT_ARCHS_DATA,
   MULTI_AGENT_PATTERNS_DATA,
   REVIEW_CHECKLIST_DATA,
   SDD_FIELDS_DATA,
   SDD_SPEC_ROWS_DATA,
-  WORKFLOW_PHASES_DATA,
 } from './i18n'
 
 /* ─── App ────────────────────────────────────────────────── */
@@ -37,11 +38,8 @@ function App() {
 
   /* ── Data (lang-switched) ──────────────────────────────── */
   const ANTI_PATTERNS  = ANTI_PATTERNS_DATA[lang]
-  const LAYERS         = LAYERS_DATA[lang]
-  const FLOW           = FLOW_DATA[lang]
   const REVIEW_CHECKLIST = REVIEW_CHECKLIST_DATA[lang]
   const DEEP_DIVES     = DEEP_DIVES_DATA[lang]
-  const WORKFLOW_PHASES = WORKFLOW_PHASES_DATA[lang]
   const SDD_FIELDS     = SDD_FIELDS_DATA[lang]
   const SDD_SPEC_ROWS  = SDD_SPEC_ROWS_DATA[lang]
   const MULTI_AGENT_ARCHS    = MULTI_AGENT_ARCHS_DATA[lang]
@@ -49,12 +47,8 @@ function App() {
   const COMM_PATTERNS  = COMM_PATTERNS_DATA[lang]
 
   /* ── State ─────────────────────────────────────────────── */
-  const [activeLayer, setActiveLayer]     = useState(LAYERS[0])
-  const [activeStep, setActiveStep]       = useState(FLOW[0])
   const [activeSection, setActiveSection] = useState('hero')
-  const [activeMapView, setActiveMapView] = useState<'all' | 'build' | 'ops'>('all')
   const [activeDeepDive, setActiveDeepDive]     = useState(DEEP_DIVES[0])
-  const [activePhase, setActivePhase]           = useState(WORKFLOW_PHASES[0])
   const [activeAntiPattern, setActiveAntiPattern] = useState(ANTI_PATTERNS[0])
   const [activeSddField, setActiveSddField]     = useState(SDD_FIELDS[0])
   const [activeArch, setActiveArch]             = useState(MULTI_AGENT_ARCHS[0])
@@ -70,10 +64,7 @@ function App() {
 
   // Reset active items when language changes
   useEffect(() => {
-    setActiveLayer(LAYERS_DATA[lang][0])
-    setActiveStep(FLOW_DATA[lang][0])
     setActiveDeepDive(DEEP_DIVES_DATA[lang][0])
-    setActivePhase(WORKFLOW_PHASES_DATA[lang][0])
     setActiveAntiPattern(ANTI_PATTERNS_DATA[lang][0])
     setActiveSddField(SDD_FIELDS_DATA[lang][0])
     setActiveArch(MULTI_AGENT_ARCHS_DATA[lang][0])
@@ -85,9 +76,6 @@ function App() {
   /* ── Refs for detail panels ───────────────────────────── */
   const sddDetailRef        = useRef<HTMLDivElement>(null)
   const deepDiveDetailRef   = useRef<HTMLDivElement>(null)
-  const layerDetailRef      = useRef<HTMLDivElement>(null)
-  const execFlowDetailRef   = useRef<HTMLDivElement>(null)
-  const workflowDetailRef   = useRef<HTMLDivElement>(null)
   const maArchDetailRef     = useRef<HTMLDivElement>(null)
   const maPatternDetailRef  = useRef<HTMLDivElement>(null)
   const antiPatternDetailRef = useRef<HTMLDivElement>(null)
@@ -722,105 +710,13 @@ prompt: |
         <ProgressiveDisclosure />
 
         {/* ── Layer Model ──────────────────────────────── */}
-        <section id="layer-model" className="reveal">
-          <p className="section-label">{t.layerModel.sectionLabel}</p>
-          <h2 className="section-title">{t.layerModel.title}</h2>
-          <p className="section-description">{t.layerModel.description}</p>
-          <div className="layer-layout">
-            <div className="layer-stack">
-              {LAYERS.map((layer) => (
-                <button
-                  key={layer.id}
-                  type="button"
-                  className={`layer-row glass-card ${activeLayer.id === layer.id ? 'active' : ''}`}
-                  onClick={() => { setActiveLayer(layer); activateDetail(layerDetailRef) }}
-                >
-                  <div className="layer-row-main">
-                    <span className="layer-title">{layer.label}</span>
-                    <span className="layer-summary">{layer.summary}</span>
-                  </div>
-                  <div className="layer-chips">
-                    {layer.chips.map((chip) => <span key={chip}>{chip}</span>)}
-                  </div>
-                </button>
-              ))}
-            </div>
-            <div ref={layerDetailRef} tabIndex={-1}>
-              <article key={activeLayer.id} className="layer-detail glass-card">
-                <span className="detail-kicker">{t.layerModel.kicker}</span>
-                <h3>{activeLayer.label}</h3>
-                <ul>{activeLayer.facts.map((fact) => <li key={fact}>{fact}</li>)}</ul>
-              </article>
-            </div>
-          </div>
-        </section>
+        <LayerModel />
 
         {/* ── RPEV Flow ────────────────────────────────── */}
-        <section id="execution-flow" className="reveal">
-          <p className="section-label">{t.executionFlow.sectionLabel}</p>
-          <h2 className="section-title">{t.executionFlow.title}</h2>
-          <p className="section-description">{t.executionFlow.description}</p>
-          <div className="flow-layout">
-            <div className="flow-left">
-              {FLOW.map((step) => (
-                <button
-                  key={step.id}
-                  type="button"
-                  className={`flow-step glass-card ${activeStep.id === step.id ? 'active' : ''}`}
-                  onClick={() => { setActiveStep(step); activateDetail(execFlowDetailRef) }}
-                >
-                  <span className="flow-step-label">{step.label}</span>
-                  <span className="flow-step-summary">{step.summary}</span>
-                </button>
-              ))}
-            </div>
-            <div ref={execFlowDetailRef} tabIndex={-1}>
-              <article key={activeStep.id} className="flow-right glass-card">
-                <span className="detail-kicker">{t.executionFlow.kicker}</span>
-                <h3>{activeStep.label}</h3>
-                <p>{activeStep.detail}</p>
-                <div className="flow-payload">{activeStep.payload}</div>
-              </article>
-            </div>
-          </div>
-        </section>
+        <ExecutionFlow />
 
         {/* ── Workflow Gate ────────────────────────────── */}
-        <section id="workflow-gate" className="reveal">
-          <p className="section-label">{t.workflowGate.sectionLabel}</p>
-          <h2 className="section-title">{t.workflowGate.title}</h2>
-          <p className="section-description">{t.workflowGate.description}</p>
-          <div className="flow-layout">
-            <div className="flow-left">
-              {WORKFLOW_PHASES.map((phase) => (
-                <button
-                  key={phase.id}
-                  type="button"
-                  className={`flow-step glass-card ${activePhase.id === phase.id ? 'active' : ''}`}
-                  onClick={() => { setActivePhase(phase); activateDetail(workflowDetailRef) }}
-                >
-                  <span className="flow-step-label">{phase.step} · {phase.title}</span>
-                  <span className="flow-step-summary">{phase.objective}</span>
-                </button>
-              ))}
-            </div>
-            <div ref={workflowDetailRef} tabIndex={-1}>
-              <article key={activePhase.id} className="flow-right glass-card">
-                <span className="detail-kicker">{t.workflowGate.kicker}</span>
-                <h3>{activePhase.step} · {activePhase.title}</h3>
-                <p>{activePhase.objective}</p>
-                <div className="deck-block">
-                  <strong>{t.workflowGate.checksLabel}</strong>
-                  <ul>{activePhase.checks.map((check) => <li key={check}>{check}</li>)}</ul>
-                </div>
-                <div className="flow-warning">
-                  <strong>{t.workflowGate.antiPatternLabel}</strong>
-                  <p>{activePhase.antiPattern}</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
+        <WorkflowGate />
 
         {/* ── Multi-Agent ──────────────────────────────── */}
         <section id="multi-agent" className="reveal">
@@ -1124,41 +1020,7 @@ prompt: |
         </section>
 
         {/* ── Ecosystem Map ────────────────────────────── */}
-        <section id="ecosystem-map" className="reveal">
-          <p className="section-label">{t.ecosystemMap.sectionLabel}</p>
-          <h2 className="section-title">{t.ecosystemMap.title}</h2>
-          <p className="section-description">{t.ecosystemMap.description}</p>
-          <div className="map-controls" role="group" aria-label={t.ecosystemMap.filterGroupLabel}>
-            <button type="button" className={activeMapView === 'all' ? 'active' : ''} onClick={() => setActiveMapView('all')}>{t.ecosystemMap.filterAll}</button>
-            <button type="button" className={activeMapView === 'build' ? 'active' : ''} onClick={() => setActiveMapView('build')}>{t.ecosystemMap.filterBuild}</button>
-            <button type="button" className={activeMapView === 'ops' ? 'active' : ''} onClick={() => setActiveMapView('ops')}>{t.ecosystemMap.filterOps}</button>
-          </div>
-          <div className="map-card glass-card">
-            <div className="map-legend">
-              <span className="legend-item legend-top">{t.ecosystemMap.legendBuild}</span>
-              <span className="legend-item legend-mid">{t.ecosystemMap.legendExec}</span>
-              <span className="legend-item legend-bot">{t.ecosystemMap.legendOps}</span>
-            </div>
-            <div className={`map-grid view-${activeMapView}`}>
-              <div className="node top"><span>rules</span><small>CLAUDE.md</small></div>
-              <div className="node top"><span>skills</span><small>SKILL.md</small></div>
-              <div className="node top"><span>mcp</span><small>tool access</small></div>
-              <div className="node top"><span>hooks</span><small>loop control</small></div>
-              <div className="node mid"><span>research</span><small>map state</small></div>
-              <div className="node mid"><span>plan</span><small>define steps</small></div>
-              <div className="node mid"><span>execute</span><small>apply changes</small></div>
-              <div className="node mid"><span>verify</span><small>validate</small></div>
-              <div className="node bot"><span>review</span><small>human eye</small></div>
-              <div className="node bot"><span>approval</span><small>gate</small></div>
-              <div className="node bot"><span>release</span><small>controlled</small></div>
-            </div>
-            <p className="map-caption">
-              {activeMapView === 'all' && t.ecosystemMap.captionAll}
-              {activeMapView === 'build' && t.ecosystemMap.captionBuild}
-              {activeMapView === 'ops' && t.ecosystemMap.captionOps}
-            </p>
-          </div>
-        </section>
+        <EcosystemMap />
 
         {/* ── Stack Curation ───────────────────────────── */}
         <StackCuration />
