@@ -12,15 +12,16 @@ import { StackCuration } from './sections/StackCuration'
 import { Principles } from './sections/Principles'
 import { ContextSignals } from './sections/ContextSignals'
 import { ProgressiveDisclosure } from './sections/ProgressiveDisclosure'
+import { Hero } from './sections/Hero'
+import { LessonRoadmap } from './sections/LessonRoadmap'
+import { VibecodeVsAI } from './sections/VibecodeVsAI'
 
 import {
   ANTI_PATTERNS_DATA,
   COMM_PATTERNS_DATA,
-  COMPARISONS_DATA,
   DEEP_DIVES_DATA,
   FLOW_DATA,
   LAYERS_DATA,
-  LESSONS_DATA,
   MULTI_AGENT_ARCHS_DATA,
   MULTI_AGENT_PATTERNS_DATA,
   REVIEW_CHECKLIST_DATA,
@@ -35,8 +36,6 @@ function App() {
   const { lang, t } = useLang()
 
   /* ── Data (lang-switched) ──────────────────────────────── */
-  const LESSONS        = LESSONS_DATA[lang]
-  const COMPARISONS    = COMPARISONS_DATA[lang]
   const ANTI_PATTERNS  = ANTI_PATTERNS_DATA[lang]
   const LAYERS         = LAYERS_DATA[lang]
   const FLOW           = FLOW_DATA[lang]
@@ -252,13 +251,7 @@ function App() {
     return t.antiPatterns.severityMedium
   }
 
-  const riskLabel = (r: 'high' | 'medium' | 'ok') => {
-    if (r === 'high') return t.vibecodeVsAI.riskHigh
-    if (r === 'medium') return t.vibecodeVsAI.riskMedium
-    return ''
-  }
-
-  const reliabilityLabel = (r: 'high' | 'medium' | 'low') => {
+const reliabilityLabel = (r: 'high' | 'medium' | 'low') => {
     if (r === 'high') return t.multiAgent.reliabilityHigh
     if (r === 'medium') return t.multiAgent.reliabilityMedium
     return t.multiAgent.reliabilityLow
@@ -605,95 +598,15 @@ prompt: |
       />
 
       {/* ── Hero ─────────────────────────────────────────── */}
-      <header id="hero" className="hero">
-        <div className="hero-grid" />
-        <div className="hero-glow hero-glow-primary" />
-        <div className="hero-glow hero-glow-secondary" />
-        <div className="hero-content reveal visible">
-          <p className="eyebrow">{t.hero.eyebrow}</p>
-          <h1>
-            {t.hero.title}
-            <span>{t.hero.titleSpan}</span>
-          </h1>
-          <p className="hero-subtitle">{t.hero.subtitle}</p>
-          <div className="hero-metrics" aria-label={t.hero.metricsLabel}>
-            <div className="metric">
-              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 12h6m-6 4h6M7 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z"/><path d="M14 3v5h5"/></svg>
-              <span>SDD</span><small>{t.hero.metric1Label}</small>
-            </div>
-            <div className="metric">
-              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M4 9a8 8 0 0114.9-2.7M20 15a8 8 0 01-14.9 2.7"/></svg>
-              <span>RPEV</span><small>{t.hero.metric2Label}</small>
-            </div>
-            <div className="metric">
-              <svg className="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="M12 7v3M6.5 17.5l4.5-3M17.5 17.5l-4.5-3"/></svg>
-              <span>Multi-Agent</span><small>{t.hero.metric3Label}</small>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Hero />
 
       <main id="main-content" className="content">
 
         {/* ── Lesson Roadmap ───────────────────────────── */}
-        <section id="lesson-roadmap" className="reveal">
-          <p className="section-label">{t.lessonRoadmap.sectionLabel}</p>
-          <h2 className="section-title">{t.lessonRoadmap.title}</h2>
-          <p className="section-description">{t.lessonRoadmap.description}</p>
-          <div className="lessons-grid">
-            {LESSONS.map((lesson) => (
-              <article key={lesson.id} className="glass-card lesson-card">
-                <div className="lesson-header">
-                  <span className="lesson-number">{lesson.number}</span>
-                  <span className="lesson-tag">{lesson.tag}</span>
-                  {lesson.date ? <span className="lesson-date">{lesson.date}</span> : null}
-                </div>
-                <h3>{lesson.title}</h3>
-                <p className="lesson-objective">{lesson.objective}</p>
-                <div className="lesson-columns">
-                  <div>
-                    <span className="lesson-col-label">{t.lessonRoadmap.topicsLabel}</span>
-                    <ul>{lesson.topics.map((tp) => <li key={tp}>{tp}</li>)}</ul>
-                  </div>
-                  <div>
-                    <span className="lesson-col-label">{t.lessonRoadmap.outcomesLabel}</span>
-                    <ul className="outcome-list">{lesson.outcomes.map((o) => <li key={o}>{o}</li>)}</ul>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        <LessonRoadmap />
 
         {/* ── Vibecoding vs AI-Assisted ─────────────────── */}
-        <section id="vibecoding-vs-ai" className="reveal">
-          <p className="section-label">{t.vibecodeVsAI.sectionLabel}</p>
-          <h2 className="section-title">{t.vibecodeVsAI.title}</h2>
-          <p className="section-description">{t.vibecodeVsAI.description}</p>
-          <div className="comparison-table glass-card">
-            <div className="comparison-head">
-              <span>{t.vibecodeVsAI.headerAspect}</span>
-              <span>{t.vibecodeVsAI.headerVibe}</span>
-              <span>{t.vibecodeVsAI.headerAI}</span>
-            </div>
-            {COMPARISONS.map((row) => (
-              <div key={row.aspect} className={`comparison-row risk-${row.risk}`}>
-                <span className="comparison-aspect">{row.aspect}</span>
-                <span className="comparison-vibe">{row.vibecoding}</span>
-                <span className="comparison-ai">
-                  {row.aiAssisted}
-                  {row.risk !== 'ok' && (
-                    <span className={`risk-badge risk-${row.risk}`}>{riskLabel(row.risk)}</span>
-                  )}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="comparison-note glass-card">
-            <strong>{t.vibecodeVsAI.ruleTitle}</strong>
-            <p>{t.vibecodeVsAI.ruleText}</p>
-          </div>
-        </section>
+        <VibecodeVsAI />
 
         {/* ── Principles ───────────────────────────────── */}
         <Principles />
