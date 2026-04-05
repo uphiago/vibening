@@ -482,36 +482,45 @@
 }
 
 .deck-detail {
-  padding: 16px;
+  padding: 20px;
   min-height: 280px;
   animation: fadeContent 0.15s ease;
 }
 
+.deck-detail h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+  color: #f2f8fc;
+}
+
 .deck-objective {
-  margin: 10px 0 0;
+  margin: 0 0 6px;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .deck-block {
-  margin-top: 12px;
+  margin-top: 14px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 12px;
 }
 
 .deck-block strong {
+  display: block;
   font-family: var(--mono-font);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(190, 235, 255, 0.88);
+  margin-bottom: 8px;
 }
 
 .deck-block p {
-  margin: 8px 0 0;
+  margin: 0;
   color: #d9edf8;
+  line-height: 1.6;
 }
 
 .deck-block ul {
@@ -1066,22 +1075,24 @@ section::before {
 
 .layer-detail,
 .flow-right {
-  padding: 16px;
+  padding: 20px;
   min-height: 240px;
   animation: fadeContent 0.15s ease;
 }
 
 .detail-kicker {
+  display: block;
   font-family: var(--mono-font);
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--accent-teal);
+  margin-bottom: 10px;
 }
 
 .layer-detail h3,
 .flow-right h3 {
-  margin: 14px 0 12px;
+  margin: 0 0 14px;
   font-size: 22px;
 }
 
@@ -1089,26 +1100,27 @@ section::before {
   margin: 0;
   padding-left: 18px;
   display: grid;
-  gap: 8px;
-  color: var(--text-muted);
-  line-height: 1.55;
-}
-
-.flow-right p {
-  margin: 0;
+  gap: 10px;
   color: var(--text-muted);
   line-height: 1.6;
 }
 
+.flow-right p {
+  margin: 0 0 6px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
 .flow-payload {
-  margin-top: 14px;
+  margin-top: 16px;
   font-family: var(--mono-font);
   font-size: 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 10px;
-  padding: 10px;
+  padding: 12px;
   color: #d8ebf8;
   background: rgba(0, 0, 0, 0.25);
+  line-height: 1.6;
 }
 
 .map-card {
@@ -2495,16 +2507,16 @@ button:focus-visible {
 }
 
 .sdd-detail h3 {
-  margin: 12px 0 10px;
+  margin: 0 0 12px;
   font-size: 22px;
   color: #f2f8fc;
 }
 
 .sdd-description {
-  margin: 0;
+  margin: 0 0 6px;
   color: var(--text-muted);
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .sdd-example-block {
