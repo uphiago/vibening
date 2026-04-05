@@ -11,7 +11,7 @@ export function Footer() {
       </div>
 
       <span className="footer-made">
-        made with ❤️ for devs, by{' '}
+        {t.footer.madeWith}{' '}
         <a href="https://x.com/uphiago" target="_blank" rel="noopener noreferrer">
           uphiago
         </a>

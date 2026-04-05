@@ -202,6 +202,7 @@ export const translations = {
       filterAll: 'All',
       filterBuild: 'Build',
       filterOps: 'Ops',
+      filterGroupLabel: 'Filtro do mapa',
       legendBuild: 'Build layer',
       legendExec: 'Execution layer',
       legendOps: 'Ops layer',
@@ -267,6 +268,8 @@ export const translations = {
     },
     footer: {
       tagline: 'guia de engenharia agêntica',
+      madeWith: 'feito com ❤️ para devs, por',
+      copyCode: 'Copiar código',
     },
   },
   'en': {
@@ -448,6 +451,7 @@ export const translations = {
       filterAll: 'All',
       filterBuild: 'Build',
       filterOps: 'Ops',
+      filterGroupLabel: 'Map filter',
       legendBuild: 'Build layer',
       legendExec: 'Execution layer',
       legendOps: 'Ops layer',
@@ -513,6 +517,8 @@ export const translations = {
     },
     footer: {
       tagline: 'agentic engineering guide',
+      madeWith: 'made with ❤️ for devs, by',
+      copyCode: 'Copy code',
     },
   },
 }

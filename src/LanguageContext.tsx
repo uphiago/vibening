@@ -13,9 +13,14 @@ interface LangContextValue {
 
 const LanguageContext = createContext<LangContextValue | null>(null)
 
+const VALID_LANGS: readonly Lang[] = ['pt-BR', 'en']
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
-    try { return (localStorage.getItem('lang') as Lang) || 'en' } catch { return 'en' }
+    try {
+      const stored = localStorage.getItem('lang')
+      return VALID_LANGS.includes(stored as Lang) ? (stored as Lang) : 'en'
+    } catch { return 'en' }
   })
 
   const t = translations[lang]

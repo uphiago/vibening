@@ -9,15 +9,56 @@ interface NavProps {
 
 export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps) {
   const { lang, setLang, t } = useLang()
-  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+  const firstLinkRef  = useRef<HTMLAnchorElement>(null)
+  const openBtnRef    = useRef<HTMLButtonElement>(null)
+  const prevOpenRef   = useRef(false)
 
-  // Move focus into dialog when it opens; close on Escape
+  // Return focus to the trigger button when the dialog closes
+  useEffect(() => {
+    if (prevOpenRef.current && !mobileNavOpen) {
+      openBtnRef.current?.focus()
+    }
+    prevOpenRef.current = mobileNavOpen
+  }, [mobileNavOpen])
+
+  // Move focus into dialog on open; Escape closes; Tab is trapped inside
   useEffect(() => {
     if (!mobileNavOpen) return
     firstLinkRef.current?.focus()
+
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileNavOpen(false)
+      if (e.key === 'Escape') {
+        setMobileNavOpen(false)
+        return
+      }
+
+      if (e.key !== 'Tab') return
+
+      const dialog = document.querySelector<HTMLElement>('.mobile-nav-sheet')
+      if (!dialog) return
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"])'
+        )
+      )
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last  = focusable[focusable.length - 1]
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
+
     document.addEventListener('keydown', onKeyDown)
     return () => document.removeEventListener('keydown', onKeyDown)
   }, [mobileNavOpen, setMobileNavOpen])
@@ -36,6 +77,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
             {lang === 'pt-BR' ? 'EN' : 'PT'}
           </button>
           <button
+            ref={openBtnRef}
             type="button"
             className="mobile-nav-btn"
             aria-label={t.nav.openNav}

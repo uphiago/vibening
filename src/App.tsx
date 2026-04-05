@@ -33,19 +33,21 @@ function useCopy(text: string) {
   const [copied, setCopied] = useState(false)
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const copy = useCallback(() => {
-    void navigator.clipboard.writeText(text).then(() => {
+    navigator.clipboard.writeText(text).then(() => {
       setCopied(true)
       if (timerRef.current) clearTimeout(timerRef.current)
       timerRef.current = setTimeout(() => setCopied(false), 1800)
-    })
+    }).catch(() => { /* clipboard unavailable or permission denied */ })
   }, [text])
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
   return { copied, copy }
 }
 
 function CopyButton({ text }: { text: string }) {
   const { copied, copy } = useCopy(text)
+  const { t } = useLang()
   return (
-    <button type="button" className={`copy-btn${copied ? ' copied' : ''}`} onClick={copy} aria-label="Copy code">
+    <button type="button" className={`copy-btn${copied ? ' copied' : ''}`} onClick={copy} aria-label={t.footer.copyCode}>
       {copied ? (
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <polyline points="20 6 9 17 4 12" />
@@ -426,7 +428,7 @@ para tratar entradas vazias sem lançar exceção.
 
 ## Escopo
 - Apenas parseDate(), sem mexer em outras funções
-- Manter assinatura atual: parseDate(input: string): Date
+- Manter assinatura atual: parseDate(input: string): Date | null
 
 ## Critério de aceite
 - parseDate('') retorna null
@@ -439,7 +441,7 @@ to handle empty inputs without throwing an exception.
 
 ## Scope
 - Only parseDate(), do not touch other functions
-- Keep current signature: parseDate(input: string): Date
+- Keep current signature: parseDate(input: string): Date | null
 
 ## Acceptance criteria
 - parseDate('') returns null
@@ -1305,7 +1307,7 @@ prompt: |
           <p className="section-label">{t.ecosystemMap.sectionLabel}</p>
           <h2 className="section-title">{t.ecosystemMap.title}</h2>
           <p className="section-description">{t.ecosystemMap.description}</p>
-          <div className="map-controls" role="group" aria-label="Map filter">
+          <div className="map-controls" role="group" aria-label={t.ecosystemMap.filterGroupLabel}>
             <button type="button" className={activeMapView === 'all' ? 'active' : ''} onClick={() => setActiveMapView('all')}>{t.ecosystemMap.filterAll}</button>
             <button type="button" className={activeMapView === 'build' ? 'active' : ''} onClick={() => setActiveMapView('build')}>{t.ecosystemMap.filterBuild}</button>
             <button type="button" className={activeMapView === 'ops' ? 'active' : ''} onClick={() => setActiveMapView('ops')}>{t.ecosystemMap.filterOps}</button>
