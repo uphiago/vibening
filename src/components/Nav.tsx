@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useLang } from '../LanguageContext'
 
 interface NavProps {
@@ -8,6 +9,18 @@ interface NavProps {
 
 export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps) {
   const { lang, setLang, t } = useLang()
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+
+  // Move focus into dialog when it opens; close on Escape
+  useEffect(() => {
+    if (!mobileNavOpen) return
+    firstLinkRef.current?.focus()
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileNavOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [mobileNavOpen, setMobileNavOpen])
 
   return (
     <>
@@ -35,7 +48,12 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
       </nav>
 
       {mobileNavOpen && (
-        <div className="mobile-nav-overlay" role="dialog" aria-label={t.nav.sectionNavLabel}>
+        <div
+          className="mobile-nav-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t.nav.sectionNavLabel}
+        >
           <div className="mobile-nav-backdrop" onClick={() => setMobileNavOpen(false)} />
           <nav className="mobile-nav-sheet">
             <div className="mobile-nav-header">
@@ -50,9 +68,10 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
               </button>
             </div>
             <ul className="mobile-nav-list">
-              {t.navItems.map((item) => (
+              {t.navItems.map((item, i) => (
                 <li key={item.id}>
                   <a
+                    ref={i === 0 ? firstLinkRef : undefined}
                     href={`#${item.id}`}
                     className={`mobile-nav-link${activeSection === item.id ? ' active' : ''}`}
                     onClick={() => setMobileNavOpen(false)}

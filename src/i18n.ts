@@ -265,6 +265,9 @@ export const translations = {
       groupMcp: 'MCP & Integração',
       groupPrompt: 'Prompt & Contexto',
     },
+    footer: {
+      tagline: 'guia de engenharia agêntica',
+    },
   },
   'en': {
     nav: {
@@ -507,6 +510,9 @@ export const translations = {
       groupSkills: 'Skills & Agents',
       groupMcp: 'MCP & Integration',
       groupPrompt: 'Prompt & Context',
+    },
+    footer: {
+      tagline: 'agentic engineering guide',
     },
   },
 }

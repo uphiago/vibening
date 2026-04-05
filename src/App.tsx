@@ -126,11 +126,11 @@ function App() {
   const maPatternDetailRef  = useRef<HTMLDivElement>(null)
   const antiPatternDetailRef = useRef<HTMLDivElement>(null)
 
-  const scrollToDetail = (ref: React.RefObject<HTMLDivElement | null>) => {
+  const scrollToDetail = useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
     if (window.innerWidth <= 980) {
       setTimeout(() => { ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }, 60)
     }
-  }
+  }, [])
 
   /* ── Intersection observers ────────────────────────────── */
   const navItems = useMemo(() => t.navItems, [t])
@@ -163,7 +163,7 @@ function App() {
   useEffect(() => {
     const onScroll = () => {
       const el = document.documentElement
-      setScrollProgress(el.scrollTop / (el.scrollHeight - el.clientHeight) * 100)
+      setScrollProgress(Math.min(100, el.scrollTop / (el.scrollHeight - el.clientHeight || 1) * 100))
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
