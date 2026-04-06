@@ -440,7 +440,7 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 12px;
-  align-items: stretch;
+  align-items: start;
 }
 
 .deck-list {
@@ -489,20 +489,45 @@
 
 .deck-detail {
   padding: 20px;
-  height: 440px;
-  overflow-y: auto;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
   align-self: start;
+  display: grid;
+  gap: 10px;
   animation: fadeContent 0.15s ease;
 }
 
+.deck-detail-shell {
+  min-height: 0;
+}
+
 .deck-detail h3 {
-  margin: 0 0 12px;
+  margin: 0;
   font-size: 20px;
   color: #f2f8fc;
 }
 
+.deck-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.deck-meta span {
+  border-radius: 999px;
+  border: 1px solid rgba(124, 212, 255, 0.22);
+  background: rgba(124, 212, 255, 0.08);
+  color: rgba(188, 228, 249, 0.92);
+  font-family: var(--mono-font);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+}
+
 .deck-objective {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--text-muted);
   line-height: 1.65;
 }

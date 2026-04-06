@@ -13,6 +13,10 @@ export function WorkflowGate() {
   }, [lang, activePhaseId])
   const workflowDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
+  const checksSummary = lang === 'pt-BR'
+    ? `${activePhase.checks.length} checks obrigatórios`
+    : `${activePhase.checks.length} required checks`
+  const gateSummary = lang === 'pt-BR' ? 'gate obrigatório' : 'required gate'
 
   return (
     <section id="workflow-gate" className="reveal">
@@ -33,10 +37,15 @@ export function WorkflowGate() {
             </button>
           ))}
         </div>
-        <div ref={workflowDetailRef} tabIndex={-1}>
+        <div ref={workflowDetailRef} tabIndex={-1} className="flow-detail-shell">
           <article key={activePhase.id} className="flow-right glass-card">
             <span className="detail-kicker">{t.workflowGate.kicker}</span>
             <h3>{activePhase.step} · {activePhase.title}</h3>
+            <div className="flow-phase-meta" aria-label={checksSummary}>
+              <span className="flow-meta-chip">{lang === 'pt-BR' ? `fase ${activePhase.step}` : `phase ${activePhase.step}`}</span>
+              <span className="flow-meta-chip">{checksSummary}</span>
+              <span className="flow-meta-chip flow-meta-chip-gate">{gateSummary}</span>
+            </div>
             <p>{activePhase.objective}</p>
             <div className="deck-block">
               <strong>{t.workflowGate.checksLabel}</strong>
