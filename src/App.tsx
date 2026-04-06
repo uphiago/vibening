@@ -106,9 +106,6 @@ function App() {
     return () => spyObserver.disconnect()
   }, [navItems])
 
-
-
-
   return (
     <div className="app">
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
