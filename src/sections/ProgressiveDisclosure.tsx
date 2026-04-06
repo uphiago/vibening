@@ -32,7 +32,7 @@ export function ProgressiveDisclosure() {
       </div>
       <article className="glass-card checklist-card">
         <h3>{t.progressiveDisclosure.workflowTitle}</h3>
-        <pre>
+        <pre className="pd-workflow-code">
           <code>{t.progressiveDisclosure.workflowCode}</code>
         </pre>
         <p>{t.progressiveDisclosure.workflowNote}</p>

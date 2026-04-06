@@ -278,7 +278,7 @@ export const translations = {
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
-      title: '10 gates antes de considerar pronto',
+      title: '13 gates antes de considerar pronto',
       description: 'Itens abertos viram ações antes do merge, não comentários para "resolver depois".',
       progress: (done: number, total: number) => `${done} / ${total} verificados`,
       allDone: 'Todos os gates atendidos. Pronto para merge.',
@@ -569,7 +569,7 @@ export const translations = {
     },
     reviewChecklist: {
       sectionLabel: 'Code Review Checklist',
-      title: '10 gates before considering it done',
+      title: '13 gates before considering it done',
       description: 'Open items become actions before merge, not comments to "fix later".',
       progress: (done: number, total: number) => `${done} / ${total} verified`,
       allDone: 'All gates met. Ready to merge.',

@@ -84,9 +84,9 @@ export function WorkflowGate() {
         </div>
         {QUALITY_ROWS.map((row) => (
           <div key={row.gate} className="matrix-row">
-            <span>{row.gate}</span>
-            <span>{row.rule}</span>
-            <span>{row.verify}</span>
+            <span data-col={t.qualityMatrix.headerGate}>{row.gate}</span>
+            <span data-col={t.qualityMatrix.headerRule}>{row.rule}</span>
+            <span data-col={t.qualityMatrix.headerVerify}>{row.verify}</span>
           </div>
         ))}
       </div>

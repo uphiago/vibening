@@ -653,13 +653,14 @@
 .side-link {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: flex-end;
   text-decoration: none;
   min-height: 28px;
-  min-width: 44px;
-  padding: 6px 0 6px 8px;
+  width: 44px;
+  padding: 6px 0;
   position: relative;
   touch-action: manipulation;
+  overflow: visible;
 }
 
 .side-link-bar {
@@ -678,13 +679,20 @@
 }
 
 .side-link-label {
+  position: absolute;
+  right: 42px;
   font-family: var(--mono-font);
   font-size: 9px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(220, 238, 250, 0);
+  color: rgba(220, 238, 250, 0.7);
   white-space: nowrap;
-  transition: color 0.18s ease;
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    color 0.18s ease,
+    opacity 0.18s ease,
+    transform 0.18s ease;
   pointer-events: none;
 }
 
@@ -695,7 +703,9 @@
 }
 
 .side-link:hover .side-link-label {
-  color: rgba(220, 238, 250, 0.65);
+  color: rgba(220, 238, 250, 0.72);
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .side-link.active .side-link-bar {
@@ -706,6 +716,8 @@
 
 .side-link.active .side-link-label {
   color: rgba(190, 230, 255, 0.85);
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .hero {
@@ -2071,6 +2083,16 @@ button:focus-visible {
   font-size: 12px;
 }
 
+.pd-workflow-code {
+  overflow-x: visible;
+}
+
+.pd-workflow-code code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 /* ── Anti-patterns ────────────────────────────────────── */
 
 .ap-item-header {
@@ -3095,9 +3117,33 @@ button:focus-visible {
     display: block;
   }
 
-  .matrix-head,
+  .matrix-head {
+    display: none;
+  }
+
   .matrix-row {
     grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .matrix-row span {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .matrix-row span::before {
+    content: attr(data-col);
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: rgba(171, 217, 243, 0.85);
   }
 
   /* SDD: field list becomes horizontal scrollable row on tablet */
@@ -3151,15 +3197,61 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  /* SDD quality table: on phones collapse to 2 cols (field + strong only) */
-  .sdd-quality-head,
+  /* SDD quality table: stack each row into labeled blocks */
+  .sdd-quality-head {
+    display: none;
+  }
+
   .sdd-quality-row {
-    grid-template-columns: 90px 1fr;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+  }
+
+  .sdd-quality-field {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(124, 212, 255, 0.08);
+    border: 1px solid rgba(124, 212, 255, 0.18);
+    color: rgba(204, 233, 249, 0.95);
+    font-size: 11px;
   }
 
   .sdd-quality-weak,
-  .sdd-weak-label {
-    display: none;
+  .sdd-quality-strong {
+    min-width: 0;
+    word-break: break-word;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .sdd-quality-weak {
+    border: 1px solid rgba(248, 81, 73, 0.24);
+    background: rgba(248, 81, 73, 0.08);
+  }
+
+  .sdd-quality-strong {
+    border: 1px solid rgba(63, 185, 80, 0.24);
+    background: rgba(63, 185, 80, 0.08);
+  }
+
+  .sdd-quality-weak::before,
+  .sdd-quality-strong::before {
+    content: attr(data-col);
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+  }
+
+  .sdd-quality-weak::before {
+    color: rgba(255, 170, 164, 0.92);
+  }
+
+  .sdd-quality-strong::before {
+    color: rgba(173, 235, 177, 0.92);
   }
 
   /* SDD why cards: smaller padding */

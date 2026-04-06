@@ -213,9 +213,15 @@ export function SDD() {
         </div>
         {SDD_SPEC_ROWS.map((row) => (
           <div key={row.field} className="sdd-quality-row">
-            <span className="sdd-quality-field">{row.field}</span>
-            <span className="sdd-quality-weak">{row.weak}</span>
-            <span className="sdd-quality-strong">{row.strong}</span>
+            <span className="sdd-quality-field" data-col={t.sdd.headerField}>
+              {row.field}
+            </span>
+            <span className="sdd-quality-weak" data-col={t.sdd.headerWeak}>
+              {row.weak}
+            </span>
+            <span className="sdd-quality-strong" data-col={t.sdd.headerStrong}>
+              {row.strong}
+            </span>
           </div>
         ))}
       </div>
