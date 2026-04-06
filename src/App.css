@@ -1109,8 +1109,9 @@ section::before {
 
 .flow-right {
   padding: 20px;
-  height: 360px;
-  overflow-y: auto;
+  min-height: 420px;
+  height: auto;
+  overflow-y: visible;
   align-self: start;
   animation: fadeContent 0.15s ease;
 }

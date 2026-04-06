@@ -752,6 +752,42 @@ export const LAYERS_DATA: Record<string, Layer[]> = {
   ],
 }
 
+type EcosystemMapNode = {
+  id: string
+  level: 'top' | 'mid' | 'bot'
+  label: string
+  detail: string
+}
+
+export const ECOSYSTEM_MAP_NODES_DATA: Record<string, EcosystemMapNode[]> = {
+  'pt-BR': [
+    { id: 'rules', level: 'top', label: 'regras', detail: 'CLAUDE.md' },
+    { id: 'skills', level: 'top', label: 'skills', detail: 'SKILL.md' },
+    { id: 'mcp', level: 'top', label: 'mcp', detail: 'acesso tools' },
+    { id: 'hooks', level: 'top', label: 'hooks', detail: 'controle loop' },
+    { id: 'research', level: 'mid', label: 'pesquisa', detail: 'mapear estado' },
+    { id: 'plan', level: 'mid', label: 'plano', detail: 'definir passos' },
+    { id: 'execute', level: 'mid', label: 'execução', detail: 'aplicar mudanças' },
+    { id: 'verify', level: 'mid', label: 'verificação', detail: 'validar' },
+    { id: 'review', level: 'bot', label: 'revisão', detail: 'olhar humano' },
+    { id: 'approval', level: 'bot', label: 'aprovação', detail: 'gate' },
+    { id: 'release', level: 'bot', label: 'release', detail: 'controlado' },
+  ],
+  'en': [
+    { id: 'rules', level: 'top', label: 'rules', detail: 'CLAUDE.md' },
+    { id: 'skills', level: 'top', label: 'skills', detail: 'SKILL.md' },
+    { id: 'mcp', level: 'top', label: 'mcp', detail: 'tool access' },
+    { id: 'hooks', level: 'top', label: 'hooks', detail: 'loop control' },
+    { id: 'research', level: 'mid', label: 'research', detail: 'map state' },
+    { id: 'plan', level: 'mid', label: 'plan', detail: 'define steps' },
+    { id: 'execute', level: 'mid', label: 'execute', detail: 'apply changes' },
+    { id: 'verify', level: 'mid', label: 'verify', detail: 'validate' },
+    { id: 'review', level: 'bot', label: 'review', detail: 'human eye' },
+    { id: 'approval', level: 'bot', label: 'approval', detail: 'gate' },
+    { id: 'release', level: 'bot', label: 'release', detail: 'controlled' },
+  ],
+}
+
 export const FLOW_DATA: Record<string, FlowStep[]> = {
   'pt-BR': [
     { id: 'research', label: 'Pesquisar', summary: 'Mapeia estado, arquivos críticos e risco.', detail: 'Identificar contexto útil, restrições reais e dependências antes de qualquer alteração. Registrar o que está faltando para execução segura.', payload: 'entrada: objetivo + limites + estado atual do projeto' },

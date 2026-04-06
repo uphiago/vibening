@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useLang } from '../LanguageContext'
+import { ECOSYSTEM_MAP_NODES_DATA } from '../i18n'
 
 export function EcosystemMap() {
-  const { t } = useLang()
+  const { lang, t } = useLang()
+  const nodes = ECOSYSTEM_MAP_NODES_DATA[lang]
   const [activeMapView, setActiveMapView] = useState<'all' | 'build' | 'ops'>('all')
   return (
     <section id="ecosystem-map" className="reveal">
@@ -21,17 +23,12 @@ export function EcosystemMap() {
           <span className="legend-item legend-bot">{t.ecosystemMap.legendOps}</span>
         </div>
         <div className={`map-grid view-${activeMapView}`}>
-          <div className="node top"><span>rules</span><small>CLAUDE.md</small></div>
-          <div className="node top"><span>skills</span><small>SKILL.md</small></div>
-          <div className="node top"><span>mcp</span><small>tool access</small></div>
-          <div className="node top"><span>hooks</span><small>loop control</small></div>
-          <div className="node mid"><span>research</span><small>map state</small></div>
-          <div className="node mid"><span>plan</span><small>define steps</small></div>
-          <div className="node mid"><span>execute</span><small>apply changes</small></div>
-          <div className="node mid"><span>verify</span><small>validate</small></div>
-          <div className="node bot"><span>review</span><small>human eye</small></div>
-          <div className="node bot"><span>approval</span><small>gate</small></div>
-          <div className="node bot"><span>release</span><small>controlled</small></div>
+          {nodes.map((node) => (
+            <div key={node.id} className={`node ${node.level}`}>
+              <span>{node.label}</span>
+              <small>{node.detail}</small>
+            </div>
+          ))}
         </div>
         <p className="map-caption">
           {activeMapView === 'all' && t.ecosystemMap.captionAll}
