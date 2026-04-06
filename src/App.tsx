@@ -1,30 +1,29 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
 import './App.css'
-
 import { useLang } from './LanguageContext'
-import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
-import { References } from './sections/References'
-import { Methods } from './sections/Methods'
-import { StackCuration } from './sections/StackCuration'
-import { Principles } from './sections/Principles'
-import { ContextSignals } from './sections/ContextSignals'
-import { ProgressiveDisclosure } from './sections/ProgressiveDisclosure'
-import { Hero } from './sections/Hero'
-import { LessonRoadmap } from './sections/LessonRoadmap'
-import { VibecodeVsAI } from './sections/VibecodeVsAI'
-import { EcosystemMap } from './sections/EcosystemMap'
-import { LayerModel } from './sections/LayerModel'
-import { ExecutionFlow } from './sections/ExecutionFlow'
-import { WorkflowGate } from './sections/WorkflowGate'
-import { SDD } from './sections/SDD'
-import { MermaidDiagrams } from './sections/MermaidDiagrams'
-import { Examples } from './sections/Examples'
-import { ReviewChecklist } from './sections/ReviewChecklist'
-import { MultiAgent } from './sections/MultiAgent'
+import { Nav } from './components/Nav'
 import { AntiPatterns } from './sections/AntiPatterns'
+import { ContextSignals } from './sections/ContextSignals'
 import { DeepDive } from './sections/DeepDive'
-
+import { EcosystemMap } from './sections/EcosystemMap'
+import { Examples } from './sections/Examples'
+import { ExecutionFlow } from './sections/ExecutionFlow'
+import { Hero } from './sections/Hero'
+import { LayerModel } from './sections/LayerModel'
+import { LessonRoadmap } from './sections/LessonRoadmap'
+import { MermaidDiagrams } from './sections/MermaidDiagrams'
+import { Methods } from './sections/Methods'
+import { MultiAgent } from './sections/MultiAgent'
+import { Principles } from './sections/Principles'
+import { ProgressiveDisclosure } from './sections/ProgressiveDisclosure'
+import { References } from './sections/References'
+import { ReviewChecklist } from './sections/ReviewChecklist'
+import { SDD } from './sections/SDD'
+import { StackCuration } from './sections/StackCuration'
+import { VibecodeVsAI } from './sections/VibecodeVsAI'
+import { WorkflowGate } from './sections/WorkflowGate'
 
 /* ─── App ────────────────────────────────────────────────── */
 
@@ -39,8 +38,8 @@ function App() {
     if (typeof window === 'undefined') return 'hero'
     return window.location.hash.slice(1) || 'hero'
   })
-  const [scrollProgress, setScrollProgress]     = useState(0)
-  const [mobileNavOpen, setMobileNavOpen]       = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   const navigateToSection = useCallback((id: string, options?: { smooth?: boolean; pushHistory?: boolean }) => {
     const target = document.getElementById(id)
@@ -71,9 +70,12 @@ function App() {
 
   useEffect(() => {
     const item = t.navItems.find((i) => i.id === activeSection)
-    document.title = item && activeSection !== 'hero'
-      ? `${item.label} | vibening`
-      : (lang === 'pt-BR' ? 'vibening · guia de engenharia agêntica' : 'vibening · Agentic Engineering Guide')
+    document.title =
+      item && activeSection !== 'hero'
+        ? `${item.label} | vibening`
+        : lang === 'pt-BR'
+          ? 'vibening · guia de engenharia agêntica'
+          : 'vibening · Agentic Engineering Guide'
   }, [activeSection, lang, t])
 
   /* ── Intersection observers ────────────────────────────── */
@@ -135,16 +137,14 @@ function App() {
   useEffect(() => {
     const onScroll = () => {
       const el = document.documentElement
-      setScrollProgress(Math.min(100, el.scrollTop / (el.scrollHeight - el.clientHeight || 1) * 100))
+      setScrollProgress(Math.min(100, (el.scrollTop / (el.scrollHeight - el.clientHeight || 1)) * 100))
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    const watched = navIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[]
+    const watched = navIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
 
     ratioMapRef.current.clear()
 
@@ -152,17 +152,17 @@ function App() {
       (entries) => {
         // Update global ratio map from the delta entries
         entries.forEach((entry) => {
-          ratioMapRef.current.set(
-            entry.target.id,
-            entry.isIntersecting ? entry.intersectionRatio : 0,
-          )
+          ratioMapRef.current.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0)
         })
 
         // Pick the section with the highest intersection ratio across all tracked sections
         let bestId = ''
         let bestRatio = 0
         ratioMapRef.current.forEach((ratio, id) => {
-          if (ratio > bestRatio) { bestRatio = ratio; bestId = id }
+          if (ratio > bestRatio) {
+            bestRatio = ratio
+            bestId = id
+          }
         })
 
         if (!bestId || bestRatio === 0) return
@@ -194,7 +194,9 @@ function App() {
   return (
     <div className="app">
       <div className="scroll-progress" style={{ width: `${scrollProgress}%` }} aria-hidden="true" />
-      <a className="skip-link" href="#main-content">{t.nav.skipLink}</a>
+      <a className="skip-link" href="#main-content">
+        {t.nav.skipLink}
+      </a>
 
       <Nav
         activeSection={activeSection}
@@ -207,7 +209,6 @@ function App() {
       <Hero />
 
       <main id="main-content" className="content">
-
         {/* ── Lesson Roadmap ───────────────────────────── */}
         <LessonRoadmap />
 
@@ -264,7 +265,6 @@ function App() {
 
         {/* ── References ───────────────────────────────── */}
         <References />
-
       </main>
 
       <Footer />

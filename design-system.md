@@ -3,17 +3,20 @@
 ## 1. Tokens de cor (padrão observado)
 
 ### Base
+
 - `--bg: #000`
 - `--text: #f0f0f0`
 - `--text-muted: rgba(255,255,255,0.4)`
 - `--text-faint: rgba(255,255,255,0.2)`
 
 ### Surface (glass)
+
 - `--glass: rgba(255,255,255,0.03)`
 - `--glass-border: rgba(255,255,255,0.07)`
 - `--glass-hover: rgba(255,255,255,0.06)`
 
 ### Acentos funcionais
+
 - verde: `#3fb950`
 - azul: `#58a6ff`
 - laranja: `#ff9442`

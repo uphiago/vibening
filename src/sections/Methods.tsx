@@ -14,7 +14,11 @@ export function Methods() {
           <article key={method.id} className="glass-card method-card">
             <h3>{method.title}</h3>
             <p>{method.summary}</p>
-            <ul>{method.bullets.map((item) => <li key={item}>{item}</li>)}</ul>
+            <ul>
+              {method.bullets.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </article>
         ))}
       </div>

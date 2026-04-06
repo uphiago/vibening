@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { COMM_PATTERNS_DATA, MULTI_AGENT_ARCHS_DATA, MULTI_AGENT_PATTERNS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { COMM_PATTERNS_DATA, MULTI_AGENT_ARCHS_DATA, MULTI_AGENT_PATTERNS_DATA } from '../i18n'
 
 function reliabilityLabel(r: 'high' | 'medium' | 'low', t: ReturnType<typeof useLang>['t']) {
   if (r === 'high') return t.multiAgent.reliabilityHigh
@@ -67,7 +68,10 @@ export function MultiAgent() {
               key={arch.id}
               type="button"
               className={`deck-item glass-card ma-arch-item ${activeArch.id === arch.id ? 'active' : ''}`}
-              onClick={() => { setActiveArchId(arch.id); activateDetail(maArchDetailRef) }}
+              onClick={() => {
+                setActiveArchId(arch.id)
+                activateDetail(maArchDetailRef)
+              }}
             >
               <div className="ma-arch-item-header">
                 <span className="ma-arch-letter">{arch.letter}</span>
@@ -95,7 +99,9 @@ export function MultiAgent() {
               <p>{activeArch.when}</p>
             </div>
             <div className="deck-tags">
-              {activeArch.components.map((c) => <span key={c}>{c}</span>)}
+              {activeArch.components.map((c) => (
+                <span key={c}>{c}</span>
+              ))}
             </div>
             <div className={`flow-warning ${activeArch.reliability === 'high' ? 'ma-tradeoff-ok' : ''}`}>
               <strong>{t.multiAgent.tradeoffLabel}</strong>
@@ -116,7 +122,10 @@ export function MultiAgent() {
               key={pattern.id}
               type="button"
               className={`deck-item glass-card ${activeAgentPattern.id === pattern.id ? 'active' : ''}`}
-              onClick={() => { setActiveAgentPatternId(pattern.id); activateDetail(maPatternDetailRef) }}
+              onClick={() => {
+                setActiveAgentPatternId(pattern.id)
+                activateDetail(maPatternDetailRef)
+              }}
             >
               <div className="ap-item-header">
                 <span className="ma-arch-letter">{pattern.letter}</span>
@@ -136,7 +145,9 @@ export function MultiAgent() {
               <p>{activeAgentPattern.when}</p>
             </div>
             <div className="deck-tags">
-              {activeAgentPattern.components.map((c) => <span key={c}>{c}</span>)}
+              {activeAgentPattern.components.map((c) => (
+                <span key={c}>{c}</span>
+              ))}
             </div>
             <div className="flow-warning">
               <strong>{t.multiAgent.tradeoffLabel}</strong>
@@ -157,11 +168,19 @@ export function MultiAgent() {
             <div className="comm-columns">
               <div>
                 <span className="comm-col-label pros">{t.multiAgent.prosLabel}</span>
-                <ul>{cp.pros.map((p) => <li key={p}>{p}</li>)}</ul>
+                <ul>
+                  {cp.pros.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
               </div>
               <div>
                 <span className="comm-col-label cons">{t.multiAgent.consLabel}</span>
-                <ul>{cp.cons.map((c) => <li key={c}>{c}</li>)}</ul>
+                <ul>
+                  {cp.cons.map((c) => (
+                    <li key={c}>{c}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </article>

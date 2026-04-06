@@ -22,11 +22,19 @@ export function LessonRoadmap() {
             <div className="lesson-columns">
               <div>
                 <span className="lesson-col-label">{t.lessonRoadmap.topicsLabel}</span>
-                <ul>{lesson.topics.map((tp) => <li key={tp}>{tp}</li>)}</ul>
+                <ul>
+                  {lesson.topics.map((tp) => (
+                    <li key={tp}>{tp}</li>
+                  ))}
+                </ul>
               </div>
               <div>
                 <span className="lesson-col-label">{t.lessonRoadmap.outcomesLabel}</span>
-                <ul className="outcome-list">{lesson.outcomes.map((o) => <li key={o}>{o}</li>)}</ul>
+                <ul className="outcome-list">
+                  {lesson.outcomes.map((o) => (
+                    <li key={o}>{o}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </article>

@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { QUALITY_ROWS_DATA, WORKFLOW_PHASES_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { QUALITY_ROWS_DATA, WORKFLOW_PHASES_DATA } from '../i18n'
 
 export function WorkflowGate() {
   const { lang, t } = useLang()
@@ -15,9 +16,10 @@ export function WorkflowGate() {
   const workflowDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
   const gateSummary = lang === 'pt-BR' ? 'gate obrigatório' : 'required gate'
-  const checksSummary = lang === 'pt-BR'
-    ? `${activePhase.checks.length} checks obrigatórios`
-    : `${activePhase.checks.length} required checks`
+  const checksSummary =
+    lang === 'pt-BR'
+      ? `${activePhase.checks.length} checks obrigatórios`
+      : `${activePhase.checks.length} required checks`
 
   return (
     <section id="workflow-gate" className="reveal">
@@ -31,9 +33,14 @@ export function WorkflowGate() {
               key={phase.id}
               type="button"
               className={`flow-step glass-card ${activePhase.id === phase.id ? 'active' : ''}`}
-              onClick={() => { setActivePhaseId(phase.id); activateDetail(workflowDetailRef) }}
+              onClick={() => {
+                setActivePhaseId(phase.id)
+                activateDetail(workflowDetailRef)
+              }}
             >
-              <span className="flow-step-label">{phase.step} · {phase.title}</span>
+              <span className="flow-step-label">
+                {phase.step} · {phase.title}
+              </span>
               <span className="flow-step-summary">{phase.objective}</span>
             </button>
           ))}
@@ -41,16 +48,24 @@ export function WorkflowGate() {
         <div ref={workflowDetailRef} tabIndex={-1} className="flow-detail-shell">
           <article key={activePhase.id} className="flow-right glass-card">
             <span className="detail-kicker">{t.workflowGate.kicker}</span>
-            <h3>{activePhase.step} · {activePhase.title}</h3>
+            <h3>
+              {activePhase.step} · {activePhase.title}
+            </h3>
             <div className="flow-phase-meta">
-              <span className="flow-meta-chip">{lang === 'pt-BR' ? `fase ${activePhase.step}` : `phase ${activePhase.step}`}</span>
+              <span className="flow-meta-chip">
+                {lang === 'pt-BR' ? `fase ${activePhase.step}` : `phase ${activePhase.step}`}
+              </span>
               <span className="flow-meta-chip">{checksSummary}</span>
               <span className="flow-meta-chip flow-meta-chip-gate">{gateSummary}</span>
             </div>
             <p>{activePhase.objective}</p>
             <div className="deck-block">
               <strong>{t.workflowGate.checksLabel}</strong>
-              <ul>{activePhase.checks.map((check) => <li key={check}>{check}</li>)}</ul>
+              <ul>
+                {activePhase.checks.map((check) => (
+                  <li key={check}>{check}</li>
+                ))}
+              </ul>
             </div>
             <div className="flow-warning">
               <strong>{t.workflowGate.antiPatternLabel}</strong>

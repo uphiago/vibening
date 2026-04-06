@@ -5,12 +5,20 @@ export function useCopy(text: string) {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const copy = useCallback(() => {
     if (!navigator?.clipboard?.writeText) return
-    navigator.clipboard.writeText(text).then(() => {
-      setCopied(true)
-      if (timerRef.current) clearTimeout(timerRef.current)
-      timerRef.current = setTimeout(() => setCopied(false), 1800)
-    }).catch(() => {})
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setCopied(true)
+        if (timerRef.current) clearTimeout(timerRef.current)
+        timerRef.current = setTimeout(() => setCopied(false), 1800)
+      })
+      .catch(() => {})
   }, [text])
-  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current) }, [])
+  useEffect(
+    () => () => {
+      if (timerRef.current) clearTimeout(timerRef.current)
+    },
+    [],
+  )
   return { copied, copy }
 }

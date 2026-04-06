@@ -284,55 +284,71 @@ export function Examples() {
           <h3>{t.examples.ex1Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={SKILL_EXAMPLE} />
-            <pre><code>{SKILL_EXAMPLE}</code></pre>
+            <pre>
+              <code>{SKILL_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex2Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={CONTEXT_EXAMPLE} />
-            <pre><code>{CONTEXT_EXAMPLE}</code></pre>
+            <pre>
+              <code>{CONTEXT_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex3Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={DYNAMIC_CTX_EXAMPLE} />
-            <pre><code>{DYNAMIC_CTX_EXAMPLE}</code></pre>
+            <pre>
+              <code>{DYNAMIC_CTX_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex4Title}</h3>
           <ul>
-            {t.examples.ex4Items.map((item) => <li key={item}>{item}</li>)}
+            {t.examples.ex4Items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
           </ul>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex5Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={AGENTS_MD_EXAMPLE} />
-            <pre><code>{AGENTS_MD_EXAMPLE}</code></pre>
+            <pre>
+              <code>{AGENTS_MD_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex6Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={PRECOMMIT_EXAMPLE} />
-            <pre><code>{PRECOMMIT_EXAMPLE}</code></pre>
+            <pre>
+              <code>{PRECOMMIT_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex7Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={SUBAGENT_EXAMPLE} />
-            <pre><code>{SUBAGENT_EXAMPLE}</code></pre>
+            <pre>
+              <code>{SUBAGENT_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex8Title}</h3>
           <div className="code-block-wrap">
             <CopyButton text={XML_TAGS_EXAMPLE} />
-            <pre><code>{XML_TAGS_EXAMPLE}</code></pre>
+            <pre>
+              <code>{XML_TAGS_EXAMPLE}</code>
+            </pre>
           </div>
         </article>
       </div>

@@ -15,6 +15,19 @@ export function VibecodeVsAI() {
       <p className="section-label">{t.vibecodeVsAI.sectionLabel}</p>
       <h2 className="section-title">{t.vibecodeVsAI.title}</h2>
       <p className="section-description">{t.vibecodeVsAI.description}</p>
+      <div className="comparison-definitions">
+        <article className="glass-card comparison-definition-card">
+          <h3>{t.vibecodeVsAI.definitionVibeTitle}</h3>
+          <p>{t.vibecodeVsAI.definitionVibeText}</p>
+        </article>
+        <article className="glass-card comparison-definition-card">
+          <h3>{t.vibecodeVsAI.definitionAiTitle}</h3>
+          <p>{t.vibecodeVsAI.definitionAiText}</p>
+        </article>
+      </div>
+      <p className="comparison-definition-note">
+        <strong>{t.vibecodeVsAI.definitionSourceLabel}:</strong> {t.vibecodeVsAI.definitionSourceText}
+      </p>
       <div className="comparison-table glass-card">
         <div className="comparison-head">
           <span>{t.vibecodeVsAI.headerAspect}</span>
@@ -27,9 +40,7 @@ export function VibecodeVsAI() {
             <span className="comparison-vibe">{row.vibecoding}</span>
             <span className="comparison-ai">
               {row.aiAssisted}
-              {row.risk !== 'ok' && (
-                <span className={`risk-badge risk-${row.risk}`}>{riskLabel(row.risk, t)}</span>
-              )}
+              {row.risk !== 'ok' && <span className={`risk-badge risk-${row.risk}`}>{riskLabel(row.risk, t)}</span>}
             </span>
           </div>
         ))}

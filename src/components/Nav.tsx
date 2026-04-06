@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+
 import { useLang } from '../LanguageContext'
 
 interface NavProps {
@@ -10,9 +11,9 @@ interface NavProps {
 
 export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate }: NavProps) {
   const { lang, setLang, t } = useLang()
-  const firstLinkRef  = useRef<HTMLAnchorElement>(null)
-  const openBtnRef    = useRef<HTMLButtonElement>(null)
-  const prevOpenRef   = useRef(false)
+  const firstLinkRef = useRef<HTMLAnchorElement>(null)
+  const openBtnRef = useRef<HTMLButtonElement>(null)
+  const prevOpenRef = useRef(false)
 
   // Return focus to the trigger button when the dialog closes
   useEffect(() => {
@@ -39,13 +40,13 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
       if (!dialog) return
       const focusable = Array.from(
         dialog.querySelectorAll<HTMLElement>(
-          'a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"])'
-        )
+          'a[href]:not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"])',
+        ),
       )
       if (focusable.length === 0) return
 
       const first = focusable[0]
-      const last  = focusable[focusable.length - 1]
+      const last = focusable[focusable.length - 1]
 
       if (e.shiftKey) {
         if (document.activeElement === first) {
@@ -71,11 +72,14 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
           href="#hero"
           className="brand"
           onClick={(event) => {
+            if (event.button !== 0) return
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
             event.preventDefault()
             onNavigate('hero', { smooth: true, pushHistory: true })
           }}
-        >vibening</a>
+        >
+          vibening
+        </a>
         <div className="top-nav-actions">
           <button
             type="button"
@@ -83,7 +87,9 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
             onClick={() => setLang(lang === 'pt-BR' ? 'en' : 'pt-BR')}
             title={t.nav.langToggle}
           >
-            <span className="lang-toggle-label" aria-hidden="true">{t.nav.languageLabel}:</span>
+            <span className="lang-toggle-label" aria-hidden="true">
+              {t.nav.languageLabel}:
+            </span>
             <span className={`lang-code${lang === 'pt-BR' ? ' active' : ''}`}>PT</span>
             <span className="lang-separator">/</span>
             <span className={`lang-code${lang === 'en' ? ' active' : ''}`}>EN</span>
@@ -97,18 +103,15 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
             aria-expanded={mobileNavOpen}
             onClick={() => setMobileNavOpen(true)}
           >
-            <span /><span /><span />
+            <span />
+            <span />
+            <span />
           </button>
         </div>
       </nav>
 
       {mobileNavOpen && (
-        <div
-          className="mobile-nav-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label={t.nav.sectionNavLabel}
-        >
+        <div className="mobile-nav-overlay" role="dialog" aria-modal="true" aria-label={t.nav.sectionNavLabel}>
           <div className="mobile-nav-backdrop" onClick={() => setMobileNavOpen(false)} />
           <nav className="mobile-nav-sheet">
             <div className="mobile-nav-header">
@@ -130,6 +133,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
                     href={`#${item.id}`}
                     className={`mobile-nav-link${activeSection === item.id ? ' active' : ''}`}
                     onClick={(event) => {
+                      if (event.button !== 0) return
                       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
                       event.preventDefault()
                       onNavigate(item.id, { smooth: true, pushHistory: true })
@@ -154,6 +158,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
             aria-label={item.label}
             aria-current={activeSection === item.id ? 'page' : undefined}
             onClick={(event) => {
+              if (event.button !== 0) return
               if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
               event.preventDefault()
               onNavigate(item.id, { smooth: true, pushHistory: true })

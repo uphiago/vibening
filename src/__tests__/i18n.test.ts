@@ -1,25 +1,26 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
+
 import {
-  translations,
-  LESSONS_DATA,
-  COMPARISONS_DATA,
   ANTI_PATTERNS_DATA,
-  PRINCIPLES_DATA,
-  PD_LAYERS_DATA,
-  LAYERS_DATA,
-  FLOW_DATA,
-  METHODS_DATA,
-  QUALITY_ROWS_DATA,
-  REVIEW_CHECKLIST_DATA,
+  COMM_PATTERNS_DATA,
+  COMPARISONS_DATA,
+  CONTEXT_SIGNALS_DATA,
   DEEP_DIVES_DATA,
-  WORKFLOW_PHASES_DATA,
-  STACK_TOOLS_DATA,
-  SDD_FIELDS_DATA,
+  FLOW_DATA,
+  LAYERS_DATA,
+  LESSONS_DATA,
+  METHODS_DATA,
   MULTI_AGENT_ARCHS_DATA,
   MULTI_AGENT_PATTERNS_DATA,
-  COMM_PATTERNS_DATA,
-  CONTEXT_SIGNALS_DATA,
+  PD_LAYERS_DATA,
+  PRINCIPLES_DATA,
+  QUALITY_ROWS_DATA,
+  REVIEW_CHECKLIST_DATA,
+  SDD_FIELDS_DATA,
   SDD_SPEC_ROWS_DATA,
+  STACK_TOOLS_DATA,
+  WORKFLOW_PHASES_DATA,
+  translations,
 } from '../i18n'
 
 const LANGS = ['pt-BR', 'en'] as const
@@ -28,7 +29,7 @@ describe('i18n key parity', () => {
   function collectKeys(obj: unknown, prefix = ''): string[] {
     if (typeof obj !== 'object' || obj === null || typeof obj === 'function') return [prefix]
     return Object.entries(obj as Record<string, unknown>).flatMap(([k, v]) =>
-      collectKeys(v, prefix ? `${prefix}.${k}` : k)
+      collectKeys(v, prefix ? `${prefix}.${k}` : k),
     )
   }
 

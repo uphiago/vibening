@@ -22,13 +22,19 @@ export function ProgressiveDisclosure() {
               <strong>{t.progressiveDisclosure.loadWhenLabel}</strong>
               <p>{layer.loadWhen}</p>
             </div>
-            <ul>{layer.includes.map((item) => <li key={item}>{item}</li>)}</ul>
+            <ul>
+              {layer.includes.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </article>
         ))}
       </div>
       <article className="glass-card checklist-card">
         <h3>{t.progressiveDisclosure.workflowTitle}</h3>
-        <pre><code>{t.progressiveDisclosure.workflowCode}</code></pre>
+        <pre>
+          <code>{t.progressiveDisclosure.workflowCode}</code>
+        </pre>
         <p>{t.progressiveDisclosure.workflowNote}</p>
       </article>
     </section>

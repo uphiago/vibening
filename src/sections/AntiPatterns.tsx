@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { ANTI_PATTERNS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { ANTI_PATTERNS_DATA } from '../i18n'
 
 function severityLabel(s: 'critical' | 'high' | 'medium', t: ReturnType<typeof useLang>['t']) {
   if (s === 'critical') return t.antiPatterns.severityCritical
@@ -32,7 +33,10 @@ export function AntiPatterns() {
               key={ap.id}
               type="button"
               className={`deck-item glass-card ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
-              onClick={() => { setActiveAntiPatternId(ap.id); activateDetail(antiPatternDetailRef) }}
+              onClick={() => {
+                setActiveAntiPatternId(ap.id)
+                activateDetail(antiPatternDetailRef)
+              }}
             >
               <div className="ap-item-header">
                 <span className={`ap-severity ap-severity-${ap.severity}`}>{severityLabel(ap.severity, t)}</span>

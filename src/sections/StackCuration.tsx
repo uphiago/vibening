@@ -20,7 +20,9 @@ export function StackCuration() {
           return (
             <div key={priority} className={`stack-group glass-card priority-${priority}`}>
               <div className="stack-group-header">
-                <span className={`priority-badge priority-${priority}`}>{t.stackCuration.priorityLabel} {priority}</span>
+                <span className={`priority-badge priority-${priority}`}>
+                  {t.stackCuration.priorityLabel} {priority}
+                </span>
                 <span className="priority-label">{labels[priority]}</span>
               </div>
               <div className="stack-list">

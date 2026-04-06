@@ -42,6 +42,7 @@ export type DeepDive = {
   title: string
   description: string
   artifacts: string[]
+  tree?: string[]
   links: { label: string; href: string }[]
 }
 

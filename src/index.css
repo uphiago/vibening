@@ -1,26 +1,4 @@
-@font-face {
-  font-family: 'Geist';
-  src: url('/fonts/Geist-Variable.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'Geist Mono';
-  src: url('/fonts/GeistMono-Variable.woff2') format('woff2-variations');
-  font-weight: 100 900;
-  font-style: normal;
-  font-display: optional;
-}
-
-@font-face {
-  font-family: 'Geist Pixel';
-  src: url('/fonts/GeistPixel-Square.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: optional;
-}
+@import '@fontsource/jetbrains-mono/index.css';
 
 :root {
   --bg: #04060a;
@@ -32,9 +10,9 @@
   --surface: #0b0f16;
   --accent-teal: rgba(86, 229, 194, 0.85);
   --accent-blue: rgba(124, 212, 255, 0.9);
-  --mono-font: 'Geist Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-  --body-font: 'Geist', Inter, 'Segoe UI', system-ui, sans-serif;
-  --heading-font: 'Geist Pixel', 'Courier New', monospace;
+  --mono-font: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+  --body-font: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+  --heading-font: 'JetBrains Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
 }
 
 *,
@@ -59,14 +37,17 @@ body,
 body {
   margin: 0;
   font-family: var(--body-font);
+  font-weight: 400;
   color: var(--text);
   background:
     radial-gradient(circle at 12% -5%, rgba(70, 170, 255, 0.12), transparent 42%),
     radial-gradient(circle at 90% 0%, rgba(86, 229, 194, 0.1), transparent 34%),
-    radial-gradient(circle at 55% 105%, rgba(130, 70, 255, 0.07), transparent 38%),
-    var(--bg);
+    radial-gradient(circle at 55% 105%, rgba(130, 70, 255, 0.07), transparent 38%), var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1;
   overflow-x: hidden;
   -webkit-tap-highlight-color: rgba(124, 212, 255, 0.22);
 }

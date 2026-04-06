@@ -1,8 +1,9 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { SDD_FIELDS_DATA, SDD_SPEC_ROWS_DATA } from '../i18n'
-import { useActivateDetail } from '../hooks/useActivateDetail'
 import { CopyButton } from '../components/CopyButton'
+import { useActivateDetail } from '../hooks/useActivateDetail'
+import { SDD_FIELDS_DATA, SDD_SPEC_ROWS_DATA } from '../i18n'
 
 const SDD_EXAMPLE_FULL_PT = `## 1. Contexto
 - problema: API /users/search retorna timeout para queries acima de 3 chars
@@ -164,7 +165,10 @@ export function SDD() {
               key={field.id}
               type="button"
               className={`sdd-field-btn glass-card ${activeSddField.id === field.id ? 'active' : ''}`}
-              onClick={() => { setActiveSddFieldId(field.id); activateDetail(sddDetailRef) }}
+              onClick={() => {
+                setActiveSddFieldId(field.id)
+                activateDetail(sddDetailRef)
+              }}
             >
               <span className="sdd-field-number">{field.number}</span>
               <span className="sdd-field-name">{field.name}</span>
@@ -198,7 +202,9 @@ export function SDD() {
 
       <div className="sdd-quality glass-card">
         <div className="sdd-quality-header">
-          <span className="section-label" style={{ margin: 0 }}>{t.sdd.specWeakVsStrong}</span>
+          <span className="section-label" style={{ margin: 0 }}>
+            {t.sdd.specWeakVsStrong}
+          </span>
         </div>
         <div className="sdd-quality-head">
           <span>{t.sdd.headerField}</span>
@@ -221,7 +227,9 @@ export function SDD() {
         </div>
         <div className="code-block-wrap">
           <CopyButton text={SDD_EXAMPLE_FULL} />
-          <pre><code>{SDD_EXAMPLE_FULL}</code></pre>
+          <pre>
+            <code>{SDD_EXAMPLE_FULL}</code>
+          </pre>
         </div>
       </div>
 
@@ -232,7 +240,9 @@ export function SDD() {
         </div>
         <div className="code-block-wrap">
           <CopyButton text={SDD_TEMPLATE} />
-          <pre><code>{SDD_TEMPLATE}</code></pre>
+          <pre>
+            <code>{SDD_TEMPLATE}</code>
+          </pre>
         </div>
       </div>
     </section>

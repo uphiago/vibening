@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { DEEP_DIVES_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { DEEP_DIVES_DATA } from '../i18n'
 
 export function DeepDive() {
   const { lang, t } = useLang()
@@ -26,7 +27,10 @@ export function DeepDive() {
               key={item.id}
               type="button"
               className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-              onClick={() => { setActiveDeepDiveId(item.id); activateDetail(deepDiveDetailRef) }}
+              onClick={() => {
+                setActiveDeepDiveId(item.id)
+                activateDetail(deepDiveDetailRef)
+              }}
             >
               <span className="deck-title">{item.title}</span>
             </button>
@@ -36,8 +40,12 @@ export function DeepDive() {
           <article key={activeDeepDive.id} className="deck-detail glass-card">
             <h3>{activeDeepDive.title}</h3>
             <div className="deck-meta">
-              <span>{t.deepDive.artifactsLabel}: {activeDeepDive.artifacts.length}</span>
-              <span>{t.deepDive.referencesLabel}: {activeDeepDive.links.length}</span>
+              <span>
+                {t.deepDive.artifactsLabel}: {activeDeepDive.artifacts.length}
+              </span>
+              <span>
+                {t.deepDive.referencesLabel}: {activeDeepDive.links.length}
+              </span>
             </div>
             <p className="deck-objective">{activeDeepDive.description}</p>
             <div className="deck-tags">
@@ -45,6 +53,13 @@ export function DeepDive() {
                 <span key={artifact}>{artifact}</span>
               ))}
             </div>
+            {activeDeepDive.tree && activeDeepDive.tree.length > 0 && (
+              <div className="deep-tree glass-card" aria-label="directory tree">
+                <pre>
+                  <code>{activeDeepDive.tree.join('\n')}</code>
+                </pre>
+              </div>
+            )}
             <div className="deep-links">
               {activeDeepDive.links.map((link) => (
                 <a key={link.href} className="ref-link glass-card" href={link.href} target="_blank" rel="noreferrer">

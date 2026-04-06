@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
 
 export function MermaidDiagrams() {
@@ -53,7 +54,10 @@ export function MermaidDiagrams() {
       { rootMargin: '300px' },
     )
     obs.observe(el)
-    return () => { active = false; obs.disconnect() }
+    return () => {
+      active = false
+      obs.disconnect()
+    }
   }, [])
 
   return (
@@ -63,10 +67,9 @@ export function MermaidDiagrams() {
       <p className="section-description">{t.mermaidDiagrams.description}</p>
       {!mermaidReady && (
         <div className="diagram-stack diagram-stack-skeleton">
-          <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
-          <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
-          <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
-          <div className="glass-card diagram-card"><div className="skeleton diagram-skeleton" /></div>
+          <div className="glass-card diagram-card">
+            <div className="skeleton diagram-skeleton" />
+          </div>
         </div>
       )}
       <div className={`diagram-stack${mermaidReady ? '' : ' diagram-grid-hidden'}`}>
@@ -74,59 +77,20 @@ export function MermaidDiagrams() {
           <span className="detail-kicker">{t.mermaidDiagrams.diagramWorkflow}</span>
           <div className="diagram-wrap">
             <pre className="mermaid">{`flowchart TD
-  A[Plan] --> B[Branch/Worktree]
-  B --> C[Implement with AI]
-  C --> D[Test + Lint]
-  D --> E[Pre-flight Review]
-  E --> F[PR + CI]
-  F --> G{Approved?}
-  G -- no --> H[Apply Fix]
-  H --> F
-  G -- yes --> I[Verification Gate]
-  I --> J[Release]
-`}</pre>
-          </div>
-        </article>
-        <article className="glass-card diagram-card">
-          <span className="detail-kicker">{t.mermaidDiagrams.diagramRules}</span>
-          <div className="diagram-wrap">
-            <pre className="mermaid">{`graph TD
-  A[Project Rules] --> D[Agent Runtime]
-  B[Skills] --> D
-  C[MCP] --> D
-  D --> E[Execute]
-  E --> F[Validate]
-  F --> G[Review]
-  G --> H[Approval Gate]
-`}</pre>
-          </div>
-        </article>
-        <article className="glass-card diagram-card">
-          <span className="detail-kicker">{t.mermaidDiagrams.diagramProgressive}</span>
-          <div className="diagram-wrap">
-            <pre className="mermaid">{`flowchart TD
-  T[Task] --> L1[Layer 1: Discovery ~100 tokens]
-  L1 --> D{Relevant?}
-  D -- no --> Skip[Skip]
-  D -- yes --> L2[Layer 2: Activation ~2k-5k tokens]
-  L2 --> E[Execute]
-  E --> ND{Deep dive needed?}
-  ND -- yes --> L3[Layer 3: Execution on demand]
-  ND -- no --> Done[Done]
-  L3 --> Done
-`}</pre>
-          </div>
-        </article>
-        <article className="glass-card diagram-card">
-          <span className="detail-kicker">{t.mermaidDiagrams.diagramEvaluator}</span>
-          <div className="diagram-wrap">
-            <pre className="mermaid">{`flowchart TD
-  G[Generator] --> S[Solution]
-  S --> C[Critic/Evaluator]
-  C --> AP{Approved?}
-  AP -- no --> R[Rework signal]
-  R --> G
-  AP -- yes --> F[Finalize]
+  U[User intent + constraints] --> R[Research]
+  R --> P[Plan]
+  P --> C[Code with AI]
+  C --> V[Verify: tests + lint + review]
+  V --> G{Gate pass?}
+  G -- no --> F[Fix + rerun]
+  F --> V
+  G -- yes --> M[Merge or release]
+  RR[Project rules] --> C
+  SS[Skills] --> C
+  MM[MCP] --> C
+  PD1[Discovery index] --> PD2[Activation instructions]
+  PD2 --> PD3[Deep dive on demand]
+  PD3 --> C
 `}</pre>
           </div>
         </article>

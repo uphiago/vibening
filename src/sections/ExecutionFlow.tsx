@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { FLOW_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { FLOW_DATA } from '../i18n'
 
 export function ExecutionFlow() {
   const { lang, t } = useLang()
@@ -26,7 +27,10 @@ export function ExecutionFlow() {
               key={step.id}
               type="button"
               className={`flow-step glass-card ${activeStep.id === step.id ? 'active' : ''}`}
-              onClick={() => { setActiveStepId(step.id); activateDetail(execFlowDetailRef) }}
+              onClick={() => {
+                setActiveStepId(step.id)
+                activateDetail(execFlowDetailRef)
+              }}
             >
               <span className="flow-step-label">{step.label}</span>
               <span className="flow-step-summary">{step.summary}</span>

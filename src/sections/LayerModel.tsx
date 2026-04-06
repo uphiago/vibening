@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
-import { LAYERS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
+import { LAYERS_DATA } from '../i18n'
 
 export function LayerModel() {
   const { lang, t } = useLang()
@@ -26,14 +27,19 @@ export function LayerModel() {
               key={layer.id}
               type="button"
               className={`layer-row glass-card ${activeLayer.id === layer.id ? 'active' : ''}`}
-              onClick={() => { setActiveLayerId(layer.id); activateDetail(layerDetailRef) }}
+              onClick={() => {
+                setActiveLayerId(layer.id)
+                activateDetail(layerDetailRef)
+              }}
             >
               <div className="layer-row-main">
                 <span className="layer-title">{layer.label}</span>
                 <span className="layer-summary">{layer.summary}</span>
               </div>
               <div className="layer-chips">
-                {layer.chips.map((chip) => <span key={chip}>{chip}</span>)}
+                {layer.chips.map((chip) => (
+                  <span key={chip}>{chip}</span>
+                ))}
               </div>
             </button>
           ))}
@@ -42,7 +48,11 @@ export function LayerModel() {
           <article key={activeLayer.id} className="layer-detail glass-card">
             <span className="detail-kicker">{t.layerModel.kicker}</span>
             <h3>{activeLayer.label}</h3>
-            <ul>{activeLayer.facts.map((fact) => <li key={fact}>{fact}</li>)}</ul>
+            <ul>
+              {activeLayer.facts.map((fact) => (
+                <li key={fact}>{fact}</li>
+              ))}
+            </ul>
           </article>
         </div>
       </div>

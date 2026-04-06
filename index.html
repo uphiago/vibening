@@ -7,7 +7,10 @@
     <meta name="theme-color" content="#05070b" />
 
     <title>vibening · Agentic Engineering Guide</title>
-    <meta name="description" content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção." />
+    <meta
+      name="description"
+      content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção."
+    />
     <meta name="author" content="sysmap" />
     <meta name="robots" content="index, follow" />
 
@@ -15,56 +18,119 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="vibening" />
     <meta property="og:title" content="vibening · Agentic Engineering Guide" />
-    <meta property="og:description" content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção." />
+    <meta
+      property="og:description"
+      content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção."
+    />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:locale:alternate" content="en_US" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="vibening · Agentic Engineering Guide" />
-    <meta name="twitter:description" content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção." />
+    <meta
+      name="twitter:description"
+      content="Guia técnico de AI Coding: SDD, RPEV, progressive disclosure e arquitetura multi-agente para engenharia assistida por IA em produção."
+    />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://vibening.vercel.app/" />
 
     <!-- Font preload: browser fetches in parallel with HTML parse, ensuring
          fonts are ready within font-display:optional's 100ms block window -->
-    <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="ecec1e83-04f3-4e88-b012-ee0970e0873d"></script>
+    <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
+    <script
+      defer
+      src="https://cloud.umami.is/script.js"
+      data-website-id="ecec1e83-04f3-4e88-b012-ee0970e0873d"
+    ></script>
 
     <!-- App shell: shown while React JS loads (~50-150ms); React replaces #root content on mount -->
     <style>
-      .s-shell { background: #04060a; min-height: 100svh; }
+      .s-shell {
+        background: #04060a;
+        min-height: 100svh;
+      }
       .s-nav {
         height: 50px;
-        background: rgba(5, 7, 11, .74);
-        border-bottom: 1px solid rgba(255, 255, 255, .08);
-        display: flex; align-items: center;
+        background: rgba(5, 7, 11, 0.74);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
         padding: 0 22px;
         justify-content: space-between;
       }
-      .s-brand { width: 72px; height: 10px; border-radius: 4px; }
-      .s-nav-actions { display: flex; gap: 8px; }
-      .s-nav-btn { width: 36px; height: 28px; border-radius: 6px; }
-      @keyframes s-shimmer {
-        0%   { background-position: -200% 0; }
-        100% { background-position:  200% 0; }
+      .s-brand {
+        width: 72px;
+        height: 10px;
+        border-radius: 4px;
       }
-      .s-brand, .s-line, .s-nav-btn {
-        background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.09) 50%, rgba(255,255,255,.04) 75%);
+      .s-nav-actions {
+        display: flex;
+        gap: 8px;
+      }
+      .s-nav-btn {
+        width: 36px;
+        height: 28px;
+        border-radius: 6px;
+      }
+      @keyframes s-shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+      .s-brand,
+      .s-line,
+      .s-nav-btn {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.04) 25%,
+          rgba(255, 255, 255, 0.09) 50%,
+          rgba(255, 255, 255, 0.04) 75%
+        );
         background-size: 200% 100%;
         animation: s-shimmer 1.6s infinite;
         border-radius: 6px;
       }
-      .s-hero { padding: 130px 5% 0; max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-      .s-eyebrow { height: 12px; width: 160px; }
-      .s-title  { height: 56px; width: 58%; }
-      .s-sub    { height: 18px; width: 72%; }
-      .s-sub2   { height: 18px; width: 55%; }
-      .s-metrics { display: flex; gap: 12px; margin-top: 8px; }
-      .s-metric { width: 100px; height: 60px; border-radius: 10px; }
+      .s-hero {
+        padding: 130px 5% 0;
+        max-width: 960px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .s-eyebrow {
+        height: 12px;
+        width: 160px;
+      }
+      .s-title {
+        height: 56px;
+        width: 58%;
+      }
+      .s-sub {
+        height: 18px;
+        width: 72%;
+      }
+      .s-sub2 {
+        height: 18px;
+        width: 55%;
+      }
+      .s-metrics {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .s-metric {
+        width: 100px;
+        height: 60px;
+        border-radius: 10px;
+      }
     </style>
   </head>
   <body>

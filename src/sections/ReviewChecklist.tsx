@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { useLang } from '../LanguageContext'
 import { REVIEW_CHECKLIST_DATA } from '../i18n'
 
@@ -21,7 +22,7 @@ export function ReviewChecklist() {
         setChecklistAnimated(true)
         checklistTimersRef.current.forEach(clearTimeout)
         checklistTimersRef.current = REVIEW_CHECKLIST_DATA[lang].map((_, i) =>
-          setTimeout(() => setCheckedItems((prev) => new Set([...prev, i])), i * 140 + 300)
+          setTimeout(() => setCheckedItems((prev) => new Set([...prev, i])), i * 140 + 300),
         )
       },
       { threshold: 0.15 },
@@ -50,10 +51,7 @@ export function ReviewChecklist() {
           </div>
         </div>
         {REVIEW_CHECKLIST.map((item, i) => (
-          <div
-            key={item.item}
-            className={`checklist-item ${checkedItems.has(i) ? 'checked' : ''}`}
-          >
+          <div key={item.item} className={`checklist-item ${checkedItems.has(i) ? 'checked' : ''}`}>
             <span className="checklist-check" aria-hidden="true">
               {checkedItems.has(i) ? '✓' : '○'}
             </span>
