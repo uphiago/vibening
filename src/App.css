@@ -420,8 +420,9 @@
   display: grid;
   align-content: start;
   gap: 8px;
-  height: 440px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
 }
 
 .deck-item {
@@ -461,8 +462,9 @@
 
 .deck-detail {
   padding: 20px;
-  height: 440px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -958,8 +960,9 @@ section::before {
   display: grid;
   align-content: start;
   gap: 10px;
-  height: 340px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
 }
 
 .layer-row,
@@ -1029,11 +1032,41 @@ section::before {
   color: rgba(222, 239, 248, 0.82);
 }
 
+/* Layer model: denser list so all cards fit visually without internal scroll */
+.layer-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(86px, auto);
+  gap: 10px;
+}
+
+.layer-stack .layer-row {
+  min-height: 0;
+  padding: 12px;
+}
+
+.layer-stack .layer-summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.layer-stack .layer-chips {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.layer-stack .layer-chips span {
+  font-size: 9px;
+  padding: 2px 6px;
+}
+
 .layer-detail,
 .flow-right {
   padding: 20px;
-  height: 340px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1193,7 +1226,7 @@ section::before {
     radial-gradient(circle at 88% 86%, rgba(86, 229, 194, 0.1), transparent 30%),
     linear-gradient(160deg, rgba(5, 12, 20, 0.95), rgba(7, 11, 17, 0.82));
   padding: 10px 10px 6px;
-  overflow: auto;
+  overflow-y: hidden;
   box-shadow: inset 0 0 0 1px rgba(124, 212, 255, 0.06);
 }
 
@@ -2174,8 +2207,9 @@ button:focus-visible {
   display: grid;
   align-content: start;
   gap: 6px;
-  height: 460px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
 }
 
 .sdd-field-btn {
@@ -2223,8 +2257,9 @@ button:focus-visible {
 
 .sdd-detail {
   padding: 20px;
-  height: 460px;
-  overflow-y: auto;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -2650,7 +2685,11 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  /* When panels stack, release reserved height — no wasted space */
+  .layer-stack {
+    grid-template-columns: 1fr;
+  }
+
+  /* When panels stack, release reserved height: no wasted space */
   .deck-detail,
   .deck-list,
   .layer-stack,

@@ -73,7 +73,7 @@ const DYNAMIC_CTX_EXAMPLE_EN = `# Passing live state to the agent at runtime
 # Use in session with:
 # "given the current state !{command}, do X"`
 
-const AGENTS_MD_EXAMPLE_PT = `# CLAUDE.md — Contrato do projeto
+const AGENTS_MD_EXAMPLE_PT = `# CLAUDE.md: Contrato do projeto
 
 ## Identidade e escopo
 Você é um assistente de engenharia para este repositório.
@@ -95,7 +95,7 @@ Foco: TypeScript/React. Nao toque em outros arquivos sem pedido explícito.
 2. Testes existentes devem continuar passando
 3. Toda PR precisa de diff legível e aprovacao humana`
 
-const AGENTS_MD_EXAMPLE_EN = `# CLAUDE.md — Project contract
+const AGENTS_MD_EXAMPLE_EN = `# CLAUDE.md: Project contract
 
 ## Identity and scope
 You are an engineering assistant for this repository.
@@ -118,7 +118,7 @@ Focus: TypeScript/React. Do not touch other files without explicit request.
 3. Every PR needs a readable diff and human approval`
 
 const PRECOMMIT_EXAMPLE_PT = `#!/bin/sh
-# .claude/hooks/pre-commit — gate antes de todo commit
+# .claude/hooks/pre-commit: gate antes de todo commit
 
 # 1. Lint e typecheck
 npm run check
@@ -137,7 +137,7 @@ fi
 echo "✓ Todos os gates passaram."`
 
 const PRECOMMIT_EXAMPLE_EN = `#!/bin/sh
-# .claude/hooks/pre-commit — gate before every commit
+# .claude/hooks/pre-commit: gate before every commit
 
 # 1. Lint and typecheck
 npm run check

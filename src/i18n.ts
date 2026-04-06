@@ -648,6 +648,8 @@ export const COMPARISONS_DATA: Record<string, Comparison[]> = {
 export const CONTEXT_SIGNALS_DATA: Record<string, ContextSignal[]> = {
   'pt-BR': [
     { signal: 'Resposta degrada a cada follow-up', meaning: 'Contexto está poluído com ruído acumulado', action: 'Iniciar nova sessão com contexto limpo e específico', type: 'error' },
+    { signal: 'Equipe evita mexer em módulo recente gerado por IA', meaning: 'A base cresceu mais rápido que a compreensão compartilhada', action: 'Pausar merges em lote e revisar entendimento: objetivo, decisões e invariantes do módulo', type: 'error' },
+    { signal: 'Review aprova sem explicar por que a mudança é segura', meaning: 'Validação superficial; dívida de compreensão em crescimento', action: 'Ativar Comprehension Gate: alguém precisa explicar impacto e rollback em até 60 segundos', type: 'error' },
     { signal: 'IA implementa fora do escopo combinado', meaning: 'Objetivo ou limites não estavam claros no prompt', action: 'Reformular com escopo explícito: "apenas X, não Y"', type: 'error' },
     { signal: 'Resposta genérica sem ancoragem no projeto', meaning: 'Contexto de projeto insuficiente ou ausente', action: 'Incluir regras do projeto, CLAUDE.md ou snippet relevante', type: 'warning' },
     { signal: 'Prompt ultrapassa ~10k tokens', meaning: 'Volume alto; efeito "Lost in the Middle" possível', action: 'Reduzir escopo, aplicar Progressive Disclosure', type: 'warning' },
@@ -659,6 +661,8 @@ export const CONTEXT_SIGNALS_DATA: Record<string, ContextSignal[]> = {
   ],
   'en': [
     { signal: 'Response degrades with each follow-up', meaning: 'Context is polluted with accumulated noise', action: 'Start a new session with clean, specific context', type: 'error' },
+    { signal: 'Team avoids touching a recent AI-generated module', meaning: 'The codebase grew faster than shared understanding', action: 'Pause bulk merges and review understanding: objective, decisions, and module invariants', type: 'error' },
+    { signal: 'Review approves without explaining why the change is safe', meaning: 'Superficial validation; comprehension debt is growing', action: 'Enable a Comprehension Gate: someone must explain impact and rollback in up to 60 seconds', type: 'error' },
     { signal: 'AI implements outside the agreed scope', meaning: 'Objective or boundaries were not clear in the prompt', action: 'Reframe with explicit scope: "only X, not Y"', type: 'error' },
     { signal: 'Generic response with no project anchoring', meaning: 'Insufficient or missing project context', action: 'Include project rules, CLAUDE.md, or a relevant snippet', type: 'warning' },
     { signal: 'Prompt exceeds ~10k tokens', meaning: 'High volume; "Lost in the Middle" effect likely', action: 'Reduce scope, apply Progressive Disclosure', type: 'warning' },
@@ -757,6 +761,7 @@ export const METHODS_DATA: Record<string, MethodCard[]> = {
     { id: 'progressive-disclosure', title: 'Progressive Disclosure', summary: 'Carregamento por camadas sem poluir janela de contexto.', bullets: ['Discovery: índice leve com metadata (~100 tokens).', 'Activation: instrução completa apenas para o item escolhido.', 'Execution: deep dive apenas quando a tarefa exigir.'] },
     { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Spec curta e execução disciplinada em ciclo fechado.', bullets: ['Plan como contrato técnico, não guia vago.', 'Execução em passos pequenos com diff revisável.', 'Verify contínuo: validate → fix → repeat.'] },
     { id: 'review-loop', title: 'CI + AI Review Loop', summary: 'Pipeline de qualidade: CI, revisão e correção iterativa.', bullets: ['PR pequena e auditável: facilita revisão real.', 'Feedback conflitante exige validação multi-fonte.', 'Merge só após gate de aprovação explicitamente atendido.'] },
+    { id: 'comprehension-gate', title: 'Comprehension Gate', summary: 'Sem entendimento explícito, não há merge seguro.', bullets: ['Alguém do time explica a mudança em 60 segundos sem ler o diff.', 'Decisões implícitas da IA (trade-offs, edge cases, defaults) viram texto explícito.', 'Definir dono claro de manutenção antes de liberar para produção.'] },
     { id: 'context-reset', title: 'Context Reset', summary: 'Saber quando e como reiniciar o contexto para manter qualidade.', bullets: ['Degradação de qualidade = sinal imediato de reset.', 'Novo chat com contexto compacto: objetivo + regras + estado atual.', 'Nunca arrastar histórico longo apenas para "manter continuidade".'] },
   ],
   'en': [
@@ -764,6 +769,7 @@ export const METHODS_DATA: Record<string, MethodCard[]> = {
     { id: 'progressive-disclosure', title: 'Progressive Disclosure', summary: 'Layered loading without polluting the context window.', bullets: ['Discovery: lightweight index with metadata (~100 tokens).', 'Activation: full instructions only for the selected item.', 'Execution: deep dive only when the task requires it.'] },
     { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Short spec and disciplined execution in a closed cycle.', bullets: ['Plan as a technical contract, not a vague guide.', 'Execution in small steps with a reviewable diff.', 'Continuous verify: validate → fix → repeat.'] },
     { id: 'review-loop', title: 'CI + AI Review Loop', summary: 'Quality pipeline: CI, review, and iterative correction.', bullets: ['Small, auditable PR: enables real review.', 'Conflicting feedback requires multi-source validation.', 'Merge only after the approval gate is explicitly met.'] },
+    { id: 'comprehension-gate', title: 'Comprehension Gate', summary: 'Without explicit understanding, there is no safe merge.', bullets: ['Someone on the team explains the change in 60 seconds without reading the diff.', 'Implicit AI decisions (trade-offs, edge cases, defaults) are made explicit in text.', 'Define a clear maintenance owner before releasing to production.'] },
     { id: 'context-reset', title: 'Context Reset', summary: 'Know when and how to restart context to maintain quality.', bullets: ['Quality degradation = immediate reset signal.', 'New chat with compact context: objective + rules + current state.', 'Never drag a long history just to "maintain continuity".'] },
   ],
 }
@@ -774,12 +780,14 @@ export const QUALITY_ROWS_DATA: Record<string, QualityRow[]> = {
     { gate: 'Progressive context', rule: 'Detalhes avançados só aparecem quando necessários.', verify: 'Contexto inicial curto, com expansão controlada sob demanda.' },
     { gate: 'Execution safety', rule: 'Ações críticas exigem confirmação humana explícita.', verify: 'Fluxo com gate antes de qualquer ação irreversível.' },
     { gate: 'Validation loop', rule: 'Nenhuma entrega sem evidence-based verify.', verify: 'CI verde + revisão técnica humana registrada.' },
+    { gate: 'Compreensão verificável', rule: 'A mudança precisa ser explicável por humano, não apenas executável por máquina.', verify: 'Uma pessoa descreve objetivo, impacto e rollback sem depender do diff completo.' },
   ],
   'en': [
     { gate: 'Primary intent', rule: 'Main objective must be identified in seconds.', verify: 'User identifies state and next action without external explanation.' },
     { gate: 'Progressive context', rule: 'Advanced details only appear when needed.', verify: 'Short initial context, with controlled expansion on demand.' },
     { gate: 'Execution safety', rule: 'Critical actions require explicit human confirmation.', verify: 'Flow with gate before any irreversible action.' },
     { gate: 'Validation loop', rule: 'No delivery without evidence-based verify.', verify: 'CI green + human technical review recorded.' },
+    { gate: 'Verifiable comprehension', rule: 'The change must be explainable by a human, not only executable by a machine.', verify: 'One person describes objective, impact, and rollback without depending on the full diff.' },
   ],
 }
 
@@ -794,6 +802,9 @@ export const REVIEW_CHECKLIST_DATA: Record<string, ChecklistItem[]> = {
     { item: 'Testes mínimos foram adicionados ou atualizados?', category: 'Testes' },
     { item: 'A decisão técnica foi documentada?', category: 'Documentação' },
     { item: 'O diff é claro para outro revisor entender sem contexto externo?', category: 'Revisão' },
+    { item: 'Pelo menos uma pessoa consegue explicar a mudança em até 60 segundos?', category: 'Compreensão' },
+    { item: 'Trade-offs e decisões implícitas da IA foram explicitados?', category: 'Compreensão' },
+    { item: 'Há dono claro para manutenção deste trecho após merge?', category: 'Ownership' },
     { item: 'Existe plano de rollback se algo falhar?', category: 'Segurança' },
   ],
   'en': [
@@ -806,6 +817,9 @@ export const REVIEW_CHECKLIST_DATA: Record<string, ChecklistItem[]> = {
     { item: 'Were minimal tests added or updated?', category: 'Tests' },
     { item: 'Was the technical decision documented?', category: 'Docs' },
     { item: 'Is the diff clear enough for another reviewer without external context?', category: 'Review' },
+    { item: 'Can at least one person explain the change in up to 60 seconds?', category: 'Comprehension' },
+    { item: 'Were implicit AI trade-offs and decisions made explicit?', category: 'Comprehension' },
+    { item: 'Is there a clear owner for maintaining this area after merge?', category: 'Ownership' },
     { item: 'Is there a rollback plan if something fails?', category: 'Security' },
   ],
 }
@@ -832,6 +846,7 @@ export const WORKFLOW_PHASES_DATA: Record<string, WorkflowPhase[]> = {
     { id: 'wf-exec', step: '2', title: 'Implementação assistida', objective: 'Codar com IA em blocos pequenos, revisando antes de commit.', checks: ['Diff incremental', 'Leitura crítica do output', 'Rastreabilidade mantida'], antiPattern: 'Commitar saída de IA sem revisão humana.' },
     { id: 'wf-validate', step: '3-4', title: 'Validação local + pre-flight', objective: 'Executar testes, lint e revisão inicial antes de abrir PR.', checks: ['Testes locais passando', 'Lint/format sem erro', 'Pre-flight review feito'], antiPattern: 'Empurrar PR com falhas básicas não verificadas.' },
     { id: 'wf-loop', step: '5-7', title: 'CI + review loop', objective: 'Iterar CI/review/fix até aprovação real com evidência.', checks: ['CI verde', 'Feedback incorporado', 'Aprovação explícita registrada'], antiPattern: 'Ignorar feedback ou encerrar loop sem evidência de aprovação.' },
+    { id: 'wf-comprehension', step: '7.5', title: 'Comprehension gate', objective: 'Confirmar entendimento humano antes de merge/release.', checks: ['Alguém explica objetivo + impacto em até 60s', 'Decisões implícitas documentadas (trade-offs/edge cases)', 'Dono de manutenção definido'], antiPattern: 'Aprovar porque "CI está verde" sem entender comportamento e impacto.' },
     { id: 'wf-release', step: '8-10', title: 'Verification gate + release', objective: 'Separar "concluído" de "publicado" com gate final explícito.', checks: ['Gate de verificação atendido', 'Rollback definido', 'Release controlado'], antiPattern: 'Merge/release automático sem checagem final.' },
   ],
   'en': [
@@ -840,6 +855,7 @@ export const WORKFLOW_PHASES_DATA: Record<string, WorkflowPhase[]> = {
     { id: 'wf-exec', step: '2', title: 'Assisted implementation', objective: 'Code with AI in small blocks, reviewing before each commit.', checks: ['Incremental diff', 'Critical reading of output', 'Traceability maintained'], antiPattern: 'Committing AI output without human review.' },
     { id: 'wf-validate', step: '3-4', title: 'Local validation + pre-flight', objective: 'Run tests, lint, and initial review before opening a PR.', checks: ['Local tests passing', 'Lint/format without errors', 'Pre-flight review done'], antiPattern: 'Pushing a PR with unverified basic failures.' },
     { id: 'wf-loop', step: '5-7', title: 'CI + review loop', objective: 'Iterate CI/review/fix until real approval with evidence.', checks: ['CI green', 'Feedback incorporated', 'Explicit approval recorded'], antiPattern: 'Ignoring feedback or closing the loop without approval evidence.' },
+    { id: 'wf-comprehension', step: '7.5', title: 'Comprehension gate', objective: 'Confirm human understanding before merge/release.', checks: ['Someone explains objective + impact in up to 60s', 'Implicit decisions documented (trade-offs/edge cases)', 'Maintenance owner defined'], antiPattern: 'Approving because "CI is green" without understanding behavior and impact.' },
     { id: 'wf-release', step: '8-10', title: 'Verification gate + release', objective: 'Separate "completed" from "published" with an explicit final gate.', checks: ['Verification gate met', 'Rollback defined', 'Controlled release'], antiPattern: 'Automatic merge/release without a final check.' },
   ],
 }
@@ -875,18 +891,18 @@ export const STACK_TOOLS_DATA: Record<string, StackTool[]> = {
 
 export const SDD_FIELDS_DATA: Record<string, SddField[]> = {
   'pt-BR': [
-    { id: 'context', number: '1', name: 'Contexto', description: 'Qual problema precisa ser resolvido, quem é afetado e quais são as restrições técnicas reais.', detail: 'Contexto fraco gera objetivo vago. Sem saber quem é afetado, o critério de sucesso fica em aberto. Restrições técnicas definem o que é viável antes de qualquer plano.', example: 'A função parseDate() lança exceção para entradas vazias. Afeta todos os forms do app. Restrição: manter a assinatura atual.', antiPattern: '"O sistema tem problemas de performance." — Quem é afetado? Qual parte? Qual restrição?' },
-    { id: 'objective', number: '2', name: 'Objetivo', description: 'O resultado esperado em uma frase. O que "pronto" significa, antes de escrever uma linha.', detail: 'Um objetivo mensurável é o que separa entrega de opinião. Se não der para verificar se o objetivo foi atingido, ele é fraco.', example: 'parseDate() retorna null para entradas inválidas sem lançar exceção.', antiPattern: '"Melhorar a experiência do usuário." — Não é verificável. Não tem critério.' },
-    { id: 'scope', number: '3', name: 'Escopo', description: 'O que entra e o que explicitamente não entra. Ambos os lados são obrigatórios.', detail: 'Escopo sem o "não entra" é incompleto. É o "não entra" que previne scope creep e garante que a IA não expanda o trabalho sem pedido.', example: 'Entra: parseDate() em utils/date.ts. Não entra: outras funções do arquivo, validações de formato.', antiPattern: '"Escopo: tudo que for lento." — Sem limite, a IA vai otimizar tudo e sair do objetivo.' },
-    { id: 'criteria', number: '4', name: 'Critérios de validação', description: 'Critérios verificáveis definidos ANTES da execução. São o contrato de aprovação da entrega.', detail: 'Critérios definidos depois da execução são post-hoc rationalization. Eles precisam existir antes para que o agente (e o revisor) saibam o que aprovar.', example: "parseDate('') = null. parseDate('invalid') = null. parseDate('2024-01-15') = Date válido. Testes existentes passam sem modificação.", antiPattern: '"Deve funcionar corretamente." — Correto segundo quem? Com qual input? Verificado como?' },
+    { id: 'context', number: '1', name: 'Contexto', description: 'Qual problema precisa ser resolvido, quem é afetado e quais são as restrições técnicas reais.', detail: 'Contexto fraco gera objetivo vago. Sem saber quem é afetado, o critério de sucesso fica em aberto. Restrições técnicas definem o que é viável antes de qualquer plano.', example: 'A função parseDate() lança exceção para entradas vazias. Afeta todos os forms do app. Restrição: manter a assinatura atual.', antiPattern: '"O sistema tem problemas de performance." : Quem é afetado? Qual parte? Qual restrição?' },
+    { id: 'objective', number: '2', name: 'Objetivo', description: 'O resultado esperado em uma frase. O que "pronto" significa, antes de escrever uma linha.', detail: 'Um objetivo mensurável é o que separa entrega de opinião. Se não der para verificar se o objetivo foi atingido, ele é fraco.', example: 'parseDate() retorna null para entradas inválidas sem lançar exceção.', antiPattern: '"Melhorar a experiência do usuário." : Não é verificável. Não tem critério.' },
+    { id: 'scope', number: '3', name: 'Escopo', description: 'O que entra e o que explicitamente não entra. Ambos os lados são obrigatórios.', detail: 'Escopo sem o "não entra" é incompleto. É o "não entra" que previne scope creep e garante que a IA não expanda o trabalho sem pedido.', example: 'Entra: parseDate() em utils/date.ts. Não entra: outras funções do arquivo, validações de formato.', antiPattern: '"Escopo: tudo que for lento." : Sem limite, a IA vai otimizar tudo e sair do objetivo.' },
+    { id: 'criteria', number: '4', name: 'Critérios de validação', description: 'Critérios verificáveis definidos ANTES da execução. São o contrato de aprovação da entrega.', detail: 'Critérios definidos depois da execução são post-hoc rationalization. Eles precisam existir antes para que o agente (e o revisor) saibam o que aprovar.', example: "parseDate('') = null. parseDate('invalid') = null. parseDate('2024-01-15') = Date válido. Testes existentes passam sem modificação.", antiPattern: '"Deve funcionar corretamente." : Correto segundo quem? Com qual input? Verificado como?' },
     { id: 'plan', number: '5', name: 'Plano RPEV', description: 'Research, Plan, Execute e Verify definidos antes de iniciar qualquer código.', detail: 'O plano não é o código: é o mapa de como chegar lá. Research evita implementar em cima de mal-entendidos. Verify define o gate de conclusão.', example: 'Research: ler parseDate() e testes atuais. Plan: guard clause para empty/null. Execute: implementar em utils/date.ts. Verify: rodar testes + lint + revisar diff.', antiPattern: 'Pular Research e ir direto ao Execute. O agente assume estado que não entende.' },
     { id: 'evidence', number: '6', name: 'Evidências', description: 'Registro dos critérios atendidos, exemplos e links. Fechamento do ciclo com prova.', detail: 'Sem evidências, "pronto" é uma afirmação. Com evidências, é um fato verificável. Esse campo fecha o loop e permite auditoria futura.', example: 'Critérios 1-4 atendidos. Testes: 42/42 passando. PR aprovado por revisor humano. Link: github.com/repo/pull/42.', antiPattern: 'Marcar como pronto sem registrar o que foi verificado. Não tem rollback se precisar reverter.' },
   ],
   'en': [
-    { id: 'context', number: '1', name: 'Context', description: 'What problem needs solving, who is affected, and what the real technical constraints are.', detail: 'Weak context produces a vague objective. Without knowing who is affected, the success criterion stays open. Technical constraints define what is viable before any plan.', example: 'The parseDate() function throws on empty inputs. Affects all app forms. Constraint: preserve the current signature.', antiPattern: '"The system has performance issues." — Who is affected? Which part? What constraint?' },
-    { id: 'objective', number: '2', name: 'Objective', description: 'The expected result in one sentence. What "done" means before writing a single line.', detail: 'A measurable objective is what separates delivery from opinion. If you cannot verify whether the objective was met, it is weak.', example: 'parseDate() returns null for invalid inputs without throwing an exception.', antiPattern: '"Improve the user experience." — Not verifiable. Has no criterion.' },
-    { id: 'scope', number: '3', name: 'Scope', description: 'What is in and what is explicitly out. Both sides are mandatory.', detail: 'Scope without the "out of scope" is incomplete. The "out of scope" is what prevents scope creep and ensures the AI does not expand the work without a request.', example: 'In: parseDate() in utils/date.ts. Out: other functions in the file, format validations.', antiPattern: '"Scope: everything that is slow." — Without a limit, the AI will optimize everything and drift from the objective.' },
-    { id: 'criteria', number: '4', name: 'Validation criteria', description: 'Verifiable criteria defined BEFORE execution. They are the delivery approval contract.', detail: 'Criteria defined after execution are post-hoc rationalization. They must exist beforehand so the agent (and the reviewer) know what to approve.', example: "parseDate('') = null. parseDate('invalid') = null. parseDate('2024-01-15') = valid Date. Existing tests pass without modification.", antiPattern: '"It must work correctly." — Correct according to whom? With what input? Verified how?' },
+    { id: 'context', number: '1', name: 'Context', description: 'What problem needs solving, who is affected, and what the real technical constraints are.', detail: 'Weak context produces a vague objective. Without knowing who is affected, the success criterion stays open. Technical constraints define what is viable before any plan.', example: 'The parseDate() function throws on empty inputs. Affects all app forms. Constraint: preserve the current signature.', antiPattern: '"The system has performance issues." : Who is affected? Which part? What constraint?' },
+    { id: 'objective', number: '2', name: 'Objective', description: 'The expected result in one sentence. What "done" means before writing a single line.', detail: 'A measurable objective is what separates delivery from opinion. If you cannot verify whether the objective was met, it is weak.', example: 'parseDate() returns null for invalid inputs without throwing an exception.', antiPattern: '"Improve the user experience." : Not verifiable. Has no criterion.' },
+    { id: 'scope', number: '3', name: 'Scope', description: 'What is in and what is explicitly out. Both sides are mandatory.', detail: 'Scope without the "out of scope" is incomplete. The "out of scope" is what prevents scope creep and ensures the AI does not expand the work without a request.', example: 'In: parseDate() in utils/date.ts. Out: other functions in the file, format validations.', antiPattern: '"Scope: everything that is slow." : Without a limit, the AI will optimize everything and drift from the objective.' },
+    { id: 'criteria', number: '4', name: 'Validation criteria', description: 'Verifiable criteria defined BEFORE execution. They are the delivery approval contract.', detail: 'Criteria defined after execution are post-hoc rationalization. They must exist beforehand so the agent (and the reviewer) know what to approve.', example: "parseDate('') = null. parseDate('invalid') = null. parseDate('2024-01-15') = valid Date. Existing tests pass without modification.", antiPattern: '"It must work correctly." : Correct according to whom? With what input? Verified how?' },
     { id: 'plan', number: '5', name: 'RPEV Plan', description: 'Research, Plan, Execute, and Verify defined before starting any code.', detail: 'The plan is not the code: it is the map of how to get there. Research prevents implementing on top of misunderstandings. Verify defines the completion gate.', example: 'Research: read parseDate() and current tests. Plan: guard clause for empty/null. Execute: implement in utils/date.ts. Verify: run tests + lint + review diff.', antiPattern: 'Skipping Research and going straight to Execute. The agent assumes state it does not understand.' },
     { id: 'evidence', number: '6', name: 'Evidence', description: 'Record of criteria met, examples, and links. Closing the cycle with proof.', detail: 'Without evidence, "done" is an assertion. With evidence, it is a verifiable fact. This field closes the loop and enables future auditing.', example: 'Criteria 1-4 met. Tests: 42/42 passing. PR approved by human reviewer. Link: github.com/repo/pull/42.', antiPattern: 'Marking as done without recording what was verified. No rollback if you need to revert.' },
   ],
@@ -897,15 +913,15 @@ export const SDD_SPEC_ROWS_DATA: Record<string, SddSpecRow[]> = {
     { field: 'Objetivo', weak: '"Melhorar a performance do sistema"', strong: '"Reduzir p95 de /api/search de 1800ms para <400ms"' },
     { field: 'Escopo', weak: '"Tudo que estiver lento"', strong: '"Apenas query builder + índice. Não entra: cache layer, auth"' },
     { field: 'Critério', weak: '"Deve ficar mais rápido"', strong: '"p95 < 400ms em load test com 100 req/s por 60s"' },
-    { field: 'Research', weak: 'Ausente — vai direto ao código', strong: '"Profiling da query atual + explain plan do índice composto"' },
-    { field: 'Evidência', weak: 'Nenhuma — "tá funcionando"', strong: '"p95 = 187ms. 100% dos testes passando. PR #42 aprovado."' },
+    { field: 'Research', weak: 'Ausente: vai direto ao código', strong: '"Profiling da query atual + explain plan do índice composto"' },
+    { field: 'Evidência', weak: 'Nenhuma: "tá funcionando"', strong: '"p95 = 187ms. 100% dos testes passando. PR #42 aprovado."' },
   ],
   'en': [
     { field: 'Objective', weak: '"Improve system performance"', strong: '"Reduce p95 of /api/search from 1800ms to <400ms"' },
     { field: 'Scope', weak: '"Everything that is slow"', strong: '"Only query builder + index. Out: cache layer, auth"' },
     { field: 'Criteria', weak: '"It should be faster"', strong: '"p95 < 400ms in load test with 100 req/s for 60s"' },
-    { field: 'Research', weak: 'Absent — goes straight to code', strong: '"Profiling of current query + explain plan of composite index"' },
-    { field: 'Evidence', weak: 'None — "it works"', strong: '"p95 = 187ms. 100% of tests passing. PR #42 approved."' },
+    { field: 'Research', weak: 'Absent: goes straight to code', strong: '"Profiling of current query + explain plan of composite index"' },
+    { field: 'Evidence', weak: 'None: "it works"', strong: '"p95 = 187ms. 100% of tests passing. PR #42 approved."' },
   ],
 }
 

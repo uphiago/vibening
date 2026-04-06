@@ -45,7 +45,7 @@ function App() {
   useEffect(() => {
     const item = t.navItems.find((i) => i.id === activeSection)
     document.title = item && activeSection !== 'hero'
-      ? `${item.label} — vibening`
+      ? `${item.label} | vibening`
       : (lang === 'pt-BR' ? 'vibening · guia de engenharia agêntica' : 'vibening · Agentic Engineering Guide')
   }, [activeSection, lang, t])
 

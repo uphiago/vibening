@@ -28,9 +28,9 @@ Reduzir p95 de /users/search de 2400ms para menos de 300ms sem alteração de sc
 - verify: rodar k6 load test + suite de testes + revisar diff
 
 ## 6. Evidências
-- p95 = 187ms (meta: < 300ms) — critério 1 atendido
-- zero timeouts registrados nos 60s de carga — critério 2 atendido
-- 42/42 testes passando — critério 3 atendido
+- p95 = 187ms (meta: < 300ms) : critério 1 atendido
+- zero timeouts registrados nos 60s de carga : critério 2 atendido
+- 42/42 testes passando : critério 3 atendido
 - PR #42 aprovado por revisor humano`
 
 const SDD_EXAMPLE_FULL_EN = `## 1. Context
@@ -57,9 +57,9 @@ Reduce p95 of /users/search from 2400ms to under 300ms without schema changes.
 - verify: run k6 load test + test suite + review diff
 
 ## 6. Evidence
-- p95 = 187ms (target: < 300ms) — criterion 1 met
-- zero timeouts recorded during 60s load — criterion 2 met
-- 42/42 tests passing — criterion 3 met
+- p95 = 187ms (target: < 300ms) : criterion 1 met
+- zero timeouts recorded during 60s load : criterion 2 met
+- 42/42 tests passing : criterion 3 met
 - PR #42 approved by human reviewer`
 
 const SDD_TEMPLATE_PT = `## 1. Contexto
