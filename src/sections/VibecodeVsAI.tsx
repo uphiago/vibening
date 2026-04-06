@@ -22,7 +22,7 @@ export function VibecodeVsAI() {
           <span>{t.vibecodeVsAI.headerAI}</span>
         </div>
         {COMPARISONS.map((row) => (
-          <div key={row.aspect} className={`comparison-row risk-${row.risk}`}>
+          <div key={row.aspect} className="comparison-row">
             <span className="comparison-aspect">{row.aspect}</span>
             <span className="comparison-vibe">{row.vibecoding}</span>
             <span className="comparison-ai">

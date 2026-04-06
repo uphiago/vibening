@@ -10,9 +10,9 @@ export function EcosystemMap() {
       <h2 className="section-title">{t.ecosystemMap.title}</h2>
       <p className="section-description">{t.ecosystemMap.description}</p>
       <div className="map-controls" role="group" aria-label={t.ecosystemMap.filterGroupLabel}>
-        <button type="button" className={activeMapView === 'all' ? 'active' : ''} onClick={() => setActiveMapView('all')}>{t.ecosystemMap.filterAll}</button>
-        <button type="button" className={activeMapView === 'build' ? 'active' : ''} onClick={() => setActiveMapView('build')}>{t.ecosystemMap.filterBuild}</button>
-        <button type="button" className={activeMapView === 'ops' ? 'active' : ''} onClick={() => setActiveMapView('ops')}>{t.ecosystemMap.filterOps}</button>
+        <button type="button" className={activeMapView === 'all' ? 'active' : ''} aria-pressed={activeMapView === 'all'} onClick={() => setActiveMapView('all')}>{t.ecosystemMap.filterAll}</button>
+        <button type="button" className={activeMapView === 'build' ? 'active' : ''} aria-pressed={activeMapView === 'build'} onClick={() => setActiveMapView('build')}>{t.ecosystemMap.filterBuild}</button>
+        <button type="button" className={activeMapView === 'ops' ? 'active' : ''} aria-pressed={activeMapView === 'ops'} onClick={() => setActiveMapView('ops')}>{t.ecosystemMap.filterOps}</button>
       </div>
       <div className="map-card glass-card">
         <div className="map-legend">

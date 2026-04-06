@@ -32,6 +32,8 @@ import { DeepDive } from './sections/DeepDive'
 function App() {
   const { lang, t } = useLang()
   const initialHashRef = useRef<string | null>(null)
+  const ratioMapRef = useRef<Map<string, number>>(new Map())
+  const replaceStateTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   /* ── State ─────────────────────────────────────────────── */
   const [activeSection, setActiveSection] = useState(() => {
@@ -108,7 +110,7 @@ function App() {
     const onHashChange = () => {
       const hash = window.location.hash.slice(1)
       if (!hash) return
-      navigateToSection(hash, { smooth: true, pushHistory: false })
+      navigateToSection(hash, { smooth: false, pushHistory: false })
     }
 
     window.addEventListener('hashchange', onHashChange)
@@ -144,28 +146,50 @@ function App() {
     const watched = navIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[]
+
+    ratioMapRef.current.clear()
+
     const spyObserver = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-        if (visible[0]?.target?.id) {
-          const nextId = visible[0].target.id
-          // Preserve explicit deep-link target on initial load until it is reached.
-          if (initialHashRef.current && nextId !== initialHashRef.current) return
-          if (initialHashRef.current === nextId) initialHashRef.current = null
+        // Update global ratio map from the delta entries
+        entries.forEach((entry) => {
+          ratioMapRef.current.set(
+            entry.target.id,
+            entry.isIntersecting ? entry.intersectionRatio : 0,
+          )
+        })
 
-          setActiveSection(nextId)
+        // Pick the section with the highest intersection ratio across all tracked sections
+        let bestId = ''
+        let bestRatio = 0
+        ratioMapRef.current.forEach((ratio, id) => {
+          if (ratio > bestRatio) { bestRatio = ratio; bestId = id }
+        })
 
-          if (window.location.hash !== `#${nextId}`) {
-            history.replaceState(null, '', `#${nextId}`)
-          }
+        if (!bestId || bestRatio === 0) return
+
+        // Preserve explicit deep-link target on initial load until it is reached
+        if (initialHashRef.current && bestId !== initialHashRef.current) return
+        if (initialHashRef.current === bestId) initialHashRef.current = null
+
+        setActiveSection(bestId)
+
+        // Debounce replaceState to avoid churn during fast scrolling
+        const targetHash = `#${bestId}`
+        if (window.location.hash !== targetHash) {
+          if (replaceStateTimerRef.current) clearTimeout(replaceStateTimerRef.current)
+          replaceStateTimerRef.current = setTimeout(() => {
+            history.replaceState(null, '', targetHash)
+          }, 120)
         }
       },
-      { rootMargin: '-20% 0px -60% 0px', threshold: [0.3, 0.6, 1] },
+      { rootMargin: '-20% 0px -60% 0px', threshold: [0, 0.3, 0.6, 1] },
     )
     watched.forEach((section) => spyObserver.observe(section))
-    return () => spyObserver.disconnect()
+    return () => {
+      spyObserver.disconnect()
+      if (replaceStateTimerRef.current) clearTimeout(replaceStateTimerRef.current)
+    }
   }, [navIds])
 
   return (

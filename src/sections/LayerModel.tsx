@@ -38,7 +38,7 @@ export function LayerModel() {
             </button>
           ))}
         </div>
-        <div ref={layerDetailRef} tabIndex={-1}>
+        <div ref={layerDetailRef} tabIndex={-1} className="layer-detail-shell">
           <article key={activeLayer.id} className="layer-detail glass-card">
             <span className="detail-kicker">{t.layerModel.kicker}</span>
             <h3>{activeLayer.label}</h3>

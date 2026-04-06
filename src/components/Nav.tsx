@@ -67,7 +67,15 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
   return (
     <>
       <nav className="top-nav" aria-label={t.nav.navLabel}>
-        <a href="#hero" className="brand">vibening</a>
+        <a
+          href="#hero"
+          className="brand"
+          onClick={(event) => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
+            event.preventDefault()
+            onNavigate('hero', { smooth: true, pushHistory: true })
+          }}
+        >vibening</a>
         <div className="top-nav-actions">
           <button
             type="button"
@@ -122,6 +130,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
                     href={`#${item.id}`}
                     className={`mobile-nav-link${activeSection === item.id ? ' active' : ''}`}
                     onClick={(event) => {
+                      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
                       event.preventDefault()
                       onNavigate(item.id, { smooth: true, pushHistory: true })
                       setMobileNavOpen(false)
@@ -145,6 +154,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
             aria-label={item.label}
             aria-current={activeSection === item.id ? 'page' : undefined}
             onClick={(event) => {
+              if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
               event.preventDefault()
               onNavigate(item.id, { smooth: true, pushHistory: true })
             }}

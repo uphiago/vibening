@@ -19,7 +19,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(() => {
     try {
       const stored = localStorage.getItem('lang')
-      return VALID_LANGS.includes(stored as Lang) ? (stored as Lang) : 'en'
+      if (VALID_LANGS.includes(stored as Lang)) return stored as Lang
+      const browser = navigator.languages?.[0] ?? navigator.language ?? ''
+      return browser.startsWith('pt') ? 'pt-BR' : 'en'
     } catch { return 'en' }
   })
 

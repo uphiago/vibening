@@ -1,18 +1,24 @@
 import { useCallback, useEffect, useRef } from 'react'
 
 export function useActivateDetail() {
-  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([])
+  const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const focusTimerRef  = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  useEffect(() => () => { timersRef.current.forEach(clearTimeout) }, [])
+  useEffect(() => () => {
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+    if (focusTimerRef.current)  clearTimeout(focusTimerRef.current)
+  }, [])
 
   return useCallback((ref: React.RefObject<HTMLDivElement | null>) => {
     if (window.innerWidth <= 980) {
-      timersRef.current.push(
-        setTimeout(() => { ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }, 60)
-      )
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current)
+      scrollTimerRef.current = setTimeout(() => {
+        ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+      }, 60)
     }
-    timersRef.current.push(
-      setTimeout(() => { ref.current?.focus({ preventScroll: true }) }, 80)
-    )
+    if (focusTimerRef.current) clearTimeout(focusTimerRef.current)
+    focusTimerRef.current = setTimeout(() => {
+      ref.current?.focus({ preventScroll: true })
+    }, 80)
   }, [])
 }

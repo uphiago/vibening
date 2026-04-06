@@ -251,27 +251,12 @@
   color: rgba(255, 255, 255, 0.28);
 }
 
-.footer-made {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.2);
-}
-
-.footer-made a {
-  color: rgba(255, 255, 255, 0.35);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-made a:hover { color: rgba(255, 255, 255, 0.65); }
-
 .footer-right {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.footer-x,
-.footer-github,
 .footer-stats {
   display: flex;
   align-items: center;
@@ -282,19 +267,7 @@
   transition: color 0.2s;
 }
 
-.footer-x:hover { color: rgba(255, 255, 255, 0.7); }
-.footer-github:hover { color: rgba(255, 255, 255, 0.7); }
 .footer-stats:hover { color: rgba(255, 255, 255, 0.7); }
-
-.footer-x svg,
-.footer-github svg {
-  flex-shrink: 0;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.footer-x:hover svg,
-.footer-github:hover svg { opacity: 1; }
 
 /* ── Mermaid diagrams: vertical stack ────────────────── */
 
@@ -638,10 +611,12 @@
 .side-link-bar {
   display: block;
   height: 1px;
-  width: 18px;
+  width: 32px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 1px;
-  transition: width 0.2s ease, background 0.2s ease;
+  transform: scaleX(0.5625);
+  transform-origin: left center;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
   flex-shrink: 0;
 }
 
@@ -658,7 +633,7 @@
 
 .side-link:hover .side-link-bar,
 .side-link.active .side-link-bar {
-  width: 28px;
+  transform: scaleX(0.875);
   background: var(--accent-teal);
 }
 
@@ -667,7 +642,7 @@
 }
 
 .side-link.active .side-link-bar {
-  width: 32px;
+  transform: scaleX(1);
   background: rgba(124, 212, 255, 0.9);
   box-shadow: 0 0 8px rgba(124, 212, 255, 0.5);
 }
@@ -846,25 +821,6 @@ h1 span {
   font-size: 11px;
 }
 
-.hero-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-}
-
-.hero-tags span {
-  font-family: var(--mono-font);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(222, 244, 255, 0.88);
-  border: 1px solid rgba(126, 180, 209, 0.35);
-  background: rgba(69, 116, 143, 0.15);
-  border-radius: 999px;
-  padding: 7px 12px;
-}
 
 .content {
   width: min(1180px, 100%);
@@ -1159,7 +1115,8 @@ section::before {
   animation: fadeContent 0.15s ease;
 }
 
-.flow-detail-shell {
+.flow-detail-shell,
+.layer-detail-shell {
   min-height: 0;
 }
 

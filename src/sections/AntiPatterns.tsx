@@ -31,7 +31,7 @@ export function AntiPatterns() {
             <button
               key={ap.id}
               type="button"
-              className={`deck-item glass-card ap-item-${ap.severity} ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
+              className={`deck-item glass-card ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
               onClick={() => { setActiveAntiPatternId(ap.id); activateDetail(antiPatternDetailRef) }}
             >
               <div className="ap-item-header">
