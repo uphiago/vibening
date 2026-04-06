@@ -420,10 +420,8 @@
   display: grid;
   align-content: start;
   gap: 8px;
-  min-height: 440px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 440px;
+  overflow-y: auto;
 }
 
 .deck-item {
@@ -463,10 +461,8 @@
 
 .deck-detail {
   padding: 20px;
-  min-height: 440px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 440px;
+  overflow-y: auto;
   animation: fadeContent 0.15s ease;
 }
 
@@ -877,11 +873,7 @@ section::before {
   border-radius: 14px;
   backdrop-filter: blur(14px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32);
-  transition: border-color 0.22s ease, background-color 0.22s ease;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
-  contain: paint;
+  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
 }
 
 .principles-grid {
@@ -896,7 +888,7 @@ section::before {
   min-height: 180px;
   display: grid;
   gap: 8px;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .principle-card:hover {
@@ -966,10 +958,8 @@ section::before {
   display: grid;
   align-content: start;
   gap: 10px;
-  min-height: 340px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 340px;
+  overflow-y: auto;
 }
 
 .layer-row,
@@ -982,7 +972,7 @@ section::before {
   padding: 14px;
   cursor: pointer;
   background: var(--glass);
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .flow-step {
@@ -1042,10 +1032,8 @@ section::before {
 .layer-detail,
 .flow-right {
   padding: 20px;
-  min-height: 340px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 340px;
+  overflow-y: auto;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1666,7 +1654,7 @@ button:focus-visible {
   min-height: 160px;
   display: grid;
   gap: 10px;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .signal-card:hover {
@@ -2186,10 +2174,8 @@ button:focus-visible {
   display: grid;
   align-content: start;
   gap: 6px;
-  min-height: 460px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 460px;
+  overflow-y: auto;
 }
 
 .sdd-field-btn {
@@ -2237,10 +2223,8 @@ button:focus-visible {
 
 .sdd-detail {
   padding: 20px;
-  min-height: 460px;
-  height: auto;
-  max-height: none;
-  overflow: visible;
+  height: 460px;
+  overflow-y: auto;
   animation: fadeContent 0.15s ease;
 }
 
@@ -2650,15 +2634,6 @@ button:focus-visible {
   .content {
     padding-right: 24px;
   }
-
-  .deck-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .deck-detail,
-  .deck-list {
-    min-height: auto;
-  }
 }
 
 @media (max-width: 980px) {
@@ -2684,7 +2659,8 @@ button:focus-visible {
   .layer-detail,
   .flow-right,
   .sdd-detail {
-    min-height: auto;
+    height: auto;
+    overflow-y: visible;
   }
 
   .principles-grid,
