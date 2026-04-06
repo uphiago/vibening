@@ -190,6 +190,8 @@ export const translations = {
       sectionLabel: 'Aprofundamento técnico',
       title: 'Arquitetura prática do stack agêntico',
       description: 'Exploração técnica das peças que compõem um stack agêntico real: CLAUDE.md, SKILL.md, MCP, hooks e gates de CI/CD.',
+      artifactsLabel: 'artefatos',
+      referencesLabel: 'referências',
     },
     mermaidDiagrams: {
       sectionLabel: 'Diagramas',
@@ -444,6 +446,8 @@ export const translations = {
       sectionLabel: 'Technical Deep Dive',
       title: 'Practical architecture of the agentic stack',
       description: 'Technical exploration of the components that make up a real agentic stack: CLAUDE.md, SKILL.md, MCP, hooks, and CI/CD gates.',
+      artifactsLabel: 'artifacts',
+      referencesLabel: 'references',
     },
     mermaidDiagrams: {
       sectionLabel: 'Diagrams',

@@ -13,8 +13,6 @@ export function DeepDive() {
   }, [lang, activeDeepDiveId])
   const deepDiveDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
-  const artifactsLabel = lang === 'pt-BR' ? 'artefatos' : 'artifacts'
-  const refsLabel = lang === 'pt-BR' ? 'referências' : 'references'
 
   return (
     <section id="deep-dive" className="reveal">
@@ -38,8 +36,8 @@ export function DeepDive() {
           <article key={activeDeepDive.id} className="deck-detail glass-card">
             <h3>{activeDeepDive.title}</h3>
             <div className="deck-meta">
-              <span>{artifactsLabel}: {activeDeepDive.artifacts.length}</span>
-              <span>{refsLabel}: {activeDeepDive.links.length}</span>
+              <span>{t.deepDive.artifactsLabel}: {activeDeepDive.artifacts.length}</span>
+              <span>{t.deepDive.referencesLabel}: {activeDeepDive.links.length}</span>
             </div>
             <p className="deck-objective">{activeDeepDive.description}</p>
             <div className="deck-tags">

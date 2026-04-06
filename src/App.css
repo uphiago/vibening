@@ -1113,13 +1113,28 @@ section::before {
   padding: 2px 6px;
 }
 
-.layer-detail,
-.flow-right {
+.layer-detail {
   padding: 20px;
-  height: 360px;
-  overflow-y: auto;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
   align-self: start;
   animation: fadeContent 0.15s ease;
+}
+
+.flow-right {
+  padding: 20px;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  align-self: start;
+  display: grid;
+  gap: 10px;
+  animation: fadeContent 0.15s ease;
+}
+
+.flow-detail-shell {
+  min-height: 0;
 }
 
 .detail-kicker {
@@ -1157,6 +1172,31 @@ section::before {
   margin: 0 0 6px;
   color: var(--text-muted);
   line-height: 1.65;
+}
+
+.flow-phase-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.flow-meta-chip {
+  border-radius: 999px;
+  border: 1px solid rgba(124, 212, 255, 0.22);
+  background: rgba(124, 212, 255, 0.08);
+  color: rgba(188, 228, 249, 0.92);
+  font-family: var(--mono-font);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+}
+
+.flow-meta-chip-gate {
+  border-color: rgba(86, 229, 194, 0.28);
+  background: rgba(86, 229, 194, 0.08);
+  color: rgba(172, 236, 210, 0.94);
 }
 
 .flow-payload {
