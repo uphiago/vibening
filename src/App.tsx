@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 
 import { useLang } from './LanguageContext'
@@ -41,6 +41,28 @@ function App() {
   const [scrollProgress, setScrollProgress]     = useState(0)
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
 
+  const navigateToSection = useCallback((id: string, options?: { smooth?: boolean; pushHistory?: boolean }) => {
+    const target = document.getElementById(id)
+    if (!target) return
+
+    const smooth = options?.smooth ?? true
+    const pushHistory = options?.pushHistory ?? true
+
+    initialHashRef.current = id
+    setActiveSection(id)
+
+    const nextHash = `#${id}`
+    if (window.location.hash !== nextHash) {
+      if (pushHistory) {
+        history.pushState(null, '', nextHash)
+      } else {
+        history.replaceState(null, '', nextHash)
+      }
+    }
+
+    target.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' })
+  }, [])
+
   /* ── Document title + html lang ───────────────────────── */
   useEffect(() => {
     document.documentElement.lang = lang
@@ -62,8 +84,7 @@ function App() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible')
-            revealObserver.unobserve(entry.target)
+            entry.target.setAttribute('data-revealed', 'true')
           }
         })
       },
@@ -71,7 +92,7 @@ function App() {
     )
     sections.forEach((section) => revealObserver.observe(section))
     return () => revealObserver.disconnect()
-  }, [])
+  }, [navigateToSection])
 
   useEffect(() => {
     const hash = window.location.hash.slice(1)
@@ -80,8 +101,19 @@ function App() {
     if (!el) return
 
     initialHashRef.current = hash
-    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80)
-  }, [])
+    setTimeout(() => el.scrollIntoView({ behavior: 'auto' }), 80)
+  }, [navigateToSection])
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.slice(1)
+      if (!hash) return
+      navigateToSection(hash, { smooth: true, pushHistory: false })
+    }
+
+    window.addEventListener('hashchange', onHashChange)
+    return () => window.removeEventListener('hashchange', onHashChange)
+  }, [navigateToSection])
 
   useEffect(() => {
     const releaseHashLock = () => {
@@ -119,11 +151,11 @@ function App() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
         if (visible[0]?.target?.id) {
           const nextId = visible[0].target.id
-          setActiveSection(nextId)
-
           // Preserve explicit deep-link target on initial load until it is reached.
           if (initialHashRef.current && nextId !== initialHashRef.current) return
           if (initialHashRef.current === nextId) initialHashRef.current = null
+
+          setActiveSection(nextId)
 
           if (window.location.hash !== `#${nextId}`) {
             history.replaceState(null, '', `#${nextId}`)
@@ -145,6 +177,7 @@ function App() {
         activeSection={activeSection}
         mobileNavOpen={mobileNavOpen}
         setMobileNavOpen={setMobileNavOpen}
+        onNavigate={navigateToSection}
       />
 
       {/* ── Hero ─────────────────────────────────────────── */}

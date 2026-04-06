@@ -5,9 +5,10 @@ interface NavProps {
   activeSection: string
   mobileNavOpen: boolean
   setMobileNavOpen: (open: boolean) => void
+  onNavigate: (id: string, options?: { smooth?: boolean; pushHistory?: boolean }) => void
 }
 
-export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps) {
+export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate }: NavProps) {
   const { lang, setLang, t } = useLang()
   const firstLinkRef  = useRef<HTMLAnchorElement>(null)
   const openBtnRef    = useRef<HTMLButtonElement>(null)
@@ -122,7 +123,11 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
                     ref={i === 0 ? firstLinkRef : undefined}
                     href={`#${item.id}`}
                     className={`mobile-nav-link${activeSection === item.id ? ' active' : ''}`}
-                    onClick={() => setMobileNavOpen(false)}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      onNavigate(item.id, { smooth: true, pushHistory: true })
+                      setMobileNavOpen(false)
+                    }}
                   >
                     {item.label}
                   </a>
@@ -141,6 +146,10 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
             className={`side-link${activeSection === item.id ? ' active' : ''}`}
             aria-label={item.label}
             aria-current={activeSection === item.id ? 'page' : undefined}
+            onClick={(event) => {
+              event.preventDefault()
+              onNavigate(item.id, { smooth: true, pushHistory: true })
+            }}
           >
             <span className="side-link-bar" aria-hidden="true" />
             <span className="side-link-label">{item.label}</span>
