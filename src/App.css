@@ -466,9 +466,9 @@
 
 .deck-detail {
   padding: 20px;
-  min-height: 0;
-  height: auto;
-  overflow: visible;
+  height: 440px;
+  overflow-y: auto;
+  align-self: start;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1068,9 +1068,9 @@ section::before {
 .layer-detail,
 .flow-right {
   padding: 20px;
-  min-height: 0;
-  height: auto;
-  overflow: visible;
+  height: 360px;
+  overflow-y: auto;
+  align-self: start;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1223,7 +1223,8 @@ section::before {
   margin-top: 12px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   background:
     radial-gradient(circle at 12% 14%, rgba(124, 212, 255, 0.13), transparent 34%),
     radial-gradient(circle at 88% 86%, rgba(86, 229, 194, 0.1), transparent 30%),
@@ -2264,9 +2265,9 @@ button:focus-visible {
 
 .sdd-detail {
   padding: 20px;
-  min-height: 0;
-  height: auto;
-  overflow: visible;
+  height: 480px;
+  overflow-y: auto;
+  align-self: start;
   animation: fadeContent 0.15s ease;
 }
 
