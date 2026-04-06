@@ -12,6 +12,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
   const firstLinkRef  = useRef<HTMLAnchorElement>(null)
   const openBtnRef    = useRef<HTMLButtonElement>(null)
   const prevOpenRef   = useRef(false)
+  const langTextId = 'lang-toggle-text'
 
   // Return focus to the trigger button when the dialog closes
   useEffect(() => {
@@ -72,12 +73,14 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
             type="button"
             className="lang-toggle"
             onClick={() => setLang(lang === 'pt-BR' ? 'en' : 'pt-BR')}
-            aria-label={t.nav.langToggle}
+            aria-labelledby={langTextId}
+            title={t.nav.langToggle}
           >
-            <span className="lang-toggle-label">{t.nav.languageLabel}:</span>
+            <span id={langTextId} className="lang-toggle-label">{t.nav.languageLabel}:</span>
             <span className={`lang-code${lang === 'pt-BR' ? ' active' : ''}`}>PT</span>
             <span className="lang-separator">/</span>
             <span className={`lang-code${lang === 'en' ? ' active' : ''}`}>EN</span>
+            <span className="sr-only">. {t.nav.langToggle}</span>
           </button>
           <button
             ref={openBtnRef}

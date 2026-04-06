@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import './App.css'
 
 import { useLang } from './LanguageContext'
@@ -31,9 +31,13 @@ import { DeepDive } from './sections/DeepDive'
 
 function App() {
   const { lang, t } = useLang()
+  const initialHashRef = useRef<string | null>(null)
 
   /* ── State ─────────────────────────────────────────────── */
-  const [activeSection, setActiveSection] = useState('hero')
+  const [activeSection, setActiveSection] = useState(() => {
+    if (typeof window === 'undefined') return 'hero'
+    return window.location.hash.slice(1) || 'hero'
+  })
   const [scrollProgress, setScrollProgress]     = useState(0)
   const [mobileNavOpen, setMobileNavOpen]       = useState(false)
 
@@ -71,9 +75,27 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash.slice(1)
-    if (hash) {
-      const el = document.getElementById(hash)
-      if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80)
+    if (!hash) return
+    const el = document.getElementById(hash)
+    if (!el) return
+
+    initialHashRef.current = hash
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth' }), 80)
+  }, [])
+
+  useEffect(() => {
+    const releaseHashLock = () => {
+      initialHashRef.current = null
+    }
+
+    window.addEventListener('wheel', releaseHashLock, { passive: true })
+    window.addEventListener('touchstart', releaseHashLock, { passive: true })
+    window.addEventListener('keydown', releaseHashLock)
+
+    return () => {
+      window.removeEventListener('wheel', releaseHashLock)
+      window.removeEventListener('touchstart', releaseHashLock)
+      window.removeEventListener('keydown', releaseHashLock)
     }
   }, [])
 
@@ -96,8 +118,16 @@ function App() {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
         if (visible[0]?.target?.id) {
-          setActiveSection(visible[0].target.id)
-          history.replaceState(null, '', `#${visible[0].target.id}`)
+          const nextId = visible[0].target.id
+          setActiveSection(nextId)
+
+          // Preserve explicit deep-link target on initial load until it is reached.
+          if (initialHashRef.current && nextId !== initialHashRef.current) return
+          if (initialHashRef.current === nextId) initialHashRef.current = null
+
+          if (window.location.hash !== `#${nextId}`) {
+            history.replaceState(null, '', `#${nextId}`)
+          }
         }
       },
       { rootMargin: '-20% 0px -60% 0px', threshold: [0.3, 0.6, 1] },

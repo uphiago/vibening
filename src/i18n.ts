@@ -44,8 +44,8 @@ export const translations = {
       { id: 'layer-model', label: 'Camadas' },
       { id: 'execution-flow', label: 'RPEV' },
       { id: 'workflow-gate', label: 'Workflow' },
-      { id: 'multi-agent', label: 'Multi-Agent' },
-      { id: 'anti-patterns', label: 'Anti-patterns' },
+      { id: 'multi-agent', label: 'Multiagente' },
+      { id: 'anti-patterns', label: 'Anti-padrões' },
       { id: 'deep-dive', label: 'Aprofundar' },
       { id: 'mermaid-diagrams', label: 'Diagramas' },
       { id: 'ecosystem-map', label: 'Mapa' },
@@ -130,14 +130,14 @@ export const translations = {
       workflowNote: 'Cada camada só é carregada quando a anterior confirma relevância. Custo de contexto é proporcional à necessidade real.',
     },
     layerModel: {
-      sectionLabel: 'Layer Model',
+      sectionLabel: 'Modelo de camadas',
       title: 'Camadas operacionais do stack agêntico',
       description: 'Cada camada tem uma responsabilidade única. Confundir onde algo pertence é uma das causas mais comuns de configuração inconsistente.',
       kicker: 'Camada selecionada',
     },
     executionFlow: {
-      sectionLabel: 'Execution Flow · RPEV',
-      title: 'Research → Plan → Execute → Verify',
+      sectionLabel: 'Fluxo de execução · RPEV',
+      title: 'Pesquisar → Planejar → Executar → Verificar',
       description: 'Cada fase tem entrada, saída e critério de conclusão. Sem gate de verify, o ciclo não fecha.',
       kicker: 'Fase atual',
     },
@@ -150,7 +150,7 @@ export const translations = {
       antiPatternLabel: 'Anti-pattern',
     },
     multiAgent: {
-      sectionLabel: 'Multi-Agent Architectures',
+      sectionLabel: 'Arquiteturas multiagente',
       title: 'Quando um agente não é suficiente',
       description: 'Acima de 10 ferramentas por agente a qualidade cai. Especialização e paralelismo resolvem os limites do agente único.',
       limitsLabel: 'Limites do agente único',
@@ -227,17 +227,17 @@ export const translations = {
       priorityC: 'Fora do escopo',
     },
     methods: {
-      sectionLabel: 'Methods',
+      sectionLabel: 'Métodos',
       title: 'Métodos técnicos aplicáveis no dia a dia',
       description: 'Técnicas concretas para manter contexto limpo, controle de escopo e qualidade de output em ciclos de desenvolvimento assistido por IA.',
     },
     examples: {
-      sectionLabel: 'Examples',
+      sectionLabel: 'Exemplos',
       title: 'Exemplos diretos e reutilizáveis',
       description: 'Templates prontos para copiar, adaptar e usar em projetos reais. Cada exemplo resolve um problema específico de configuração ou contexto.',
       ex1Title: 'SKILL.md mínimo',
       ex2Title: 'Contexto mínimo viável',
-      ex3Title: 'Dynamic context injection',
+      ex3Title: 'Injeção dinâmica de contexto',
       ex4Title: 'Heurísticas de contexto',
       ex4Items: [
         'Prompt > ~10k tokens → revisar escopo e aplicar PD.',
@@ -258,7 +258,7 @@ export const translations = {
       allDone: 'Todos os gates atendidos. Pronto para merge.',
     },
     qualityMatrix: {
-      sectionLabel: 'Quality Matrix',
+      sectionLabel: 'Matriz de qualidade',
       title: 'Gates para avaliação de interface e execução',
       description: 'Referência objetiva: o que verificar, qual critério aplicar e como confirmar antes de considerar a entrega concluída.',
       headerGate: 'Gate',
@@ -552,7 +552,7 @@ export const LESSONS_DATA: Record<string, Lesson[]> = {
         'Vibecoding vs desenvolvimento assistido por IA',
         'Contexto mínimo viável para iniciar uma tarefa',
         'Progressive Disclosure: carregamento em camadas',
-        'RPEV (Research → Plan → Execute → Verify)',
+        'RPEV (Pesquisar → Planejar → Executar → Verificar)',
         'Stack agêntico na prática: MCP + Skills + AGENTS.md',
         'Comparação rápida de stacks (Claude / Cursor)',
         'Sinais de contexto insuficiente e gatilhos de replanning',
@@ -560,7 +560,7 @@ export const LESSONS_DATA: Record<string, Lesson[]> = {
       outcomes: [
         'Estruturar um prompt com objetivo, escopo e critério de aceite',
         'Entender o papel de cada camada do stack agêntico',
-        'Aplicar RPEV em uma tarefa real com validação',
+        'Aplicar RPEV em uma tarefa real com verificação',
       ],
     },
     {
@@ -573,7 +573,7 @@ export const LESSONS_DATA: Record<string, Lesson[]> = {
       topics: [
         'Checklist de code review para saída de IA',
         'Refatoração assistida com validação incremental',
-        'Quality loop: validate → fix → repeat',
+        'Loop de qualidade: validar → corrigir → repetir',
         'Segurança operacional: aprovação humana para ações críticas',
         'Geração e revisão de testes com IA',
         'Documentação e registro de decisões técnicas',
@@ -733,11 +733,11 @@ export const PD_LAYERS_DATA: Record<string, ProgressiveLayer[]> = {
 
 export const LAYERS_DATA: Record<string, Layer[]> = {
   'pt-BR': [
-    { id: 'user', label: 'User Intent', summary: 'Objetivo, restrições e critério de aceite.', chips: ['escopo', 'aceite'], facts: ['Sem objetivo explícito, o agente otimiza para velocidade, não para qualidade.', 'Critério de aceite antes de codar reduz retrabalho em cascata.', 'Contexto mínimo viável é a baseline de confiabilidade da resposta.'] },
-    { id: 'project-context', label: 'Project Rules', summary: 'Contrato local em AGENTS.md / CLAUDE.md + rules.', chips: ['governança', 'padrões'], facts: ['Contrato de projeto evita divergência de arquitetura e estilo entre sessões.', 'Regras curtas e objetivas têm maior aderência do agente que docs longas.', 'Sem contrato, cada sessão reinventa decisões críticas de forma inconsistente.'] },
+    { id: 'user', label: 'Intenção do usuário', summary: 'Objetivo, restrições e critério de aceite.', chips: ['escopo', 'aceite'], facts: ['Sem objetivo explícito, o agente otimiza para velocidade, não para qualidade.', 'Critério de aceite antes de codar reduz retrabalho em cascata.', 'Contexto mínimo viável é a base de confiabilidade da resposta.'] },
+    { id: 'project-context', label: 'Regras do projeto', summary: 'Contrato local em AGENTS.md / CLAUDE.md + regras.', chips: ['governança', 'padrões'], facts: ['Contrato de projeto evita divergência de arquitetura e estilo entre sessões.', 'Regras curtas e objetivas têm maior aderência do agente que documentação longa.', 'Sem contrato, cada sessão reinventa decisões críticas de forma inconsistente.'] },
     { id: 'skills', label: 'Skills', summary: 'Know-how reutilizável e auditável: SKILL.md + scripts/ + references/.', chips: ['workflow', 'reuso'], facts: ['Skill robusta define entrada, limites operacionais e saída esperada com clareza.', 'scripts/ concentra execução determinística; references/ carrega contexto sob demanda.', '$ARGUMENTS e $ARGUMENTS[N] permitem parametrização dinâmica da skill.'] },
     { id: 'mcp', label: 'MCP', summary: 'Acesso a dados e ferramentas externas com rastreabilidade.', chips: ['integração', 'acesso'], facts: ['MCP separa "como fazer" (skill) de "onde agir" (acesso a dado ou tool).', 'Conexões externas exigem autenticação explícita e permission gate definido.', 'Sem MCP, o agente é um gerador local; com MCP, é um operador com acesso real.'] },
-    { id: 'verification', label: 'Verification', summary: 'Gate de validação antes de considerar qualquer entrega como pronta.', chips: ['check', 'review'], facts: ['Loop mínimo: validate → fix → repeat. Nunca skip em código crítico.', 'Ações destrutivas (push, delete, migration) exigem confirmação humana explícita.', 'CI verde + revisão técnica humana = condição necessária de conclusão.'] },
+    { id: 'verification', label: 'Verificação', summary: 'Gate de validação antes de considerar qualquer entrega como pronta.', chips: ['check', 'review'], facts: ['Loop mínimo: validar → corrigir → repetir. Nunca pular em código crítico.', 'Ações destrutivas (push, delete, migration) exigem confirmação humana explícita.', 'CI verde + revisão técnica humana = condição necessária de conclusão.'] },
   ],
   'en': [
     { id: 'user', label: 'User Intent', summary: 'Objective, constraints, and acceptance criteria.', chips: ['scope', 'acceptance'], facts: ['Without an explicit objective, the agent optimizes for speed, not quality.', 'Acceptance criteria before coding reduces cascading rework.', 'Minimum viable context is the reliability baseline for any response.'] },
@@ -750,10 +750,10 @@ export const LAYERS_DATA: Record<string, Layer[]> = {
 
 export const FLOW_DATA: Record<string, FlowStep[]> = {
   'pt-BR': [
-    { id: 'research', label: 'Research', summary: 'Mapeia estado, arquivos críticos e risco.', detail: 'Identificar contexto útil, restrições reais e dependências antes de qualquer alteração. Registrar o que está faltando para execução segura.', payload: 'input: objetivo + limites + estado atual do projeto' },
-    { id: 'plan', label: 'Plan', summary: 'Quebra em passos verificáveis com critério de aceite.', detail: 'Definir etapas pequenas, cada uma com critério de aceite claro e fallback definido. Plano é contrato técnico, não lista de desejos.', payload: 'output: plano técnico + critérios por etapa' },
-    { id: 'execute', label: 'Execute', summary: 'Implementa em incrementos curtos e rastreáveis.', detail: 'Alterações rastreáveis para minimizar custo de correção. Revisar cada bloco antes de avançar. Sem commits em massa sem revisão.', payload: 'output: diff incremental + rastreabilidade' },
-    { id: 'verify', label: 'Verify', summary: 'Valida comportamento, qualidade e critérios.', detail: 'Executar lint, typecheck, build, testes e revisão orientada a risco. Sem evidência de aprovação, ciclo reinicia.', payload: 'gate: evidence-based approval | CI + human review' },
+    { id: 'research', label: 'Pesquisar', summary: 'Mapeia estado, arquivos críticos e risco.', detail: 'Identificar contexto útil, restrições reais e dependências antes de qualquer alteração. Registrar o que está faltando para execução segura.', payload: 'entrada: objetivo + limites + estado atual do projeto' },
+    { id: 'plan', label: 'Planejar', summary: 'Quebra em passos verificáveis com critério de aceite.', detail: 'Definir etapas pequenas, cada uma com critério de aceite claro e fallback definido. Plano é contrato técnico, não lista de desejos.', payload: 'saída: plano técnico + critérios por etapa' },
+    { id: 'execute', label: 'Executar', summary: 'Implementa em incrementos curtos e rastreáveis.', detail: 'Alterações rastreáveis para minimizar custo de correção. Revisar cada bloco antes de avançar. Sem commits em massa sem revisão.', payload: 'saída: diff incremental + rastreabilidade' },
+    { id: 'verify', label: 'Verificar', summary: 'Valida comportamento, qualidade e critérios.', detail: 'Executar lint, typecheck, build, testes e revisão orientada a risco. Sem evidência de aprovação, ciclo reinicia.', payload: 'gate: aprovação por evidências | CI + revisão humana' },
   ],
   'en': [
     { id: 'research', label: 'Research', summary: 'Maps state, critical files, and risk.', detail: 'Identify useful context, real constraints, and dependencies before any change. Record what is missing for safe execution.', payload: 'input: objective + limits + current project state' },
@@ -767,7 +767,7 @@ export const METHODS_DATA: Record<string, MethodCard[]> = {
   'pt-BR': [
     { id: 'context-minimo', title: 'Contexto mínimo viável', summary: 'Definir problema, escopo e validação antes da execução.', bullets: ['Objetivo explícito em uma frase, não uma conversa.', 'Critério de aceite: o que define "pronto" antes de começar.', 'Escopo delimitado: o que está dentro e o que está fora.'] },
     { id: 'progressive-disclosure', title: 'Progressive Disclosure', summary: 'Carregamento por camadas sem poluir janela de contexto.', bullets: ['Discovery: índice leve com metadata (~100 tokens).', 'Activation: instrução completa apenas para o item escolhido.', 'Execution: deep dive apenas quando a tarefa exigir.'] },
-    { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Spec curta e execução disciplinada em ciclo fechado.', bullets: ['Plan como contrato técnico, não guia vago.', 'Execução em passos pequenos com diff revisável.', 'Verify contínuo: validate → fix → repeat.'] },
+    { id: 'sdd-rpev', title: 'SDD + RPEV', summary: 'Spec curta e execução disciplinada em ciclo fechado.', bullets: ['Plan como contrato técnico, não guia vago.', 'Execução em passos pequenos com diff revisável.', 'Verificação contínua: validar → corrigir → repetir.'] },
     { id: 'review-loop', title: 'CI + AI Review Loop', summary: 'Pipeline de qualidade: CI, revisão e correção iterativa.', bullets: ['PR pequena e auditável: facilita revisão real.', 'Feedback conflitante exige validação multi-fonte.', 'Merge só após gate de aprovação explicitamente atendido.'] },
     { id: 'comprehension-gate', title: 'Comprehension Gate', summary: 'Sem entendimento explícito, não há merge seguro.', bullets: ['Alguém do time explica a mudança em 60 segundos sem ler o diff.', 'Decisões implícitas da IA (trade-offs, edge cases, defaults) viram texto explícito.', 'Definir dono claro de manutenção antes de liberar para produção.'] },
     { id: 'context-reset', title: 'Context Reset', summary: 'Saber quando e como reiniciar o contexto para manter qualidade.', bullets: ['Degradação de qualidade = sinal imediato de reset.', 'Novo chat com contexto compacto: objetivo + regras + estado atual.', 'Nunca arrastar histórico longo apenas para "manter continuidade".'] },
@@ -784,10 +784,10 @@ export const METHODS_DATA: Record<string, MethodCard[]> = {
 
 export const QUALITY_ROWS_DATA: Record<string, QualityRow[]> = {
   'pt-BR': [
-    { gate: 'Primary intent', rule: 'Objetivo principal deve ser identificado em segundos.', verify: 'Usuário identifica estado e próxima ação sem explicação externa.' },
-    { gate: 'Progressive context', rule: 'Detalhes avançados só aparecem quando necessários.', verify: 'Contexto inicial curto, com expansão controlada sob demanda.' },
-    { gate: 'Execution safety', rule: 'Ações críticas exigem confirmação humana explícita.', verify: 'Fluxo com gate antes de qualquer ação irreversível.' },
-    { gate: 'Validation loop', rule: 'Nenhuma entrega sem evidence-based verify.', verify: 'CI verde + revisão técnica humana registrada.' },
+    { gate: 'Intenção primária', rule: 'Objetivo principal deve ser identificado em segundos.', verify: 'Usuário identifica estado e próxima ação sem explicação externa.' },
+    { gate: 'Contexto progressivo', rule: 'Detalhes avançados só aparecem quando necessários.', verify: 'Contexto inicial curto, com expansão controlada sob demanda.' },
+    { gate: 'Segurança de execução', rule: 'Ações críticas exigem confirmação humana explícita.', verify: 'Fluxo com gate antes de qualquer ação irreversível.' },
+    { gate: 'Loop de validação', rule: 'Nenhuma entrega sem validação baseada em evidências.', verify: 'CI verde + revisão técnica humana registrada.' },
     { gate: 'Compreensão verificável', rule: 'A mudança precisa ser explicável por humano, não apenas executável por máquina.', verify: 'Uma pessoa descreve objetivo, impacto e rollback sem depender do diff completo.' },
   ],
   'en': [
@@ -812,7 +812,7 @@ export const REVIEW_CHECKLIST_DATA: Record<string, ChecklistItem[]> = {
     { item: 'O diff é claro para outro revisor entender sem contexto externo?', category: 'Revisão' },
     { item: 'Pelo menos uma pessoa consegue explicar a mudança em até 60 segundos?', category: 'Compreensão' },
     { item: 'Trade-offs e decisões implícitas da IA foram explicitados?', category: 'Compreensão' },
-    { item: 'Há dono claro para manutenção deste trecho após merge?', category: 'Ownership' },
+    { item: 'Há dono claro para manutenção deste trecho após merge?', category: 'Responsabilidade' },
     { item: 'Existe plano de rollback se algo falhar?', category: 'Segurança' },
   ],
   'en': [
@@ -834,9 +834,9 @@ export const REVIEW_CHECKLIST_DATA: Record<string, ChecklistItem[]> = {
 
 export const DEEP_DIVES_DATA: Record<string, DeepDive[]> = {
   'pt-BR': [
-    { id: 'dd1', title: 'Skill Architecture', description: 'SKILL.md define comportamento e frontmatter de controle; scripts/ garante determinismo para lógica pesada; references/ amplia contexto sem inflar o prompt principal.', artifacts: ['SKILL.md', 'scripts/', 'references/', '$ARGUMENTS', '$ARGUMENTS[N]'], links: [{ label: 'Agent Skills Standard', href: 'https://agentskills.io' }, { label: 'anthropics/skills', href: 'https://github.com/anthropics/skills' }] },
-    { id: 'dd2', title: 'MCP Integration', description: 'MCP conecta o agente ao mundo externo com controle de acesso, autenticação e rastreabilidade. Transforma o agente de gerador local em operador com acesso real a dados e ferramentas.', artifacts: ['MCP servers', 'auth layer', 'permission gates', 'tool logs'], links: [{ label: 'MCP Intro', href: 'https://modelcontextprotocol.io/docs/getting-started/intro' }, { label: 'Cursor MCP Docs', href: 'https://cursor.com/docs/mcp' }] },
-    { id: 'dd3', title: 'Validation Pipeline', description: 'Pipeline robusto de qualidade: tests + lint + typecheck + CI + review + fix loop. Nenhuma entrega é final sem evidência explícita de aprovação em todos os gates.', artifacts: ['CI green', 'AI review', 'human approval', 'merge gate'], links: [{ label: 'Building Effective Agents', href: 'https://www.anthropic.com/engineering/building-effective-agents' }, { label: 'Prompt Engineering', href: 'https://platform.openai.com/docs/guides/prompt-engineering' }] },
+    { id: 'dd1', title: 'Arquitetura de skills', description: 'SKILL.md define comportamento e frontmatter de controle; scripts/ garante determinismo para lógica pesada; references/ amplia contexto sem inflar o prompt principal.', artifacts: ['SKILL.md', 'scripts/', 'references/', '$ARGUMENTS', '$ARGUMENTS[N]'], links: [{ label: 'Agent Skills Standard', href: 'https://agentskills.io' }, { label: 'anthropics/skills', href: 'https://github.com/anthropics/skills' }] },
+    { id: 'dd2', title: 'Integração MCP', description: 'MCP conecta o agente ao mundo externo com controle de acesso, autenticação e rastreabilidade. Transforma o agente de gerador local em operador com acesso real a dados e ferramentas.', artifacts: ['MCP servers', 'auth layer', 'permission gates', 'tool logs'], links: [{ label: 'MCP Intro', href: 'https://modelcontextprotocol.io/docs/getting-started/intro' }, { label: 'Cursor MCP Docs', href: 'https://cursor.com/docs/mcp' }] },
+    { id: 'dd3', title: 'Pipeline de validação', description: 'Pipeline robusto de qualidade: tests + lint + typecheck + CI + review + fix loop. Nenhuma entrega é final sem evidência explícita de aprovação em todos os gates.', artifacts: ['CI green', 'AI review', 'human approval', 'merge gate'], links: [{ label: 'Building Effective Agents', href: 'https://www.anthropic.com/engineering/building-effective-agents' }, { label: 'Prompt Engineering', href: 'https://platform.openai.com/docs/guides/prompt-engineering' }] },
     { id: 'dd4', title: '.claude/ Directory Anatomy', description: 'A pasta .claude/ é o contrato operacional entre agente e projeto. Clareza e modularidade são inversamente proporcionais a retrabalho e risco.', artifacts: ['CLAUDE.md', 'settings.json', 'rules/', 'skills/', 'agents/', 'hooks/'], links: [{ label: 'Claude Code Docs', href: 'https://docs.anthropic.com/claude-code' }, { label: 'Context7 MCP', href: 'https://context7.com' }] },
   ],
   'en': [
@@ -849,13 +849,13 @@ export const DEEP_DIVES_DATA: Record<string, DeepDive[]> = {
 
 export const WORKFLOW_PHASES_DATA: Record<string, WorkflowPhase[]> = {
   'pt-BR': [
-    { id: 'wf-plan', step: '0', title: 'Planning First', objective: 'Declarar escopo, critérios de aceite e riscos antes de codar.', checks: ['Plano explícito com etapas', 'Critérios de aceite definidos', 'Escopo delimitado (in/out)'], antiPattern: 'Começar direto no código sem contrato técnico.' },
+    { id: 'wf-plan', step: '0', title: 'Planejamento primeiro', objective: 'Declarar escopo, critérios de aceite e riscos antes de codar.', checks: ['Plano explícito com etapas', 'Critérios de aceite definidos', 'Escopo delimitado (in/out)'], antiPattern: 'Começar direto no código sem contrato técnico.' },
     { id: 'wf-setup', step: '1', title: 'Isolamento de trabalho', objective: 'Criar branch/worktree para evitar impacto em baseline.', checks: ['1 feature = 1 branch', 'Nomenclatura descritiva', 'Ambiente limpo'], antiPattern: 'Implementar em contexto compartilhado sem isolamento.' },
     { id: 'wf-exec', step: '2', title: 'Implementação assistida', objective: 'Codar com IA em blocos pequenos, revisando antes de commit.', checks: ['Diff incremental', 'Leitura crítica do output', 'Rastreabilidade mantida'], antiPattern: 'Commitar saída de IA sem revisão humana.' },
     { id: 'wf-validate', step: '3-4', title: 'Validação local + pre-flight', objective: 'Executar testes, lint e revisão inicial antes de abrir PR.', checks: ['Testes locais passando', 'Lint/format sem erro', 'Pre-flight review feito'], antiPattern: 'Empurrar PR com falhas básicas não verificadas.' },
     { id: 'wf-loop', step: '5-7', title: 'CI + review loop', objective: 'Iterar CI/review/fix até aprovação real com evidência.', checks: ['CI verde', 'Feedback incorporado', 'Aprovação explícita registrada'], antiPattern: 'Ignorar feedback ou encerrar loop sem evidência de aprovação.' },
-    { id: 'wf-comprehension', step: '7.5', title: 'Comprehension gate', objective: 'Confirmar entendimento humano antes de merge/release.', checks: ['Alguém explica objetivo + impacto em até 60s', 'Decisões implícitas documentadas (trade-offs/edge cases)', 'Dono de manutenção definido'], antiPattern: 'Aprovar porque "CI está verde" sem entender comportamento e impacto.' },
-    { id: 'wf-release', step: '8-10', title: 'Verification gate + release', objective: 'Separar "concluído" de "publicado" com gate final explícito.', checks: ['Gate de verificação atendido', 'Rollback definido', 'Release controlado'], antiPattern: 'Merge/release automático sem checagem final.' },
+    { id: 'wf-comprehension', step: '7.5', title: 'Gate de compreensão', objective: 'Confirmar entendimento humano antes de merge/release.', checks: ['Alguém explica objetivo + impacto em até 60s', 'Decisões implícitas documentadas (trade-offs/edge cases)', 'Dono de manutenção definido'], antiPattern: 'Aprovar porque "CI está verde" sem entender comportamento e impacto.' },
+    { id: 'wf-release', step: '8-10', title: 'Gate de verificação + release', objective: 'Separar "concluído" de "publicado" com gate final explícito.', checks: ['Gate de verificação atendido', 'Rollback definido', 'Release controlado'], antiPattern: 'Merge/release automático sem checagem final.' },
   ],
   'en': [
     { id: 'wf-plan', step: '0', title: 'Planning First', objective: 'Declare scope, acceptance criteria, and risks before coding.', checks: ['Explicit plan with steps', 'Acceptance criteria defined', 'Bounded scope (in/out)'], antiPattern: 'Starting directly in code without a technical contract.' },
@@ -923,7 +923,7 @@ export const SDD_SPEC_ROWS_DATA: Record<string, SddSpecRow[]> = {
     { field: 'Objetivo', weak: '"Melhorar a performance do sistema"', strong: '"Reduzir p95 de /api/search de 1800ms para <400ms"' },
     { field: 'Escopo', weak: '"Tudo que estiver lento"', strong: '"Apenas query builder + índice. Não entra: cache layer, auth"' },
     { field: 'Critério', weak: '"Deve ficar mais rápido"', strong: '"p95 < 400ms em load test com 100 req/s por 60s"' },
-    { field: 'Research', weak: 'Ausente: vai direto ao código', strong: '"Profiling da query atual + explain plan do índice composto"' },
+    { field: 'Pesquisa', weak: 'Ausente: vai direto ao código', strong: '"Profiling da query atual + explain plan do índice composto"' },
     { field: 'Evidência', weak: 'Nenhuma: "tá funcionando"', strong: '"p95 = 187ms. 100% dos testes passando. PR #42 aprovado."' },
   ],
   'en': [
