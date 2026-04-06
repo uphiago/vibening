@@ -413,12 +413,15 @@
   display: grid;
   grid-template-columns: 320px 1fr;
   gap: 12px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .deck-list {
   display: grid;
+  align-content: start;
   gap: 8px;
+  height: 440px;
+  overflow-y: auto;
 }
 
 .deck-item {
@@ -882,6 +885,7 @@ section::before {
 
 .principle-card {
   padding: 20px;
+  min-height: 180px;
   display: grid;
   gap: 8px;
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
@@ -946,13 +950,16 @@ section::before {
   grid-template-columns: 1fr 420px;
   gap: 14px;
   margin-top: 22px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .layer-stack,
 .flow-left {
   display: grid;
+  align-content: start;
   gap: 10px;
+  height: 340px;
+  overflow-y: auto;
 }
 
 .layer-row,
@@ -1245,6 +1252,7 @@ section::before {
 
 .method-card {
   padding: 16px;
+  min-height: 180px;
 }
 
 .methods-grid .method-card:nth-child(1) { border-top: 2px solid rgba(124, 212, 255, 0.45); }
@@ -1275,6 +1283,7 @@ section::before {
 
 .example-card {
   padding: 16px;
+  min-height: 160px;
   min-width: 0;
   overflow: hidden;
 }
@@ -1444,6 +1453,7 @@ button:focus-visible {
 
 .lesson-card {
   padding: 22px;
+  min-height: 240px;
   display: grid;
   gap: 12px;
 }
@@ -1641,6 +1651,7 @@ button:focus-visible {
 
 .signal-card {
   padding: 16px;
+  min-height: 160px;
   display: grid;
   gap: 10px;
   transition: transform 0.2s ease, border-color 0.2s ease;
@@ -1748,6 +1759,7 @@ button:focus-visible {
 
 .pd-card {
   padding: 18px;
+  min-height: 160px;
   display: grid;
   gap: 10px;
 }
@@ -1869,6 +1881,7 @@ button:focus-visible {
 
 .stack-group {
   padding: 18px;
+  min-height: 180px;
   display: grid;
   gap: 12px;
 }
@@ -2154,12 +2167,15 @@ button:focus-visible {
   display: grid;
   grid-template-columns: 220px 1fr;
   gap: 12px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .sdd-fields-list {
   display: grid;
+  align-content: start;
   gap: 6px;
+  height: 460px;
+  overflow-y: auto;
 }
 
 .sdd-field-btn {
@@ -2442,6 +2458,7 @@ button:focus-visible {
   display: grid;
   gap: 4px;
   padding: 14px;
+  min-height: 100px;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.07);
   background: rgba(255, 255, 255, 0.02);
@@ -2545,6 +2562,7 @@ button:focus-visible {
 
 .comm-card {
   padding: 18px;
+  min-height: 140px;
 }
 
 .comm-card h3 {
