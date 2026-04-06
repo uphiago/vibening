@@ -92,7 +92,7 @@ function App() {
     )
     sections.forEach((section) => revealObserver.observe(section))
     return () => revealObserver.disconnect()
-  }, [navigateToSection])
+  }, [])
 
   useEffect(() => {
     const hash = window.location.hash.slice(1)
@@ -102,7 +102,7 @@ function App() {
 
     initialHashRef.current = hash
     setTimeout(() => el.scrollIntoView({ behavior: 'auto' }), 80)
-  }, [navigateToSection])
+  }, [])
 
   useEffect(() => {
     const onHashChange = () => {

@@ -33,7 +33,7 @@ export function ExecutionFlow() {
             </button>
           ))}
         </div>
-        <div ref={execFlowDetailRef} tabIndex={-1}>
+        <div ref={execFlowDetailRef} tabIndex={-1} className="flow-detail-shell">
           <article key={activeStep.id} className="flow-right glass-card">
             <span className="detail-kicker">{t.executionFlow.kicker}</span>
             <h3>{activeStep.label}</h3>

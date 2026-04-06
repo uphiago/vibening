@@ -491,12 +491,9 @@
 
 .deck-detail {
   padding: 20px;
-  height: auto;
-  min-height: 0;
-  overflow: visible;
+  height: 440px;
+  overflow-y: auto;
   align-self: start;
-  display: grid;
-  gap: 10px;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1148,21 +1145,17 @@ section::before {
 
 .layer-detail {
   padding: 20px;
-  height: auto;
-  min-height: 0;
-  overflow: visible;
+  height: 360px;
+  overflow-y: auto;
   align-self: start;
   animation: fadeContent 0.15s ease;
 }
 
 .flow-right {
   padding: 20px;
-  height: auto;
-  min-height: 0;
-  overflow: visible;
+  height: 360px;
+  overflow-y: auto;
   align-self: start;
-  display: grid;
-  gap: 10px;
   animation: fadeContent 0.15s ease;
 }
 
@@ -2908,13 +2901,8 @@ button:focus-visible {
 
 @media (max-width: 700px) {
   .hero {
-    padding: 72px 22px 62px;
-  }
-
-  .hero {
     min-height: auto;
-    padding-top: 100px;
-    padding-bottom: 56px;
+    padding: 100px 22px 56px;
   }
 
   .hero-glow-primary {
