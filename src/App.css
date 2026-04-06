@@ -3054,13 +3054,19 @@ button:focus-visible {
   }
 
   .comparison-row > span {
-    display: grid;
-    gap: 4px;
+    display: block;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.02);
   }
 
-  .comparison-row > span::before,
+  .comparison-aspect::before,
+  .comparison-vibe::before,
   .comparison-ai-value::before {
     content: attr(data-col);
+    display: block;
+    margin-bottom: 6px;
     font-family: var(--mono-font);
     font-size: 9px;
     letter-spacing: 0.11em;
@@ -3076,8 +3082,17 @@ button:focus-visible {
     font-weight: 600;
   }
 
+  .comparison-ai::before {
+    content: none;
+  }
+
   .comparison-ai {
     gap: 6px;
+    color: rgba(180, 240, 210, 0.9);
+  }
+
+  .comparison-ai-value {
+    display: block;
   }
 
   .matrix-head,
