@@ -74,7 +74,10 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen }: NavProps
             onClick={() => setLang(lang === 'pt-BR' ? 'en' : 'pt-BR')}
             aria-label={t.nav.langToggle}
           >
-            {lang === 'pt-BR' ? 'EN' : 'PT'}
+            <span className="lang-toggle-label">{t.nav.languageLabel}:</span>
+            <span className={`lang-code${lang === 'pt-BR' ? ' active' : ''}`}>PT</span>
+            <span className="lang-separator">/</span>
+            <span className={`lang-code${lang === 'en' ? ' active' : ''}`}>EN</span>
           </button>
           <button
             ref={openBtnRef}

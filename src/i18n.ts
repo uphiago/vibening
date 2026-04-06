@@ -31,6 +31,7 @@ export const translations = {
       navLabel: 'Navegação principal',
       sectionNavLabel: 'Navegação por seção',
       langToggle: 'Mudar para inglês',
+      languageLabel: 'Idioma',
     },
     navItems: [
       { id: 'hero', label: 'Início' },
@@ -284,6 +285,7 @@ export const translations = {
       navLabel: 'Main navigation',
       sectionNavLabel: 'Section navigation',
       langToggle: 'Mudar para Português',
+      languageLabel: 'Language',
     },
     navItems: [
       { id: 'hero', label: 'Home' },
