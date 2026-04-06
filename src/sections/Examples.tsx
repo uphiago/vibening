@@ -215,6 +215,56 @@ prompt: |
   If any check fails: write details to /tmp/review.md and exit 1.
   If all pass: write "approved" to /tmp/review.md and exit 0.`
 
+const XML_TAGS_EXAMPLE_PT = `<task>
+  <context>
+    Projeto React + TypeScript. Feature: busca em catálogo.
+    Problema atual: resultados inconsistentes em queries curtas.
+  </context>
+  <scope>
+    Ajustar apenas src/search/ranking.ts.
+    Não alterar API pública nem contratos de payload.
+  </scope>
+  <acceptance_criteria>
+    <item>Query com 1-2 caracteres mantém ordenação estável</item>
+    <item>Sem regressão em queries longas</item>
+    <item>Testes de ranking passam</item>
+  </acceptance_criteria>
+  <constraints>
+    <item>Sem novas dependências</item>
+    <item>Complexidade máxima O(n log n)</item>
+  </constraints>
+  <output_format>
+    1) plano curto
+    2) patch proposto
+    3) riscos e rollback
+  </output_format>
+</task>`
+
+const XML_TAGS_EXAMPLE_EN = `<task>
+  <context>
+    React + TypeScript project. Feature: catalog search.
+    Current issue: inconsistent results on short queries.
+  </context>
+  <scope>
+    Modify only src/search/ranking.ts.
+    Do not change public API or payload contracts.
+  </scope>
+  <acceptance_criteria>
+    <item>1-2 char queries keep stable ordering</item>
+    <item>No regression on long queries</item>
+    <item>Ranking tests pass</item>
+  </acceptance_criteria>
+  <constraints>
+    <item>No new dependencies</item>
+    <item>Maximum complexity O(n log n)</item>
+  </constraints>
+  <output_format>
+    1) short plan
+    2) proposed patch
+    3) risks and rollback
+  </output_format>
+</task>`
+
 export function Examples() {
   const { lang, t } = useLang()
   const CONTEXT_EXAMPLE = lang === 'pt-BR' ? CONTEXT_EXAMPLE_PT : CONTEXT_EXAMPLE_EN
@@ -222,6 +272,7 @@ export function Examples() {
   const AGENTS_MD_EXAMPLE = lang === 'pt-BR' ? AGENTS_MD_EXAMPLE_PT : AGENTS_MD_EXAMPLE_EN
   const PRECOMMIT_EXAMPLE = lang === 'pt-BR' ? PRECOMMIT_EXAMPLE_PT : PRECOMMIT_EXAMPLE_EN
   const SUBAGENT_EXAMPLE = lang === 'pt-BR' ? SUBAGENT_EXAMPLE_PT : SUBAGENT_EXAMPLE_EN
+  const XML_TAGS_EXAMPLE = lang === 'pt-BR' ? XML_TAGS_EXAMPLE_PT : XML_TAGS_EXAMPLE_EN
 
   return (
     <section id="examples" className="reveal">
@@ -275,6 +326,13 @@ export function Examples() {
           <div className="code-block-wrap">
             <CopyButton text={SUBAGENT_EXAMPLE} />
             <pre><code>{SUBAGENT_EXAMPLE}</code></pre>
+          </div>
+        </article>
+        <article className="glass-card example-card">
+          <h3>{t.examples.ex8Title}</h3>
+          <div className="code-block-wrap">
+            <CopyButton text={XML_TAGS_EXAMPLE} />
+            <pre><code>{XML_TAGS_EXAMPLE}</code></pre>
           </div>
         </article>
       </div>

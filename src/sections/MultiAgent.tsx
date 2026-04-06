@@ -36,7 +36,7 @@ export function MultiAgent() {
 
       <div className="ma-limits glass-card">
         <div className="ma-limits-header">
-          <span className="section-label" style={{ margin: 0 }}>{t.multiAgent.limitsLabel}</span>
+          <span className="section-label ma-limits-label">{t.multiAgent.limitsLabel}</span>
         </div>
         <div className="ma-limits-grid">
           <div className="ma-limit-item">
@@ -58,7 +58,7 @@ export function MultiAgent() {
       </div>
 
       <div className="ma-section-title">
-        <p className="section-label" style={{ marginTop: '32px' }}>{t.multiAgent.archsLabel}</p>
+        <p className="section-label ma-subsection-label">{t.multiAgent.archsLabel}</p>
       </div>
       <div className="deck-layout">
         <div className="deck-list">
@@ -106,8 +106,8 @@ export function MultiAgent() {
       </div>
 
       <div className="ma-section-title">
-        <p className="section-label" style={{ marginTop: '32px' }}>{t.multiAgent.patternsLabel}</p>
-        <p className="section-description" style={{ marginTop: '8px' }}>{t.multiAgent.patternsDesc}</p>
+        <p className="section-label ma-subsection-label">{t.multiAgent.patternsLabel}</p>
+        <p className="section-description ma-subsection-description">{t.multiAgent.patternsDesc}</p>
       </div>
       <div className="deck-layout">
         <div className="deck-list">
@@ -147,7 +147,7 @@ export function MultiAgent() {
       </div>
 
       <div className="ma-section-title">
-        <p className="section-label" style={{ marginTop: '32px' }}>{t.multiAgent.commLabel}</p>
+        <p className="section-label ma-subsection-label">{t.multiAgent.commLabel}</p>
       </div>
       <div className="comm-grid">
         {COMM_PATTERNS.map((cp) => (

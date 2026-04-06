@@ -1513,6 +1513,14 @@ section::before {
   overflow: hidden;
 }
 
+.workflow-matrix-label {
+  margin-top: 40px;
+}
+
+.workflow-matrix-description {
+  margin-bottom: 16px;
+}
+
 .matrix-head,
 .matrix-row {
   display: grid;
@@ -2563,6 +2571,10 @@ button:focus-visible {
   margin-bottom: 16px;
 }
 
+.ma-limits-label {
+  margin: 0;
+}
+
 .ma-limits-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2603,6 +2615,14 @@ button:focus-visible {
 
 .ma-section-title {
   margin-top: 6px;
+}
+
+.ma-subsection-label {
+  margin-top: 32px;
+}
+
+.ma-subsection-description {
+  margin-top: 8px;
 }
 
 .ma-arch-item-header {

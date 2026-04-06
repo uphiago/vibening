@@ -5,7 +5,6 @@ import { useLang } from './LanguageContext'
 import { Nav } from './components/Nav'
 import { Footer } from './components/Footer'
 import { References } from './sections/References'
-import { QualityMatrix } from './sections/QualityMatrix'
 import { Methods } from './sections/Methods'
 import { StackCuration } from './sections/StackCuration'
 import { Principles } from './sections/Principles'
@@ -262,9 +261,6 @@ function App() {
 
         {/* ── Review Checklist ─────────────────────────── */}
         <ReviewChecklist key={lang} />
-
-        {/* ── Quality Matrix ───────────────────────────── */}
-        <QualityMatrix />
 
         {/* ── References ───────────────────────────────── */}
         <References />

@@ -34,6 +34,24 @@ export function References() {
             <a className="glass-card ref-link" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noreferrer">ReAct (arXiv)</a>
           </div>
         </div>
+        <div>
+          <h3 className="refs-group-label">{t.refs.groupPlanExecute}</h3>
+          <div className="references-grid">
+            <a className="glass-card ref-link" href="https://cursor.com/docs/agent/plan-mode" target="_blank" rel="noreferrer">Cursor Plan Mode</a>
+            <a className="glass-card ref-link" href="https://cursor.com/docs/agent/overview" target="_blank" rel="noreferrer">Cursor Agent Overview</a>
+            <a className="glass-card ref-link" href="https://cursor.com/docs/agent/tools" target="_blank" rel="noreferrer">Cursor Agent Tools</a>
+            <a className="glass-card ref-link" href="https://cursor.com/docs/agent/tools/browser" target="_blank" rel="noreferrer">Browser Tooling</a>
+          </div>
+        </div>
+        <div>
+          <h3 className="refs-group-label">{t.refs.groupEval}</h3>
+          <div className="references-grid">
+            <a className="glass-card ref-link" href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noreferrer">promptfoo</a>
+            <a className="glass-card ref-link" href="https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md" target="_blank" rel="noreferrer">Web Interface Guidelines</a>
+            <a className="glass-card ref-link" href="https://arxiv.org/abs/2601.20245" target="_blank" rel="noreferrer">How AI Impacts Skill Formation (arXiv)</a>
+            <a className="glass-card ref-link" href="https://medium.com/@addyosmani/comprehension-debt-the-hidden-cost-of-ai-generated-code-00f6f38726d0" target="_blank" rel="noreferrer">Comprehension Debt (Addy Osmani)</a>
+          </div>
+        </div>
       </div>
     </section>
   )

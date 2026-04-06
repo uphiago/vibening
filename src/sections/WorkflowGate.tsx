@@ -1,11 +1,12 @@
 import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
-import { WORKFLOW_PHASES_DATA } from '../i18n'
+import { QUALITY_ROWS_DATA, WORKFLOW_PHASES_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
 
 export function WorkflowGate() {
   const { lang, t } = useLang()
   const WORKFLOW_PHASES = WORKFLOW_PHASES_DATA[lang]
+  const QUALITY_ROWS = QUALITY_ROWS_DATA[lang]
   const [activePhaseId, setActivePhaseId] = useState(WORKFLOW_PHASES[0].id)
   const activePhase = useMemo(() => {
     const data = WORKFLOW_PHASES_DATA[lang]
@@ -57,6 +58,22 @@ export function WorkflowGate() {
             </div>
           </article>
         </div>
+      </div>
+      <p className="section-label workflow-matrix-label">{t.qualityMatrix.sectionLabel}</p>
+      <p className="section-description workflow-matrix-description">{t.qualityMatrix.description}</p>
+      <div className="matrix-card glass-card">
+        <div className="matrix-head">
+          <span>{t.qualityMatrix.headerGate}</span>
+          <span>{t.qualityMatrix.headerRule}</span>
+          <span>{t.qualityMatrix.headerVerify}</span>
+        </div>
+        {QUALITY_ROWS.map((row) => (
+          <div key={row.gate} className="matrix-row">
+            <span>{row.gate}</span>
+            <span>{row.rule}</span>
+            <span>{row.verify}</span>
+          </div>
+        ))}
       </div>
     </section>
   )
