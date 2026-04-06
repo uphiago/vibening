@@ -9,8 +9,6 @@ export function Footer() {
         <span className="footer-brand">vibening</span>
         <span className="footer-tagline">{t.footer.tagline}</span>
       </div>
-
-      <span className="footer-made">{t.footer.madeWith}</span>
     </footer>
   )
 }

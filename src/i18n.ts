@@ -272,7 +272,6 @@ export const translations = {
     },
     footer: {
       tagline: 'guia de engenharia agêntica',
-      madeWith: 'feito com ❤️ para devs',
       copyCode: 'Copiar código',
     },
   },
@@ -525,7 +524,6 @@ export const translations = {
     },
     footer: {
       tagline: 'agentic engineering guide',
-      madeWith: 'made with ❤️ for devs',
       copyCode: 'Copy code',
     },
   },
