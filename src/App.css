@@ -420,8 +420,10 @@
   display: grid;
   align-content: start;
   gap: 8px;
-  height: 440px;
-  overflow-y: auto;
+  min-height: 440px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 .deck-item {
@@ -461,8 +463,10 @@
 
 .deck-detail {
   padding: 20px;
-  height: 440px;
-  overflow-y: auto;
+  min-height: 440px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -873,7 +877,11 @@ section::before {
   border-radius: 14px;
   backdrop-filter: blur(14px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.32);
-  transition: border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
+  transition: border-color 0.22s ease, background-color 0.22s ease;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  contain: paint;
 }
 
 .principles-grid {
@@ -888,7 +896,7 @@ section::before {
   min-height: 180px;
   display: grid;
   gap: 8px;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .principle-card:hover {
@@ -958,8 +966,10 @@ section::before {
   display: grid;
   align-content: start;
   gap: 10px;
-  height: 340px;
-  overflow-y: auto;
+  min-height: 340px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 .layer-row,
@@ -972,7 +982,7 @@ section::before {
   padding: 14px;
   cursor: pointer;
   background: var(--glass);
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .flow-step {
@@ -1032,8 +1042,10 @@ section::before {
 .layer-detail,
 .flow-right {
   padding: 20px;
-  height: 340px;
-  overflow-y: auto;
+  min-height: 340px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -1654,7 +1666,7 @@ button:focus-visible {
   min-height: 160px;
   display: grid;
   gap: 10px;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .signal-card:hover {
@@ -2174,8 +2186,10 @@ button:focus-visible {
   display: grid;
   align-content: start;
   gap: 6px;
-  height: 460px;
-  overflow-y: auto;
+  min-height: 460px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
 }
 
 .sdd-field-btn {
@@ -2223,8 +2237,10 @@ button:focus-visible {
 
 .sdd-detail {
   padding: 20px;
-  height: 460px;
-  overflow-y: auto;
+  min-height: 460px;
+  height: auto;
+  max-height: none;
+  overflow: visible;
   animation: fadeContent 0.15s ease;
 }
 
@@ -2493,7 +2509,8 @@ button:focus-visible {
 .ma-arch-item-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
+  justify-content: flex-start;
   margin-bottom: 6px;
 }
 
@@ -2503,17 +2520,22 @@ button:focus-visible {
   letter-spacing: 0.12em;
   color: rgba(124, 212, 255, 0.6);
   font-weight: 700;
+  min-width: 2ch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ma-arch-letter.large {
   font-size: 16px;
-  margin-right: 10px;
+  margin-right: 0;
 }
 
 .ma-detail-top {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
@@ -2524,6 +2546,18 @@ button:focus-visible {
   text-transform: uppercase;
   border-radius: 999px;
   padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.ma-arch-item .deck-title {
+  line-height: 1.35;
+}
+
+.ma-arch-item .layer-summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .ma-reliability-high {
@@ -2616,6 +2650,15 @@ button:focus-visible {
   .content {
     padding-right: 24px;
   }
+
+  .deck-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .deck-detail,
+  .deck-list {
+    min-height: auto;
+  }
 }
 
 @media (max-width: 980px) {
@@ -2634,6 +2677,10 @@ button:focus-visible {
 
   /* When panels stack, release reserved height — no wasted space */
   .deck-detail,
+  .deck-list,
+  .layer-stack,
+  .flow-left,
+  .sdd-fields-list,
   .layer-detail,
   .flow-right,
   .sdd-detail {

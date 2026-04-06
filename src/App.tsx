@@ -46,8 +46,8 @@ function App() {
     const item = t.navItems.find((i) => i.id === activeSection)
     document.title = item && activeSection !== 'hero'
       ? `${item.label} — vibening`
-      : 'vibening · Agentic Engineering Guide'
-  }, [activeSection, t])
+      : (lang === 'pt-BR' ? 'vibening · guia de engenharia agêntica' : 'vibening · Agentic Engineering Guide')
+  }, [activeSection, lang, t])
 
   /* ── Intersection observers ────────────────────────────── */
   const navIds = useMemo(() => t.navItems.map((i) => i.id), [t])
