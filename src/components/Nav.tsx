@@ -2,6 +2,19 @@ import { useEffect, useRef } from 'react'
 
 import { useLang } from '../LanguageContext'
 
+const MAIN_SECTION_IDS = new Set([
+  'hero',
+  'lesson-roadmap',
+  'sdd',
+  'layer-model',
+  'workflow-gate',
+  'multi-agent',
+  'deep-dive',
+  'stack-curation',
+  'examples',
+  'refs',
+])
+
 interface NavProps {
   activeSection: string
   mobileNavOpen: boolean
@@ -154,7 +167,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
           <a
             key={item.id}
             href={`#${item.id}`}
-            className={`side-link${activeSection === item.id ? ' active' : ''}`}
+            className={`side-link ${MAIN_SECTION_IDS.has(item.id) ? 'side-link-main' : 'side-link-sub'}${activeSection === item.id ? ' active' : ''}`}
             aria-label={item.label}
             aria-current={activeSection === item.id ? 'page' : undefined}
             onClick={(event) => {
