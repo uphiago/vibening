@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
 import { LAYERS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
@@ -6,11 +6,13 @@ import { useActivateDetail } from '../hooks/useActivateDetail'
 export function LayerModel() {
   const { lang, t } = useLang()
   const LAYERS = LAYERS_DATA[lang]
-  const [activeLayer, setActiveLayer] = useState(LAYERS[0])
+  const [activeLayerId, setActiveLayerId] = useState(LAYERS[0].id)
+  const activeLayer = useMemo(() => {
+    const data = LAYERS_DATA[lang]
+    return data.find((l) => l.id === activeLayerId) ?? data[0]
+  }, [lang, activeLayerId])
   const layerDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
-
-  useEffect(() => { setActiveLayer(LAYERS_DATA[lang][0]) }, [lang])
 
   return (
     <section id="layer-model" className="reveal">
@@ -24,7 +26,7 @@ export function LayerModel() {
               key={layer.id}
               type="button"
               className={`layer-row glass-card ${activeLayer.id === layer.id ? 'active' : ''}`}
-              onClick={() => { setActiveLayer(layer); activateDetail(layerDetailRef) }}
+              onClick={() => { setActiveLayerId(layer.id); activateDetail(layerDetailRef) }}
             >
               <div className="layer-row-main">
                 <span className="layer-title">{layer.label}</span>

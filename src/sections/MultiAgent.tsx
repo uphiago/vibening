@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
 import { COMM_PATTERNS_DATA, MULTI_AGENT_ARCHS_DATA, MULTI_AGENT_PATTERNS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
@@ -14,16 +14,19 @@ export function MultiAgent() {
   const MULTI_AGENT_ARCHS = MULTI_AGENT_ARCHS_DATA[lang]
   const MULTI_AGENT_PATTERNS = MULTI_AGENT_PATTERNS_DATA[lang]
   const COMM_PATTERNS = COMM_PATTERNS_DATA[lang]
-  const [activeArch, setActiveArch] = useState(MULTI_AGENT_ARCHS[0])
-  const [activeAgentPattern, setActiveAgentPattern] = useState(MULTI_AGENT_PATTERNS[0])
+  const [activeArchId, setActiveArchId] = useState(MULTI_AGENT_ARCHS[0].id)
+  const [activeAgentPatternId, setActiveAgentPatternId] = useState(MULTI_AGENT_PATTERNS[0].id)
+  const activeArch = useMemo(() => {
+    const data = MULTI_AGENT_ARCHS_DATA[lang]
+    return data.find((a) => a.id === activeArchId) ?? data[0]
+  }, [lang, activeArchId])
+  const activeAgentPattern = useMemo(() => {
+    const data = MULTI_AGENT_PATTERNS_DATA[lang]
+    return data.find((p) => p.id === activeAgentPatternId) ?? data[0]
+  }, [lang, activeAgentPatternId])
   const maArchDetailRef = useRef<HTMLDivElement>(null)
   const maPatternDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
-
-  useEffect(() => {
-    setActiveArch(MULTI_AGENT_ARCHS_DATA[lang][0])
-    setActiveAgentPattern(MULTI_AGENT_PATTERNS_DATA[lang][0])
-  }, [lang])
 
   return (
     <section id="multi-agent" className="reveal">
@@ -64,7 +67,7 @@ export function MultiAgent() {
               key={arch.id}
               type="button"
               className={`deck-item glass-card ma-arch-item ${activeArch.id === arch.id ? 'active' : ''}`}
-              onClick={() => { setActiveArch(arch); activateDetail(maArchDetailRef) }}
+              onClick={() => { setActiveArchId(arch.id); activateDetail(maArchDetailRef) }}
             >
               <div className="ma-arch-item-header">
                 <span className="ma-arch-letter">{arch.letter}</span>
@@ -113,7 +116,7 @@ export function MultiAgent() {
               key={pattern.id}
               type="button"
               className={`deck-item glass-card ${activeAgentPattern.id === pattern.id ? 'active' : ''}`}
-              onClick={() => { setActiveAgentPattern(pattern); activateDetail(maPatternDetailRef) }}
+              onClick={() => { setActiveAgentPatternId(pattern.id); activateDetail(maPatternDetailRef) }}
             >
               <div className="ap-item-header">
                 <span className="ma-arch-letter">{pattern.letter}</span>

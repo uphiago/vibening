@@ -19,7 +19,8 @@ export function ReviewChecklist() {
         if (!entry.isIntersecting) return
         obs.disconnect()
         setChecklistAnimated(true)
-        checklistTimersRef.current = REVIEW_CHECKLIST.map((_, i) =>
+        checklistTimersRef.current.forEach(clearTimeout)
+        checklistTimersRef.current = REVIEW_CHECKLIST_DATA[lang].map((_, i) =>
           setTimeout(() => setCheckedItems((prev) => new Set([...prev, i])), i * 140 + 300)
         )
       },
@@ -29,8 +30,9 @@ export function ReviewChecklist() {
     return () => {
       obs.disconnect()
       checklistTimersRef.current.forEach(clearTimeout)
+      checklistTimersRef.current = []
     }
-  }, [checklistAnimated, REVIEW_CHECKLIST])
+  }, [checklistAnimated, lang])
 
   return (
     <section id="review-checklist" className="reveal" ref={checklistSectionRef}>
@@ -49,7 +51,7 @@ export function ReviewChecklist() {
         </div>
         {REVIEW_CHECKLIST.map((item, i) => (
           <div
-            key={`${lang}-${i}`}
+            key={item.item}
             className={`checklist-item ${checkedItems.has(i) ? 'checked' : ''}`}
           >
             <span className="checklist-check" aria-hidden="true">

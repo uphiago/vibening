@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
 import { ANTI_PATTERNS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
@@ -12,11 +12,13 @@ function severityLabel(s: 'critical' | 'high' | 'medium', t: ReturnType<typeof u
 export function AntiPatterns() {
   const { lang, t } = useLang()
   const ANTI_PATTERNS = ANTI_PATTERNS_DATA[lang]
-  const [activeAntiPattern, setActiveAntiPattern] = useState(ANTI_PATTERNS[0])
+  const [activeAntiPatternId, setActiveAntiPatternId] = useState(ANTI_PATTERNS[0].id)
+  const activeAntiPattern = useMemo(() => {
+    const data = ANTI_PATTERNS_DATA[lang]
+    return data.find((p) => p.id === activeAntiPatternId) ?? data[0]
+  }, [lang, activeAntiPatternId])
   const antiPatternDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
-
-  useEffect(() => { setActiveAntiPattern(ANTI_PATTERNS_DATA[lang][0]) }, [lang])
 
   return (
     <section id="anti-patterns" className="reveal">
@@ -30,7 +32,7 @@ export function AntiPatterns() {
               key={ap.id}
               type="button"
               className={`deck-item glass-card ap-item-${ap.severity} ${activeAntiPattern.id === ap.id ? 'active' : ''}`}
-              onClick={() => { setActiveAntiPattern(ap); activateDetail(antiPatternDetailRef) }}
+              onClick={() => { setActiveAntiPatternId(ap.id); activateDetail(antiPatternDetailRef) }}
             >
               <div className="ap-item-header">
                 <span className={`ap-severity ap-severity-${ap.severity}`}>{severityLabel(ap.severity, t)}</span>

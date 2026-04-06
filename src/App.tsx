@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 import { useLang } from './LanguageContext'
@@ -47,10 +47,10 @@ function App() {
     document.title = item && activeSection !== 'hero'
       ? `${item.label} — vibening`
       : 'vibening · Agentic Engineering Guide'
-  }, [activeSection, t.navItems])
+  }, [activeSection, t])
 
   /* ── Intersection observers ────────────────────────────── */
-  const navItems = t.navItems
+  const navIds = useMemo(() => t.navItems.map((i) => i.id), [t])
 
   useEffect(() => {
     const sections = document.querySelectorAll('.reveal')
@@ -87,8 +87,8 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const watched = navItems
-      .map((item) => document.getElementById(item.id))
+    const watched = navIds
+      .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[]
     const spyObserver = new IntersectionObserver(
       (entries) => {
@@ -104,7 +104,7 @@ function App() {
     )
     watched.forEach((section) => spyObserver.observe(section))
     return () => spyObserver.disconnect()
-  }, [navItems])
+  }, [navIds])
 
   return (
     <div className="app">

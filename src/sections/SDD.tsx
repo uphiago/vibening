@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
 import { SDD_FIELDS_DATA, SDD_SPEC_ROWS_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
@@ -122,14 +122,16 @@ export function SDD() {
   const { lang, t } = useLang()
   const SDD_FIELDS = SDD_FIELDS_DATA[lang]
   const SDD_SPEC_ROWS = SDD_SPEC_ROWS_DATA[lang]
-  const [activeSddField, setActiveSddField] = useState(SDD_FIELDS[0])
+  const [activeSddFieldId, setActiveSddFieldId] = useState(SDD_FIELDS[0].id)
+  const activeSddField = useMemo(() => {
+    const data = SDD_FIELDS_DATA[lang]
+    return data.find((f) => f.id === activeSddFieldId) ?? data[0]
+  }, [lang, activeSddFieldId])
   const sddDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
 
   const SDD_EXAMPLE_FULL = lang === 'pt-BR' ? SDD_EXAMPLE_FULL_PT : SDD_EXAMPLE_FULL_EN
   const SDD_TEMPLATE = lang === 'pt-BR' ? SDD_TEMPLATE_PT : SDD_TEMPLATE_EN
-
-  useEffect(() => { setActiveSddField(SDD_FIELDS_DATA[lang][0]) }, [lang])
 
   return (
     <section id="sdd" className="reveal">
@@ -162,7 +164,7 @@ export function SDD() {
               key={field.id}
               type="button"
               className={`sdd-field-btn glass-card ${activeSddField.id === field.id ? 'active' : ''}`}
-              onClick={() => { setActiveSddField(field); activateDetail(sddDetailRef) }}
+              onClick={() => { setActiveSddFieldId(field.id); activateDetail(sddDetailRef) }}
             >
               <span className="sdd-field-number">{field.number}</span>
               <span className="sdd-field-name">{field.name}</span>

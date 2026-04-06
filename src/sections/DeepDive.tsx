@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { useLang } from '../LanguageContext'
 import { DEEP_DIVES_DATA } from '../i18n'
 import { useActivateDetail } from '../hooks/useActivateDetail'
@@ -6,11 +6,13 @@ import { useActivateDetail } from '../hooks/useActivateDetail'
 export function DeepDive() {
   const { lang, t } = useLang()
   const DEEP_DIVES = DEEP_DIVES_DATA[lang]
-  const [activeDeepDive, setActiveDeepDive] = useState(DEEP_DIVES[0])
+  const [activeDeepDiveId, setActiveDeepDiveId] = useState(DEEP_DIVES[0].id)
+  const activeDeepDive = useMemo(() => {
+    const data = DEEP_DIVES_DATA[lang]
+    return data.find((d) => d.id === activeDeepDiveId) ?? data[0]
+  }, [lang, activeDeepDiveId])
   const deepDiveDetailRef = useRef<HTMLDivElement>(null)
   const activateDetail = useActivateDetail()
-
-  useEffect(() => { setActiveDeepDive(DEEP_DIVES_DATA[lang][0]) }, [lang])
 
   return (
     <section id="deep-dive" className="reveal">
@@ -24,7 +26,7 @@ export function DeepDive() {
               key={item.id}
               type="button"
               className={`deck-item glass-card ${activeDeepDive.id === item.id ? 'active' : ''}`}
-              onClick={() => { setActiveDeepDive(item); activateDetail(deepDiveDetailRef) }}
+              onClick={() => { setActiveDeepDiveId(item.id); activateDetail(deepDiveDetailRef) }}
             >
               <span className="deck-title">{item.title}</span>
             </button>
