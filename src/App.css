@@ -246,7 +246,8 @@
 }
 
 .footer-x,
-.footer-github {
+.footer-github,
+.footer-stats {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -258,6 +259,7 @@
 
 .footer-x:hover { color: rgba(255, 255, 255, 0.7); }
 .footer-github:hover { color: rgba(255, 255, 255, 0.7); }
+.footer-stats:hover { color: rgba(255, 255, 255, 0.7); }
 
 .footer-x svg,
 .footer-github svg {
@@ -272,9 +274,11 @@
 /* ── Mermaid diagrams: vertical stack ────────────────── */
 
 .diagram-stack {
+  margin-top: 22px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
+  max-width: 980px;
 }
 
 .diagram-stack-skeleton {
@@ -1207,7 +1211,7 @@ section::before {
 }
 
 .diagram-card {
-  padding: 16px;
+  padding: 18px;
 }
 
 .diagram-card h3 {
@@ -1219,23 +1223,26 @@ section::before {
   margin-top: 12px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   background:
     radial-gradient(circle at 12% 14%, rgba(124, 212, 255, 0.13), transparent 34%),
     radial-gradient(circle at 88% 86%, rgba(86, 229, 194, 0.1), transparent 30%),
     linear-gradient(160deg, rgba(5, 12, 20, 0.95), rgba(7, 11, 17, 0.82));
-  padding: 10px 10px 6px;
-  overflow-y: hidden;
+  padding: 12px 12px 10px;
   box-shadow: inset 0 0 0 1px rgba(124, 212, 255, 0.06);
 }
 
 .mermaid {
-  min-width: 380px;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .diagram-wrap .mermaid svg {
-  width: 100%;
+  width: min(100%, 940px);
+  max-width: 100%;
   height: auto;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
 }
@@ -2847,9 +2854,7 @@ button:focus-visible {
     font-size: clamp(20px, 5vw, 32px);
   }
 
-  .mermaid {
-    min-width: 320px;
-  }
+  .mermaid { min-width: 0; }
 
   section {
     margin-top: 52px;

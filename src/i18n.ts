@@ -273,6 +273,7 @@ export const translations = {
     footer: {
       tagline: 'guia de engenharia agêntica',
       copyCode: 'Copiar código',
+      statsLabel: 'stats',
     },
   },
   'en': {
@@ -525,6 +526,7 @@ export const translations = {
     footer: {
       tagline: 'agentic engineering guide',
       copyCode: 'Copy code',
+      statsLabel: 'stats',
     },
   },
 }
@@ -864,28 +866,30 @@ export const STACK_TOOLS_DATA: Record<string, StackTool[]> = {
   'pt-BR': [
     { name: 'anthropics/skills', type: 'Skills', why: 'Repositório oficial de skills prontas para Claude Code', priority: 'A' },
     { name: 'Context7', type: 'MCP', why: 'Docs de libs em tempo real no contexto do agente', priority: 'A' },
-    { name: 'github/spec-kit', type: 'Spec', why: 'Spec-driven development com integração direta ao agente', priority: 'B' },
+    { name: 'github/spec-kit', type: 'Spec', why: 'Spec-driven development com integração direta ao agente', priority: 'A' },
     { name: 'vercel-labs/skills', type: 'Skills', why: 'Skills complementares mantidas por time de produto', priority: 'A' },
-    { name: 'Tavily', type: 'MCP', why: 'Search contextual para research em tempo de execução', priority: 'A' },
+    { name: 'Tavily', type: 'MCP', why: 'Search contextual para research em tempo de execução', priority: 'B' },
     { name: 'promptfoo/promptfoo', type: 'Eval', why: 'Avaliação e segurança em fluxos de IA: testes de saída', priority: 'B' },
     { name: 'pydantic/pydantic-ai', type: 'Framework', why: 'Tipagem e confiabilidade em agentes Python', priority: 'B' },
     { name: 'n8n-io/n8n', type: 'Integração', why: 'Automação e integração de workflows com suporte a agentes', priority: 'B' },
     { name: 'Stacks massivas sem critério', type: 'Risco', why: 'Volume sem validação aumenta risco e manutenção', priority: 'C' },
     { name: 'Infra avançada sem necessidade', type: 'Risco', why: 'RAG/agent mesh exige pré-requisito avançado', priority: 'C' },
     { name: 'Automação stealth (evasão)', type: 'Risco', why: 'Fora do escopo: sem auditabilidade ou segurança', priority: 'C' },
+    { name: 'Arquitetura guiada por leak', type: 'Risco', why: 'Decisão baseada em vazamento e rumor cria stack frágil e sem contrato de manutenção', priority: 'C' },
   ],
   'en': [
     { name: 'anthropics/skills', type: 'Skills', why: 'Official repository of ready-made skills for Claude Code', priority: 'A' },
     { name: 'Context7', type: 'MCP', why: 'Real-time library docs injected into agent context', priority: 'A' },
-    { name: 'github/spec-kit', type: 'Spec', why: 'Spec-driven development with direct agent integration', priority: 'B' },
+    { name: 'github/spec-kit', type: 'Spec', why: 'Spec-driven development with direct agent integration', priority: 'A' },
     { name: 'vercel-labs/skills', type: 'Skills', why: 'Complementary skills maintained by a product team', priority: 'A' },
-    { name: 'Tavily', type: 'MCP', why: 'Contextual search for research at execution time', priority: 'A' },
+    { name: 'Tavily', type: 'MCP', why: 'Contextual search for research at execution time', priority: 'B' },
     { name: 'promptfoo/promptfoo', type: 'Eval', why: 'Evaluation and security for AI flows: output testing', priority: 'B' },
     { name: 'pydantic/pydantic-ai', type: 'Framework', why: 'Typing and reliability for Python agents', priority: 'B' },
     { name: 'n8n-io/n8n', type: 'Integration', why: 'Workflow automation and integration with agent support', priority: 'B' },
     { name: 'Massive stacks without criteria', type: 'Risk', why: 'Volume without validation increases risk and maintenance', priority: 'C' },
     { name: 'Advanced infra without necessity', type: 'Risk', why: 'RAG/agent mesh requires advanced prerequisites', priority: 'C' },
     { name: 'Stealth automation (evasion)', type: 'Risk', why: 'Out of scope: no auditability or security', priority: 'C' },
+    { name: 'Leak-driven architecture', type: 'Risk', why: 'Designing from leaks and rumors creates fragile systems with no maintenance contract', priority: 'C' },
   ],
 }
 

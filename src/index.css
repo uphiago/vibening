@@ -25,10 +25,10 @@
 :root {
   --bg: #04060a;
   --text: #e7eef2;
-  --text-muted: rgba(231, 238, 242, 0.62);
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-hover: rgba(255, 255, 255, 0.055);
+  --text-muted: rgba(231, 238, 242, 0.74);
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-hover: rgba(255, 255, 255, 0.08);
   --surface: #0b0f16;
   --accent-teal: rgba(86, 229, 194, 0.85);
   --accent-blue: rgba(124, 212, 255, 0.9);

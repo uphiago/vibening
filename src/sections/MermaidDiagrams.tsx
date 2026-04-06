@@ -73,7 +73,7 @@ export function MermaidDiagrams() {
         <article className="glass-card diagram-card">
           <span className="detail-kicker">{t.mermaidDiagrams.diagramWorkflow}</span>
           <div className="diagram-wrap">
-            <pre className="mermaid">{`flowchart LR
+            <pre className="mermaid">{`flowchart TD
   A[Plan] --> B[Branch/Worktree]
   B --> C[Implement with AI]
   C --> D[Test + Lint]
@@ -120,7 +120,7 @@ export function MermaidDiagrams() {
         <article className="glass-card diagram-card">
           <span className="detail-kicker">{t.mermaidDiagrams.diagramEvaluator}</span>
           <div className="diagram-wrap">
-            <pre className="mermaid">{`flowchart LR
+            <pre className="mermaid">{`flowchart TD
   G[Generator] --> S[Solution]
   S --> C[Critic/Evaluator]
   C --> AP{Approved?}
