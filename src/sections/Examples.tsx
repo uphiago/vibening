@@ -73,6 +73,44 @@ const DYNAMIC_CTX_EXAMPLE_EN = `# Passing live state to the agent at runtime
 # Use in session with:
 # "given the current state !{command}, do X"`
 
+const DIAG_PROMPT_EXAMPLE_PT = `<task>
+  <context>
+    O módulo de processamento de lotes está lento após mudanças recentes.
+    Não sabemos ainda qual função exata é o gargalo.
+  </context>
+  <scope>
+    Investigar apenas em src/batch/ e src/queue/.
+    Não aplicar refatoração global nesta tarefa.
+  </scope>
+  <objective>
+    Identificar o principal gargalo e propor correção mínima viável.
+  </objective>
+  <acceptance_criteria>
+    <item>Apontar função/componente com evidência objetiva</item>
+    <item>Definir patch pequeno e reversível</item>
+    <item>Mostrar benchmark antes/depois</item>
+  </acceptance_criteria>
+</task>`
+
+const DIAG_PROMPT_EXAMPLE_EN = `<task>
+  <context>
+    The batch processing module became slower after recent changes.
+    We do not yet know the exact bottleneck function.
+  </context>
+  <scope>
+    Investigate only src/batch/ and src/queue/.
+    Do not perform global refactoring in this task.
+  </scope>
+  <objective>
+    Identify the primary bottleneck and propose a minimum viable fix.
+  </objective>
+  <acceptance_criteria>
+    <item>Point to function/component with objective evidence</item>
+    <item>Define a small, reversible patch</item>
+    <item>Show before/after benchmark</item>
+  </acceptance_criteria>
+</task>`
+
 const AGENTS_MD_EXAMPLE_PT = `# CLAUDE.md: Contrato do projeto
 
 ## Identidade e escopo
@@ -269,6 +307,7 @@ export function Examples() {
   const { lang, t } = useLang()
   const CONTEXT_EXAMPLE = lang === 'pt-BR' ? CONTEXT_EXAMPLE_PT : CONTEXT_EXAMPLE_EN
   const DYNAMIC_CTX_EXAMPLE = lang === 'pt-BR' ? DYNAMIC_CTX_EXAMPLE_PT : DYNAMIC_CTX_EXAMPLE_EN
+  const DIAG_PROMPT_EXAMPLE = lang === 'pt-BR' ? DIAG_PROMPT_EXAMPLE_PT : DIAG_PROMPT_EXAMPLE_EN
   const AGENTS_MD_EXAMPLE = lang === 'pt-BR' ? AGENTS_MD_EXAMPLE_PT : AGENTS_MD_EXAMPLE_EN
   const PRECOMMIT_EXAMPLE = lang === 'pt-BR' ? PRECOMMIT_EXAMPLE_PT : PRECOMMIT_EXAMPLE_EN
   const SUBAGENT_EXAMPLE = lang === 'pt-BR' ? SUBAGENT_EXAMPLE_PT : SUBAGENT_EXAMPLE_EN
@@ -309,11 +348,12 @@ export function Examples() {
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex4Title}</h3>
-          <ul>
-            {t.examples.ex4Items.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <div className="code-block-wrap">
+            <CopyButton text={DIAG_PROMPT_EXAMPLE} />
+            <pre>
+              <code>{DIAG_PROMPT_EXAMPLE}</code>
+            </pre>
+          </div>
         </article>
         <article className="glass-card example-card">
           <h3>{t.examples.ex5Title}</h3>

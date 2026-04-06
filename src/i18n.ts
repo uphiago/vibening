@@ -69,7 +69,7 @@ export const translations = {
       sectionLabel: 'Guia de Estudo',
       title: 'Trilha de aprendizado',
       description:
-        'Duas partes progressivas: da base de contexto e execução até refatoração segura e qualidade contínua em ciclos assistidos por IA.',
+        'Da base de contexto e execução até refatoração segura e qualidade contínua em ciclos assistidos por IA.',
       topicsLabel: 'Tópicos cobertos',
       outcomesLabel: 'Resultados esperados',
     },
@@ -358,7 +358,7 @@ export const translations = {
       sectionLabel: 'Study Guide',
       title: 'Learning path',
       description:
-        'Two progressive parts: from context engineering and execution fundamentals to safe refactoring and continuous quality in AI-assisted cycles.',
+        'From context engineering and execution fundamentals to safe refactoring and continuous quality in AI-assisted cycles.',
       topicsLabel: 'Topics covered',
       outcomesLabel: 'Expected outcomes',
     },

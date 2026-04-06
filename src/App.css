@@ -237,8 +237,9 @@
 /* ── Footer ──────────────────────────────────────────── */
 
 .footer {
+  position: relative;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 32px 40px;
+  padding: 32px 40px 40px 96px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -246,7 +247,8 @@
   color: rgba(255, 255, 255, 0.35);
   gap: 24px;
   flex-wrap: wrap;
-  margin-left: 56px;
+  margin-left: 0;
+  background: linear-gradient(180deg, rgba(8, 13, 20, 0.55), rgba(4, 7, 11, 0.94));
 }
 
 .footer-left {
@@ -955,7 +957,6 @@ section::before {
 
 /* Grid consistency: keep rows visually aligned and cards stretched */
 .principles-grid,
-.examples-grid,
 .methods-grid,
 .lessons-grid,
 .signals-grid,
@@ -969,7 +970,6 @@ section::before {
 }
 
 .principles-grid > *,
-.examples-grid > *,
 .methods-grid > *,
 .lessons-grid > *,
 .signals-grid > *,
@@ -1182,7 +1182,7 @@ section::before {
 
 .flow-right {
   padding: 20px;
-  min-height: 420px;
+  min-height: 336px;
   height: auto;
   overflow-y: visible;
   align-self: start;
@@ -1426,6 +1426,7 @@ section::before {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  align-items: start;
 }
 
 .methods-grid {
@@ -1478,9 +1479,14 @@ section::before {
 
 .example-card {
   padding: 16px;
-  min-height: 160px;
+  min-height: 0;
   min-width: 0;
   overflow: hidden;
+}
+
+#review-checklist,
+#refs {
+  margin-top: 40px;
 }
 
 .example-card h3 {
@@ -1840,6 +1846,10 @@ button:focus-visible {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.comparison-ai-value {
+  display: block;
 }
 
 .risk-badge {
@@ -3034,11 +3044,40 @@ button:focus-visible {
     grid-template-columns: 1fr;
   }
 
-  .comparison-aspect {
-    color: var(--accent-teal);
-    font-size: 10px;
-    letter-spacing: 0.08em;
+  .comparison-head {
+    display: none;
+  }
+
+  .comparison-row {
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .comparison-row > span {
+    display: grid;
+    gap: 4px;
+  }
+
+  .comparison-row > span::before,
+  .comparison-ai-value::before {
+    content: attr(data-col);
+    font-family: var(--mono-font);
+    font-size: 9px;
+    letter-spacing: 0.11em;
     text-transform: uppercase;
+    color: rgba(171, 217, 243, 0.85);
+  }
+
+  .comparison-aspect {
+    color: #edf7ff;
+    font-size: 13px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 600;
+  }
+
+  .comparison-ai {
+    gap: 6px;
   }
 
   .matrix-head,

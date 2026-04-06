@@ -36,10 +36,16 @@ export function VibecodeVsAI() {
         </div>
         {COMPARISONS.map((row) => (
           <div key={row.aspect} className="comparison-row">
-            <span className="comparison-aspect">{row.aspect}</span>
-            <span className="comparison-vibe">{row.vibecoding}</span>
+            <span className="comparison-aspect" data-col={t.vibecodeVsAI.headerAspect}>
+              {row.aspect}
+            </span>
+            <span className="comparison-vibe" data-col={t.vibecodeVsAI.headerVibe}>
+              {row.vibecoding}
+            </span>
             <span className="comparison-ai">
-              {row.aiAssisted}
+              <span className="comparison-ai-value" data-col={t.vibecodeVsAI.headerAI}>
+                {row.aiAssisted}
+              </span>
               {row.risk !== 'ok' && <span className={`risk-badge risk-${row.risk}`}>{riskLabel(row.risk, t)}</span>}
             </span>
           </div>

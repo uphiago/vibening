@@ -20,7 +20,7 @@ export function DeepDive() {
       <p className="section-label">{t.deepDive.sectionLabel}</p>
       <h2 className="section-title">{t.deepDive.title}</h2>
       <p className="section-description">{t.deepDive.description}</p>
-      <div className="deck-layout">
+      <div className="deck-layout deck-layout-compact">
         <div className="deck-list">
           {DEEP_DIVES.map((item) => (
             <button
