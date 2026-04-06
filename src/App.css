@@ -653,6 +653,8 @@
   --line-width: 24px;
   --line-idle-scale: 0.58;
   --line-hover-scale: 0.82;
+  --link-shift-hover: -2px;
+  --link-shift-active: -6px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -663,6 +665,8 @@
   position: relative;
   touch-action: manipulation;
   overflow: visible;
+  transition: transform 0.2s ease;
+  will-change: transform;
 }
 
 .side-link-main {
@@ -676,7 +680,7 @@
   --line-width: 20px;
   --line-idle-scale: 0.54;
   --line-hover-scale: 0.76;
-  margin-right: 8px;
+  padding-right: 8px;
 }
 
 .side-link-bar {
@@ -718,6 +722,10 @@
   background: var(--accent-teal);
 }
 
+.side-link:hover {
+  transform: translateX(var(--link-shift-hover));
+}
+
 .side-link:hover .side-link-label {
   color: rgba(220, 238, 250, 0.72);
   opacity: 1;
@@ -737,7 +745,7 @@
 }
 
 .side-link.active {
-  transform: translateX(-4px);
+  transform: translateX(var(--link-shift-active));
 }
 
 .hero {
