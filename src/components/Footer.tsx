@@ -21,14 +21,6 @@ export function Footer() {
       </div>
       <div className="footer-right">
         <a
-          className="footer-sysmap-link"
-          href="https://sysmap.com.br"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Built by sysmap.com.br
-        </a>
-        <a
           className="footer-stats"
           href="https://cloud.umami.is/share/PLq6jMtAVMv9Kyp6"
           target="_blank"

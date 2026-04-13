@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { useLang } from '../LanguageContext'
+import sysmapLogo from '../../logo-sysmap.png'
 
 const MAIN_SECTION_IDS = new Set([
   'hero',
@@ -91,7 +92,7 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
             onNavigate('hero', { smooth: true, pushHistory: true })
           }}
         >
-          vibening
+          <img src={sysmapLogo} alt="SysMap" className="brand-logo" />
         </a>
         <div className="top-nav-actions">
           <button
@@ -128,7 +129,9 @@ export function Nav({ activeSection, mobileNavOpen, setMobileNavOpen, onNavigate
           <div className="mobile-nav-backdrop" onClick={() => setMobileNavOpen(false)} />
           <nav className="mobile-nav-sheet">
             <div className="mobile-nav-header">
-              <span className="brand">vibening</span>
+              <span className="brand">
+                <img src={sysmapLogo} alt="SysMap" className="brand-logo" />
+              </span>
               <button
                 type="button"
                 className="mobile-nav-close"
